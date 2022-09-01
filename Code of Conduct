@@ -1,0 +1,36 @@
+Code of Conduct - Kashyyyk
+
+* You have to attend the booked group meetings – if, for some reason, You are not able to attend give a heads up in a timely manner.
+
+* The group should as far as possible have at least ONE meeting per week – preferably on afternoons.
+
+* Follow the Scrum Master Schema – See note 1.
+
+* Scrum Master tasks are:
+    - Keep track of the backlog.
+    - Add tasks into Trello.
+    - ???.
+    - Profit.
+
+* You execute the task You have taken (or been appointed to) with as good quality as possible. Ask for help when you need it.
+
+* If someone asks for help – Everyone in the group have a responsibility to help the Asker.
+
+* Communicate with the group about what You are currently working with to avoid having two members doing the same job.
+    - If You don’t have anything to do – Check the Trello for unassigned tasks to do. Alternatively bring it up during the weekly group meetings.
+
+* Keep the Trello updated:
+    - You assign your own name to the task in Trello.
+
+* You take full responsibility for your own task.
+
+* When a conflict occurs:
+    - Discuss and resonate about both parties opinions and listen to each other. Let both parties talk without getting interrupted.
+    - If both parties can NOT reach a decision – The group will do a vote about which direction the project should take.
+
+* Every meeting commences with a “around the table” where every member in the group gets their own time slot to speak and express their own opinion without getting interrupted.
+
+* You should follow the GIT protocol when doing any actions with GIT e.g.
+    - Add a proper comment when doing a Pull Request, include which members that needs to look at the request (meaning which members that is going to be affected by the request).
+
+* Further agreements can be added during the project.
