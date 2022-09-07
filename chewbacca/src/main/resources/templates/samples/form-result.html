@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Form Result</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!-- Display the value of greeting.id -->
+    <p>
+       id: <span th:text="${greeting.id}"></span>
+    </p>
+    <!-- Display the value of greeting.content -->
+    <p>
+        content: <span th:text="${greeting.content}"></span>
+    </p>
+
+    <!-- Hyperlink back to the form. -->
+    <a href="/samples/greeting">Submit another message</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Form</h1>
+
+    <!--
+        The <form> tag is used to create an HTML form for user input.
+        The 'action' attribute specifies where to send the form data when a form is submitted. '#' is unimportant here.
+        The 'method' attribute specifies how to send the form data (GET or POST).
+
+        th:action attribute is used to specify the URL to send the form data to, here to the samples/greeting endpoint in FormController.java.
+
+        th:object attribute is used to specify the object that the form data will be bound to.
+
+        The GET handler for this form is in FormController.java, and sends with it the 'greeting' object.
+        That object will get populated with data through this form a than sent back to the samples/greeting endpoint.
+    -->
+    <form action="#" th:action="@{/samples/greeting}" th:object="${greeting}" method="post">
+        <!--
+            Field with name 'Id' and set to populate the 'id' field of the 'greeting' object, i.e greeting.id.
+            The field is specified in the th:fild attribute in the format '*{field_name}'.
+        -->
+    	<p>Id: <input type="text" th:field="*{id}" /></p>
+
+        <!--
+            Same here but for the 'content' field.
+        -->
+        <p>Message: <input type="text" th:field="*{content}" /></p>
+
+        <p>
+            <!--Submit button. -->
+            <input type="submit" value="Submit" />
+            <!--Reset button. -->
+            <input type="reset" value="Reset" />
+        </p>
+    </form>
+</body>
+</html>

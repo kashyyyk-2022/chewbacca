@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Hello World!</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div>
+        <p>
+            <!--
+                Notice the <span th:text="${name}">...</span> tag.
+                Thymeleaf will evaluate the expression inside the th:text attribute
+                So <span th:text="${name}"></span> becomes <span>World</span> if 'name' is 'World'
+
+                <span> is used here to avoid a linebreak, but the th:text attribute can be used on any tag.
+                E.g. <p th:text="${name}"></p>, <div th:text="${name}"></div>, etc.
+            -->
+            Hello <span th:text="${name}"></span>!
+        </p>
+    </div>
+</body>
+</html>
