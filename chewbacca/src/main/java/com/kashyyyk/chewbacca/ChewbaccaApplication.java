@@ -14,6 +14,8 @@ public class ChewbaccaApplication {
 	 * or if there needs to be some initialization code, it can be done here.
 	 * 
 	 * @param args		Arguments passed to the application
+	 *
+	 * learning pull requests /Viktoria
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ChewbaccaApplication.class, args);
