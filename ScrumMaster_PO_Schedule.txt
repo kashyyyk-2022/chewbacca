@@ -1,0 +1,18 @@
+Scrum master schedule:
+
+Study week 2: Viktoria
+Study week 3: Lovisa
+Study week 4: Rasmus
+Study week 5: Isak
+Study week 6: Marcus
+Study week 7: Wincent
+Study week 8: Oscar
+
+Product owner schedule:
+
+Study week 3: Rasmus & Viktoria
+Study week 4: Lovisa
+Study week 5: Oscar
+Study week 6: Wincent
+Study week 7: Marcus
+Study week 8: Isak
