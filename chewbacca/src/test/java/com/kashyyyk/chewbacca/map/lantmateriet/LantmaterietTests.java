@@ -3,7 +3,10 @@ package com.kashyyyk.chewbacca.map.lantmateriet;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.kashyyyk.chewbacca.map.Coordinate;
 
@@ -54,7 +57,7 @@ public class LantmaterietTests {
     {
         // This just has to not throw an exception
         var result = Lantmateriet.renderImage(
-            1028, 1028, 319456, 6397088 - 10, 319488, 6397120 - 10
+            512, 512, 6400119 - 500, 317623 - 500, 6400119 + 500, 317623 + 500
         );
     }
 }
