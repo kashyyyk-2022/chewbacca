@@ -28,7 +28,15 @@ Code of Conduct - Kashyyyk
 
 * Every meeting commences with a “around the table” where every member in the group gets their own time slot to speak and express their own opinion without getting interrupted.
 
+* Before ending a meeting the group will plan time and place for the next meeting.
+
 * You should follow the GIT protocol when doing any actions with GIT e.g.
     - Add a proper comment when doing a Pull Request, include which members that needs to look at the request (meaning which members that is going to be affected by the request).
+    
+* Every week one of the group members will act as PO. The list is in the scrummaster_po_schedule.txt file.
+
+* The PO will act as a judge when new functions are added. The PO checks if DoD is checked and  manages what User Stories should be made. 
+  The PO is the one putting User Stories from the "backlog" to "next sprint" in Trello. The PO will also make a rundown och the backlog after a roundtable meeting
+
 
 * Further agreements can be added during the project.
