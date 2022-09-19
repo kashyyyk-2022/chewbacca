@@ -203,7 +203,7 @@ public final class Lantmateriet {
      * @return The image.
      * @throws IOException If the image could not be rendered.
      */
-    public static BufferedImage renderImage(int width, int height, int eastMin, int northMin, int eastMax, int northMax)
+    public static BufferedImage renderImage(int width, int height, int northMin, int eastMin, int northMax, int eastMax)
             throws IOException {
         final var service = "WMS";
         final var version = "1.1.1";

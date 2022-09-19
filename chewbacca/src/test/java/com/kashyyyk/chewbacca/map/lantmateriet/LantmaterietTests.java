@@ -4,8 +4,12 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.LinkedList;
+
+import javax.imageio.ImageIO;
 
 import com.kashyyyk.chewbacca.map.Coordinate;
+import com.kashyyyk.chewbacca.map.WaypointType;
 
 public class LantmaterietTests {
 
@@ -54,7 +58,76 @@ public class LantmaterietTests {
     {
         // This just has to not throw an exception
         var result = Lantmateriet.renderImage(
-            1028, 1028, 319456, 6397088 - 10, 319488, 6397120 - 10
+            512, 512, 6396234 - 100, 318824 - 100, 6396234 + 100, 318824 + 100
         );
+    }
+
+    @Test
+    public void testProcessImage() throws IOException
+    {
+        // This just has to not throw an exception
+        var result = LantmaterietImageProcessor.processPoint(6396234, 318824);
+
+        // For each pixel
+        var path = result.waypoints;
+
+        // Draw the path on the image
+        for (var waypint : path) {
+            if (!waypint.getType().equals(WaypointType.Path)) continue;
+            // Check if any of the other path elements are closer than 10 pixels
+            for (var other : path) {
+                if (waypint != other) {
+                    var coordinate = waypint.getCoordinate();
+                    var otherCoordinate = other.getCoordinate();
+                    
+                    var distance = Math.sqrt(
+                        Math.pow(coordinate.latitude - otherCoordinate.latitude, 2) +
+                        Math.pow(coordinate.longitude - otherCoordinate.longitude, 2)
+                    );
+                    
+                    if (distance > 35) {
+                        continue;
+                    }
+
+                    coordinate = LantmaterietImageProcessor.getPixelPositionFromCoordinate(result.minNorth, result.minEast, coordinate);
+                    otherCoordinate = LantmaterietImageProcessor.getPixelPositionFromCoordinate(result.minNorth, result.minEast, otherCoordinate);
+
+                    // Draw a line between the two points
+                    var x1 = (int)coordinate.longitude;
+                    var y1 = (int)coordinate.latitude;
+                    var x2 = (int)otherCoordinate.longitude;
+                    var y2 = (int)otherCoordinate.latitude;
+
+                    var dx = Math.abs(x2 - x1);
+                    var dy = Math.abs(y2 - y1);
+                    var sx = x1 < x2 ? 1 : -1;
+                    var sy = y1 < y2 ? 1 : -1;
+                    var err = dx - dy;
+
+                    while (true) {
+                        result.image.setRGB(x1, y1, 0xFF0000);
+
+                        if (x1 == x2 && y1 == y2) {
+                            break;
+                        }
+
+                        var e2 = 2 * err;
+
+                        if (e2 > -dy) {
+                            err = err - dy;
+                            x1 = x1 + sx;
+                        }
+
+                        if (e2 < dx) {
+                            err = err + dx;
+                            y1 = y1 + sy;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Save the image to disk
+        ImageIO.write(result.image, "png", new java.io.File("test.png"));
     }
 }
