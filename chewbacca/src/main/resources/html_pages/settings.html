@@ -19,10 +19,10 @@
             <div class="col-8 col-md-6 col-lg-2">
                 <div class="btn-group d-flex" role="group" aria-label="Dark or light mode">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="light" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="colorMode" id="light" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="light">Light</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="dark" autocomplete="off">
+                    <input type="radio" class="btn-check" name="colorMode" id="dark" autocomplete="off">
                     <label class="btn btn-outline-primary" for="dark">Dark</label>
                 </div>
             </div>
@@ -53,10 +53,10 @@
             <div class="col-8 col-md-6 col-lg-2">
                 <div class="btn-group d-flex" role="group" aria-label="Language">
 
-                    <input type="radio" class="btn-check" name="btnradio3" id="english" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="language" id="english" onclick="setCookie('lang', 'english', 365)" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="english">English</label>
 
-                    <input type="radio" class="btn-check" name="btnradio3" id="svenska" autocomplete="off">
+                    <input type="radio" class="btn-check" name="language" id="svenska" onclick="setCookie('lang', 'svenska', 365)" autocomplete="off">
                     <label class="btn btn-outline-primary" for="svenska">Svenska</label>
                 </div>
             </div>
@@ -69,7 +69,32 @@
 </div>
 
 
+<script>
 
+    function setCookie(name, value, days) {
+         let d = new Date();
+         d.setTime(d.getTime() + (days*24*60*60*1000));
+         document.cookie = name + "=" + value + ";expires:" + d.toUTCString();
+    }
+
+    function getCookie(name) {
+        let decodedC = decodeURIComponent(document.cookie);
+        let arr = decodedC.split(";");
+        for(let i = 0; i < arr.length; i++) {
+            let c = arr[i];
+            while(c.charAt(0) === " ") {
+                c = c.substring(1);
+            }
+            if(c.indexOf(name) === 0) {
+                return c.substring(name.length);
+            }
+        }
+        return "";
+    }
+
+
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
