@@ -3,6 +3,7 @@ package com.kashyyyk.chewbacca.map.lantmateriet;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
