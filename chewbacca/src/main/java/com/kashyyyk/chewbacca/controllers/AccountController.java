@@ -8,7 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AccountController {
 
-    @GetMapping("Account")
-        public ModelAndView getIndex(Model model){ return new ModelAndView("html_pages/Account.html", model.asMap());
-        }
+    @GetMapping("account")
+    public ModelAndView getIndex(Model model) {
+        return new ModelAndView("html_pages/Account.html", model.asMap());
+    }
 }

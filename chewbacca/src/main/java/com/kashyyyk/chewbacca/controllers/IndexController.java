@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 
-    @GetMapping("index")
+    @GetMapping("")
     public ModelAndView getIndex(Model model){
         return new ModelAndView("html_pages/index.html", model.asMap());
     }
