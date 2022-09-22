@@ -10,6 +10,7 @@
         "english_button": "Inglés",
         "swedish_button": "Sueco",
         "spanish_button": "Español",
-        "reset_button": "Restablecer configuración"
+        "reset_button": "Restablecer configuración",
+        "back_button": "Volver al menú principal"
     }
 }
