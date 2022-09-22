@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CurrentRouteController {
 
-    @GetMapping("CurrentRoute")
+    @GetMapping("current-route")
     public ModelAndView getIndex(Model model) {
         return new ModelAndView("html_pages/CurrentRoute.html", model.asMap());
     }
