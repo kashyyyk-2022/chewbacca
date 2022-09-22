@@ -8,21 +8,53 @@ import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class LocaleResources {    
+/**
+ * Locale resources
+ */
+public class LocaleResources {
+    /**
+     * Name of the English locale
+     */
     public static final String ENGLISH = "english";
+
+    /**
+     * Name of the Swedish locale
+     */
     public static final String SWEDISH = "swedish";
+
+    /**
+     * Name of the Spanish locale
+     */
     public static final String SPANISH = "spanish";
 
+    /**
+     * Array of supported locales
+     */
     public static final String[] SUPPORTED_LOCALES = {ENGLISH, SWEDISH, SPANISH};
 
+    /**
+     * The English locale
+     */
     private Locales english;
 
+    /**
+     * The Swedish locale
+     */
     private Locales swedish;
 
+    /**
+     * The Spanish locale
+     */
     private Locales spanish;
 
+    /**
+     * The singleton instance
+     */
     private static LocaleResources instance;
 
+    /**
+     * Load the locales from the static resources
+     */
     public void loadFromResources() throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
@@ -42,6 +74,11 @@ public class LocaleResources {
         spanish = mapper.readValue(inputStream, Locales.class);
     }
 
+    /**
+     * Get the singleton instance
+     * 
+     * @return The singleton instance
+     */
     public static LocaleResources getInstance() throws IOException
     {
         if (instance == null)
@@ -53,6 +90,12 @@ public class LocaleResources {
         return instance;
     }
 
+    /**
+     * Get the locales for a specific language
+     * 
+     * @param language  The language to get the locales for
+     * @return          The locales for the language
+     */
     public static Locales getLocales(String language) throws IOException
     {
         getInstance();
