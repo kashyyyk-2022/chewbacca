@@ -83,8 +83,14 @@
         var cookie = getCookie('unit', 'metric');
         if (cookie === 'imperial') {
             document.getElementById('imperial').checked = true;
-        } else if (cookie == 'metric') {
+        } else if (cookie === 'metric') {
             document.getElementById('metric').checked = true;
+        }
+        cookie = getCookie('lang', 'english');
+        if (cookie === 'english') {
+            document.getElementById('english').checked = true;
+        } else if (cookie === 'swedish') {
+            document.getElementById('swedish').checked = true;
         }
     }
 </script>
