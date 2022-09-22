@@ -23,12 +23,6 @@ public class IndexController {
         model.addAttribute("lang", lang);
         model.addAttribute("darkMode", darkMode);
 
-        try {
-            LocaleResources.getLocales(lang).populateModel(model);
-        } catch (IOException e) {
-            return new ModelAndView("html_pages/error.html", model.asMap());
-        }
-
         return new ModelAndView("html_pages/index.html", model.asMap());
     }
 }
