@@ -76,25 +76,18 @@
         </div>
 
     </div>
-    <script>
-        function toggleDarkMode(){
-            let darkMode=getCookie('darkMode');
-            if(darkMode=="true"){
-                document.body.style.backgroundColor = "black";
-            } else{
-                document.body.style.backgroundColor = "white";
-            }
-        }
-    </script>
+
+</div>
+
 
 </div>
 
 <script>
     function onload() {
-        let cookie = getCookie('unit', 'metric');
+        var cookie = getCookie('unit', 'metric');
         if (cookie === 'imperial') {
             document.getElementById('imperial').checked = true;
-        } else if (cookie === 'metric') {
+        } else if (cookie == 'metric') {
             document.getElementById('metric').checked = true;
         }
         cookie = getCookie('lang', 'english');
@@ -102,6 +95,21 @@
             document.getElementById('english').checked = true;
         } else if (cookie === 'swedish') {
             document.getElementById('swedish').checked = true;
+        }
+        cookie = getCookie('darkMode','false');
+        if (cookie === 'true') {
+            document.getElementById('dark').checked = true;
+        } else if (cookie === 'false') {
+            document.getElementById('light').checked = true;
+        }
+    }
+
+    function toggleDarkMode() {
+        let darkMode = getCookie('darkMode');
+        if (darkMode == "true") {
+            document.body.style.backgroundColor = "black";
+        } else {
+            document.body.style.backgroundColor = "white";
         }
     }
 </script>
