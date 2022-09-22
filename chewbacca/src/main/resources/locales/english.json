@@ -11,6 +11,7 @@
         "swedish_button": "Swedish",
         "spanish_button": "Spanish",
         "reset_button": "Reset to default settings",
-        "back_button": "Back to main menu"
+        "back_button": "Back to main menu",
+        "new_route_button": "New route"
     }
 }

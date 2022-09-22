@@ -17,7 +17,9 @@
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
-                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/newroute" role="button" onclick="toggleActiveRoute()">New route</a>
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/newroute" id="new-route-button" onclick="toggleActiveRoute()">
+                        <label for="new-route-button" th:text="${new_route_button}"></label>
+                    </a>
                 </div>
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>

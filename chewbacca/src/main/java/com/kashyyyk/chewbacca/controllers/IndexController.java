@@ -16,12 +16,18 @@ public class IndexController {
     public ModelAndView getIndex(
             Model model,
             @CookieValue(value = "unit", defaultValue = "metric") String unit,
-            @CookieValue(value = "lang", defaultValue = "en") String lang,
+            @CookieValue(value = "lang", defaultValue = "english") String lang,
             @CookieValue(value = "darkMode", defaultValue = "false") String darkMode
     ){
         model.addAttribute("unit", unit);
         model.addAttribute("lang", lang);
         model.addAttribute("darkMode", darkMode);
+
+        try {
+            LocaleResources.getLocales(lang).populateModel(model);
+        } catch (IOException e) {
+            return new ModelAndView("html_pages/error.html", model.asMap());
+        }
 
         return new ModelAndView("html_pages/index.html", model.asMap());
     }
