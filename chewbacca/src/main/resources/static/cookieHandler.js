@@ -4,7 +4,7 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + value + ";expires:" + d.toUTCString();
 }
 
-function getCookie(name) {
+function getCookie(name, defaultValue = "") {
     let decodedC = decodeURIComponent(document.cookie);
     let arr = decodedC.split(";");
     for(let i = 0; i < arr.length; i++) {
@@ -13,8 +13,8 @@ function getCookie(name) {
             c = c.substring(1);
         }
         if(c.indexOf(name) === 0) {
-            return c.substring(name.length);
+            return c.substring(name.length + 1);
         }
     }
-    return "";
+    return defaultValue;
 }
