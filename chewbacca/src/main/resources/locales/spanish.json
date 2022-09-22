@@ -1,0 +1,14 @@
+{
+    "language": "es",
+    "phrases": {
+        "language_name": "Spanish",
+        "settings_title": "Configuración",
+        "light_theme_button": "Tema claro",
+        "dark_theme_button": "Tema oscuro",
+        "metric_button": "Métrico",
+        "imperial_button": "Imperial",
+        "english_button": "Inglés",
+        "swedish_button": "Sueco",
+        "spanish_button": "Español"
+    }
+}
