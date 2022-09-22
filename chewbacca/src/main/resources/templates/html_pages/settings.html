@@ -19,10 +19,10 @@
             <div class="col-8 col-md-6 col-lg-2">
                 <div class="btn-group d-flex" role="group" aria-label="Dark or light mode">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="light" autocomplete="off">
+                    <input type="radio" class="btn-check" name="btnradio" id="light" onclick="setCookie('darkMode','false',365);toggleDarkMode()" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="light">Light</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="dark" autocomplete="off">
+                    <input type="radio" class="btn-check" name="btnradio" id="dark" onclick="setCookie('darkMode','true',365);toggleDarkMode()" autocomplete="off">
                     <label class="btn btn-outline-primary" for="dark">Dark</label>
                 </div>
             </div>
@@ -56,8 +56,8 @@
                     <input type="radio" class="btn-check" name="btnradio3" id="english" onclick="setCookie('lang', 'english', 365)" autocomplete="off">
                     <label class="btn btn-outline-primary" for="english">English</label>
 
-                    <input type="radio" class="btn-check" name="btnradio3" id="svenska" onclick="setCookie('lang', 'swedish', 365)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="svenska">Svenska</label>
+                    <input type="radio" class="btn-check" name="btnradio3" id="swedish" onclick="setCookie('lang', 'swedish', 365)" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="swedish">Svenska</label>
                 </div>
             </div>
             <div class="col-2 col-md-3 col-lg-5"> <!-- en tom col-->
@@ -68,6 +68,9 @@
 
 </div>
 
+
+</div>
+
 <script>
     function onload() {
         var cookie = getCookie('unit', 'metric');
@@ -75,6 +78,27 @@
             document.getElementById('imperial').checked = true;
         } else if (cookie == 'metric') {
             document.getElementById('metric').checked = true;
+        }
+        cookie = getCookie('lang', 'english');
+        if (cookie === 'english') {
+            document.getElementById('english').checked = true;
+        } else if (cookie === 'swedish') {
+            document.getElementById('swedish').checked = true;
+        }
+        cookie = getCookie('darkMode','false');
+        if (cookie === 'true') {
+            document.getElementById('dark').checked = true;
+        } else if (cookie === 'false') {
+            document.getElementById('light').checked = true;
+        }
+    }
+
+    function toggleDarkMode() {
+        let darkMode = getCookie('darkMode');
+        if (darkMode == "true") {
+            document.body.style.backgroundColor = "black";
+        } else {
+            document.body.style.backgroundColor = "white";
         }
     }
 </script>
