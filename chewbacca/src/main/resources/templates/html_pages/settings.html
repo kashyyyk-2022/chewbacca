@@ -74,7 +74,8 @@
                 <button class="btn btn-danger w-100" type="reset" onclick="setCookie('lang', 'english', 365);
                 setCookie('darkMode', 'false', 365);
                 setCookie('unit', 'metric', 365);
-                reloadPage();" autocomplete="off">Reset to default settings
+                reloadPage();" id="reset-button" autocomplete="off">
+                    <label for="reset-button" th:text="${reset_button}"></label>
                 </button>
 
 

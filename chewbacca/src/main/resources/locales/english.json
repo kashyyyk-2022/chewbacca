@@ -9,6 +9,7 @@
         "imperial_button": "Imperial",
         "english_button": "English",
         "swedish_button": "Swedish",
-        "spanish_button": "Spanish"
+        "spanish_button": "Spanish",
+        "reset_button": "Reset to default settings"
     }
 }
