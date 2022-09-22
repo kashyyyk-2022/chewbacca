@@ -11,6 +11,7 @@
         "swedish_button": "Svenska",
         "spanish_button": "Spanska",
         "reset_button": "Återställ inställningar",
-        "back_button": "Tillbaka till huvudmeny"
+        "back_button": "Tillbaka till huvudmeny",
+        "new_route_button": "Ny rutt"
     }
 }
