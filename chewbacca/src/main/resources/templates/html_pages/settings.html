@@ -80,7 +80,7 @@
 
 <script>
     function onload() {
-        var cookie = getCookie('unit', 'metric');
+        let cookie = getCookie('unit', 'metric');
         if (cookie === 'imperial') {
             document.getElementById('imperial').checked = true;
         } else if (cookie === 'metric') {
