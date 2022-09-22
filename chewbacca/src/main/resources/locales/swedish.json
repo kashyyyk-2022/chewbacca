@@ -1,0 +1,14 @@
+{
+    "language": "se",
+    "phrases": {
+        "language_name": "Swedish",
+        "settings_title": "Inställningar",
+        "light_theme_button": "Ljust",
+        "dark_theme_button": "Mörkt",
+        "metric_button": "Metric",
+        "imperial_button": "Imperial",
+        "english_button": "Engelska",
+        "swedish_button": "Svenska",
+        "spanish_button": "Spanska"
+    }
+}

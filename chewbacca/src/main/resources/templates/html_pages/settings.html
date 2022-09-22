@@ -20,10 +20,10 @@
                 <div class="btn-group d-flex" role="group" aria-label="Dark or light mode">
 
                     <input type="radio" class="btn-check" name="btnradio" id="light" onclick="setCookie('darkMode','false',365);toggleDarkMode()" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="light">Light</label>
+                    <label class="btn btn-outline-primary" for="light" th:text="${light_theme_button}">Light</label>
 
                     <input type="radio" class="btn-check" name="btnradio" id="dark" onclick="setCookie('darkMode','true',365);toggleDarkMode()" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="dark">Dark</label>
+                    <label class="btn btn-outline-primary" for="dark" th:text="${dark_theme_button}">Dark</label>
                 </div>
             </div>
             <div class="col-2 col-md-3 col-lg-5"> <!-- en tom col-->
@@ -37,10 +37,10 @@
                 <div class="btn-group d-flex" role="group" aria-label="Units">
 
                     <input type="radio" class="btn-check" name="units" id="metric" onclick="setCookie('unit', 'metric', 365)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="metric">Metric</label>
+                    <label class="btn btn-outline-primary" for="metric" th:text="${metric_button}">Metric</label>
 
                     <input type="radio" class="btn-check" name="units" id="imperial" onclick="setCookie('unit', 'imperial', 365)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="imperial">Imperial</label>
+                    <label class="btn btn-outline-primary" for="imperial" th:text="${imperial_button}">Imperial</label>
                 </div>
             </div>
             <div class="col-2 col-md-3 col-lg-5"> <!-- en tom col-->
@@ -53,11 +53,11 @@
             <div class="col-8 col-md-6 col-lg-2">
                 <div class="btn-group d-flex" role="group" aria-label="Language">
 
-                    <input type="radio" class="btn-check" name="btnradio3" id="english" onclick="setCookie('lang', 'english', 365)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="english">English</label>
+                    <input type="radio" class="btn-check" name="btnradio3" id="english" onclick="setCookie('lang', 'english', 365);reloadPage();" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="english" th:text="${english_button}">English</label>
 
-                    <input type="radio" class="btn-check" name="btnradio3" id="swedish" onclick="setCookie('lang', 'swedish', 365)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="swedish">Svenska</label>
+                    <input type="radio" class="btn-check" name="btnradio3" id="swedish" onclick="setCookie('lang', 'swedish', 365);reloadPage();" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="swedish" th:text="${swedish_button}">Svenska</label>
                 </div>
             </div>
             <div class="col-2 col-md-3 col-lg-5"> <!-- en tom col-->
@@ -84,6 +84,8 @@
             document.getElementById('english').checked = true;
         } else if (cookie === 'swedish') {
             document.getElementById('swedish').checked = true;
+        } else if (cookie === 'spanish') {
+            document.getElementById('spanish').checked = true;
         }
         cookie = getCookie('darkMode','false');
         if (cookie === 'true') {
@@ -100,6 +102,10 @@
         } else {
             document.body.style.backgroundColor = "white";
         }
+    }
+
+    function reloadPage() {
+        location.reload();
     }
 </script>
 
