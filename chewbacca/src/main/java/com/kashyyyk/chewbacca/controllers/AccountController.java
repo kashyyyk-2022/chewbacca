@@ -12,4 +12,5 @@ public class AccountController {
     public ModelAndView getIndex(Model model) {
         return new ModelAndView("html_pages/Account.html", model.asMap());
     }
+
 }
