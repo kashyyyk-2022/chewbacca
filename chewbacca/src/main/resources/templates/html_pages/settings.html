@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Settings</title>
+</head>
+<body onload="onload()" class="d-flex flex-column min-vh-100">
+<div class="container">
+    <div class="d-grid gap-3">
+        <div class="row p-4">
+            <h1 class="text-center" th:text="${settings_title}"></h1>
+        </div>
+
+        <div class="row p-2 row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="btn-group d-flex" role="group" aria-label="Dark or light mode">
+
+                    <input type="radio" class="btn-check" name="btnradio" id="light" onclick="setCookie('darkMode','false',365);toggleDarkMode()" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="light" th:text="${light_theme_button}">Light</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="dark" onclick="setCookie('darkMode','true',365);toggleDarkMode()" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="dark" th:text="${dark_theme_button}">Dark</label>
+                </div>
+            </div>
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
+        </div>
+
+        <div class="row p-2">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="btn-group d-flex" role="group" aria-label="Units">
+
+                    <input type="radio" class="btn-check" name="units" id="metric" onclick="setCookie('unit', 'metric', 365)" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="metric" th:text="${metric_button}">Metric</label>
+
+                    <input type="radio" class="btn-check" name="units" id="imperial" onclick="setCookie('unit', 'imperial', 365)" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="imperial" th:text="${imperial_button}">Imperial</label>
+                </div>
+            </div>
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
+        </div>
+
+        <div class="row p-2 row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="btn-group d-flex" role="group" aria-label="Language">
+
+                    <input type="radio" class="btn-check" name="btnradio3" id="english" onclick="setCookie('lang', 'english', 365);reloadPage();" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="english" th:text="${english_button}">English</label>
+
+                    <input type="radio" class="btn-check" name="btnradio3" id="swedish" onclick="setCookie('lang', 'swedish', 365);reloadPage();" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="swedish" th:text="${swedish_button}">Svenska</label>
+
+                    <input type="radio" class="btn-check" name="btnradio3" id="spanish" onclick="setCookie('lang', 'spanish', 365);reloadPage();" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="spanish" th:text="${spanish_button}">Spanska</label>
+                </div>
+            </div>
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
+        </div>
+
+        <div class="row p-2 row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <button class="btn btn-danger w-100" type="reset" onclick="setCookie('lang', 'english', 365);
+                setCookie('darkMode', 'false', 365);
+                setCookie('unit', 'metric', 365);
+                reloadPage();" id="reset-button" autocomplete="off">
+                    <label for="reset-button" th:text="${reset_button}"></label>
+                </button>
+
+
+            </div>
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+<footer class="container w-100 mt-auto pb-2">
+    <div class="row row-md-3 row-lg-4">
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+            <a class="btn btn-secondary w-100" type="back" id="back-button" href="/">
+                <label for="back-button" th:text="${back_button}"></label>
+            </a>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+        </div>
+    </div>
+</footer>
+
+<script>
+    function onload() {
+        var cookie = getCookie('unit', 'metric');
+        if (cookie === 'imperial') {
+            document.getElementById('imperial').checked = true;
+        } else if (cookie == 'metric') {
+            document.getElementById('metric').checked = true;
+        }
+        cookie = getCookie('lang', 'english');
+        if (cookie === 'english') {
+            document.getElementById('english').checked = true;
+        } else if (cookie === 'swedish') {
+            document.getElementById('swedish').checked = true;
+        } else if (cookie === 'spanish') {
+            document.getElementById('spanish').checked = true;
+        }
+        cookie = getCookie('darkMode','false');
+        if (cookie === 'true') {
+            document.getElementById('dark').checked = true;
+        } else if (cookie === 'false') {
+            document.getElementById('light').checked = true;
+        }
+        toggleDarkMode();
+    }
+
+    function toggleDarkMode() {
+        let darkMode = getCookie('darkMode');
+        if (darkMode == "true") {
+            document.body.style.backgroundColor = "black";
+        } else {
+            document.body.style.backgroundColor = "white";
+        }
+    }
+
+    function reloadPage() {
+        location.reload();
+    }
+</script>
+
+<script type = "text/javascript" src="/cookieHandler.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</body>
+</html>

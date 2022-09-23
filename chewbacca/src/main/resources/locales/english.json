@@ -1,0 +1,17 @@
+{
+    "language": "en",
+    "phrases": {
+        "language_name": "English",
+        "settings_title": "Settings",
+        "light_theme_button": "Light",
+        "dark_theme_button": "Dark",
+        "metric_button": "Metric",
+        "imperial_button": "Imperial",
+        "english_button": "English",
+        "swedish_button": "Swedish",
+        "spanish_button": "Spanish",
+        "reset_button": "Reset to default settings",
+        "back_button": "Back to main menu",
+        "new_route_button": "New route"
+    }
+}
