@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>GraphHopper Form Sample</title>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function (event) {
+
+                // create the tile layer with correct attribution
+                var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+                var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+
+                // (1) change coordinates
+                var latlng = [57.69288261596026,11.981792449951172];
+                var map = L.map('map', {
+                    center: latlng,
+                    zoom: 15,
+                    layers: [osm]
+                });
+                
+                var marker = L.marker(latlng).addTo(map);
+            });
+
+        </script>
+    </head>
+    <body>
+        <div>
+            <form target="_blank" method="get" action="https://graphhopper.com/maps/">
+                <div>
+                    <div style="padding-top: 5px">
+                        From
+                    </div>
+                    <input id="startaddr" type="text" name="point" placeholder="Your Start Address">
+                </div>
+                <div>
+                    <div style="padding-top: 5px">
+                        To
+                    </div>
+                    <!-- (2) change address -->
+                    <input id="destinationaddr" type="text" value="Am Mainflecklein 10, Bayreuth, 95444" name="point">
+                </div>
+                <button class="btn-booking" type="submit">Find Route</button>
+            </form>
+
+            <div id="map" style="width: 600px; height: 400px">
+
+            </div>
+        </div>
+    </body>
+</html>
