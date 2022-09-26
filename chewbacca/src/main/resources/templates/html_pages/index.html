@@ -17,7 +17,7 @@
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
-                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/newroute" id="new-route-button">
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/newroute" id="new-route-button" role="button" onclick="toggleActiveRoute()">
                         <label for="new-route-button" th:text="${new_route_button}"></label>
                     </a>
                 </div>
@@ -28,7 +28,9 @@
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
-                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/settings" role="button" >Settings</a>
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/settings" id="settings-button" role="button" >
+                        <label for="settings-button" th:text="${settings_button}"></label>
+                    </a>
                 </div>
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
@@ -37,7 +39,9 @@
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
-                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/current-route" role="button">Current Route</a>
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/current-route" id="current-route-button" role="button">
+                        <label for="current-route-button" th:text="${current_route_button}"></label>
+                    </a>
                 </div>
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
@@ -47,7 +51,9 @@
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
-                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/account" role="button" >Account</a>
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/account" id="account-button" role="button" >
+                        <label for="account-button" th:text="${account_button}"></label>
+                    </a>
                 </div>
                 <div class="col-2 col-md-3 col-lg-4">
                 </div>

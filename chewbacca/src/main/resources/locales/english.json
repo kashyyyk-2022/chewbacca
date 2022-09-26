@@ -12,6 +12,9 @@
         "spanish_button": "Spanish",
         "reset_button": "Reset to default settings",
         "back_button": "Back to main menu",
-        "new_route_button": "New route"
+        "new_route_button": "New route",
+        "settings_button":  "Settings",
+        "current_route_button": "Current route",
+        "account_button": "Account"
     }
 }
