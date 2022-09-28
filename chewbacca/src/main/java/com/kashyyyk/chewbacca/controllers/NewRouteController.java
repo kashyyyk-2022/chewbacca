@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class NewRouteController {
-    
     @GetMapping("newroute")
     public ModelAndView getIndex(Model model) {
         return new ModelAndView("html_pages/newroute.html", model.asMap());
