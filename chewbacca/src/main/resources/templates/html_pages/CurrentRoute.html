@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- This style is needed to have a red marker -->
+    <style>
+        img.huechange { filter: hue-rotate(120deg); }
+    </style>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,13 +99,19 @@
     </script>
 
     <script>
-        var map = L.map('map').setView([57.706, 11.937], 13);
+        latlng = [57.68939495267853,11.974072522154591]; //Change later to my position.
+        //var map = L.map('map').setView([57.706, 11.937], 13);
+        var map = L.map('map', {
+            center: latlng,
+            zoom: 15,
+        });
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: 'Routemeister'
         }).addTo(map);
     </script>
 
+    <script type = "text/javascript" src="/generateRoute.js"></script>
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
