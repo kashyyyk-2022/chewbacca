@@ -70,13 +70,21 @@
         <!-- Script to be executed when page is loaded-->
         function onload(){
             toggleDarkMode();
-            dataUpdate(); //This should be added to a time triggered function as well
+            dataUpdate(1,13.37,1,1); //This should be added to a time triggered function as well
         }
 
-        function dataUpdate(){
-            document.getElementById("heightInfoData").innerHTML= "1 "+"m";
-            document.getElementById("distanceInfoData").innerHTML= "1337 "+"m" ;
-            document.getElementById("timeInfoData").innerHTML= "37 "+"min";
+        //This script calls the data update function every second. The data input need to be updated with actual data
+        window.setInterval(dataUpdate(1,13.37,1,37), 1000);
+
+        function dataUpdate(height,length,tHour,tMin){
+            let cookie = getCookie("unit","metric");
+            let hUnit = cookie=="metric" ? " m":" feet";
+            let lUnit =  cookie=="metric" ? " km":" miles";
+
+            document.getElementById("heightInfoData").innerHTML= height.toString()+hUnit;
+            document.getElementById("distanceInfoData").innerHTML= length.toString()+lUnit;
+            document.getElementById("timeInfoData").innerHTML= tHour.toString()+":"+tMin.toString()+ " h:m";
+
         }
     </script>
 
