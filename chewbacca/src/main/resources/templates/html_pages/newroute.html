@@ -21,12 +21,70 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <h1 class="text-center">Time</h1>
+                    <h4 class="text-center">Time</h4>
+                </div>
+
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+            </div>
+
+            <div class="row p-2">
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <!--TODO save hours in cookie(?)-->
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <label for="customLength" class="form-label">Time in hours</label>
+                    <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="hours.value = this.value">
+                    <output id="hours">0</output>
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
             </div>
+
+            <div class="row p-2">
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <!--TODO save minutes in cookie(?)-->
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <label for="customLength" class="form-label">Time in minutes</label>
+                    <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="minutes.value = this.value">
+                    <output id="minutes">0</output>
+                </div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="row w-100 p-2">
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"><!-- en tom col-->
+                    <div class="w-100"></div>
+                </div>
+
+
+                <div class="col-4 col-md-3 col-lg-2">
+                    <div class="w-100 btn btn-info btn-md">Hej</div>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <div class="w-100 btn btn-info btn-md">Hej</div>
+                </div>
+
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                    <div class="w-100"></div>
+                </div>
+            </div>
+
+
+
 
 
             <div class="row p-2">
@@ -35,8 +93,8 @@
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <label for="customLength" class="form-label">Length in kilometers</label>
-                    <input type="range" class="form-range" min="0" max="20" step="0.5" id="customLength" name="length" oninput="num.value = this.value">
-                    <output id="num">10</output>
+                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customLength" name="length" oninput="num.value = this.value">
+                    <output id="num">0</output>
                     <!--TODO save length in cookie(?)-->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableLength">
@@ -92,6 +150,20 @@
         </div>
 
     </div>
+
+    <footer class="container w-100 mt-auto pb-2">
+        <div class="row row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <a class="btn btn-secondary w-100" type="back" id="back-button" href="/">
+                    <label for="back-button" th:text="${back_button}"></label>
+                </a>
+            </div>
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
+        </div>
+    </footer>
 
 
 
