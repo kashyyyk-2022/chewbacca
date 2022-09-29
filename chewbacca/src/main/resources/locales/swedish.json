@@ -15,6 +15,11 @@
         "new_route_button": "Ny rutt",
         "settings_button": "Inställningar",
         "current_route_button": "Påbörjad rutt",
-        "account_button": "Konto"
+        "account_button": "Konto",
+        "current_route_title": "Aktiv rutt",
+        "route_info": "Ruttinformation",
+        "height_info": "Höjdskillnad",
+        "distance_info": "Kvarvarande sträcka",
+        "time_info": "Ungefärlig tid kvar"
     }
 }
