@@ -26,26 +26,30 @@
             <div class="row">
                 <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
                 <div class="col-10 col-sm-6 col-md-6 col-lg-6">
-                    <div class="card text-center">
-                        <div class="card-header" th:text="${route_info}">
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <p th:text="${height_info}"></p>
-                                    <p id="heightInfoData"></p>
-                                </div>
-                                <div class="col">
-                                    <p th:text="${distance_info}"></p>
-                                    <p id="distanceInfoData"></p>
-                                </div>
-                                <div class="col">
-                                    <p th:text="${time_info}"></p>
-                                    <p id="timeInfoData"></p>
+                        <div class="card text-center">
+                            <div class="card-header" id="headingCard">
+                                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="true" aria-controls="collapseCard" th:text="${route_info}">
+                                </button>
+                            </div>
+                            <div class="collapse show" id="collapseCard">
+                                <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p th:text="${height_info}"></p>
+                                                <p id="heightInfoData"></p>
+                                            </div>
+                                            <div class="col">
+                                                <p th:text="${distance_info}"></p>
+                                                <p id="distanceInfoData"></p>
+                                            </div>
+                                            <div class="col">
+                                                <p th:text="${time_info}"></p>
+                                                <p id="timeInfoData"></p>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
             </div>
@@ -89,10 +93,10 @@
     </script>
 
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        var map = L.map('map').setView([57.706, 11.937], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '© OpenStreetMap'
+            attribution: 'Routemeister'
         }).addTo(map);
     </script>
 
