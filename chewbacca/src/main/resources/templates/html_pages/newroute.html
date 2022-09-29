@@ -7,6 +7,30 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <title>New Route</title>
 
+        <style>
+  .water
+  {
+    background-image: url('https://bhavyeducation.com/wp-content/uploads/2022/03/blog.jpg');
+
+    background-size: 170px 55px;
+    background-repeat: no-repeat;
+  }
+
+  .city
+  {
+    background-image: url('https://www.citybreak.com/sites/cb_citybreak/files/styles/slide_large/public/ben-o-bro-wpU4veNGnHg-unsplash.jpg?h=41f55a5b&itok=xr1okfZF');
+
+    background-size: 170px 55px;
+    background-repeat: no-repeat;
+  }
+
+  .nature
+  {
+    background-image: url('https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0%2C176%2C3008%2C1654&wid=4000&hei=2200&scl=0.752');
+    background-size: 170px 55px;
+    background-repeat: no-repeat;
+   }
+        </style>
     </head>
 
     <body onload="onload()">
@@ -129,13 +153,13 @@
                     <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Language">
 
                         <input type="radio" class="btn-check" name="btnradio" id="nature" >
-                        <label class="btn btn-outline-primary" for="nature">Nature</label>
+                        <label class="btn btn-outline-primary nature" for="nature">Nature</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="city">
-                        <label class="btn btn-outline-primary" for="city">City</label>
+                        <label class="btn btn-outline-primary city" for="city">City</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="water">
-                        <label class="btn btn-outline-primary" for="water">Water</label>
+                        <label class="btn btn-outline-primary water" for="water">Water</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableTerrain">
