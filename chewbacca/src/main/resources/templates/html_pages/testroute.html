@@ -31,11 +31,14 @@
                 console.log("Your browser does not support this geolocation feature:(")
             }
             else {
+                /*
                     setInterval(() => {
                         navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
                     }, 1000);
-                    // should update location each time it changes
-                    //navigator.geolocation.watchPosition(getPosition)
+
+                 */
+                // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
+                    navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
             }
 
             function getPosition(position) {
@@ -43,18 +46,17 @@
                 var long = position.coords.longitude;
                 var accuracy = position.coords.accuracy;
 
-                if(marker) {
-                    map.removeLayer(marker);
-                }
-                if (circle) {
-                    map.removeLayer(circle);
-                }
-                circle = L.circle([lat, long], {radius:accuracy});
-                marker = L.marker([lat, long]);
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    if (circle) {
+                        map.removeLayer(circle);
+                    }
+                    circle = L.circle([lat, long], {radius: accuracy});
+                    marker = L.marker([lat, long]);
 
-                currentpos = L.featureGroup([marker, circle]).addTo(map);
-
-                console.log(lat, long, accuracy)
+                    currentpos = L.featureGroup([marker, circle]).addTo(map);
+                    console.log(lat, long, accuracy)
             }
 
             function displayError(error) {
