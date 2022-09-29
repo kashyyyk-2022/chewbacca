@@ -33,15 +33,15 @@
                             <div class="row">
                                 <div class="col">
                                     <p th:text="${height_info}"></p>
-                                    <p>DATA</p>
+                                    <p id="heightInfoData"></p>
                                 </div>
                                 <div class="col">
                                     <p th:text="${distance_info}"></p>
-                                    <p>DATA</p>
+                                    <p id="distanceInfoData"></p>
                                 </div>
                                 <div class="col">
                                     <p th:text="${time_info}"></p>
-                                    <p>DATA</p>
+                                    <p id="timeInfoData"></p>
                                 </div>
                             </div>
                         </div>
@@ -70,6 +70,13 @@
         <!-- Script to be executed when page is loaded-->
         function onload(){
             toggleDarkMode();
+            dataUpdate(); //This should be added to a time triggered function as well
+        }
+
+        function dataUpdate(){
+            document.getElementById("heightInfoData").innerHTML= "1 "+"m";
+            document.getElementById("distanceInfoData").innerHTML= "1337 "+"m" ;
+            document.getElementById("timeInfoData").innerHTML= "37 "+"min";
         }
     </script>
 
