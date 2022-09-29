@@ -72,13 +72,16 @@
 
     <script>
         <!-- Script to be executed when page is loaded-->
+        let x;
         function onload(){
             toggleDarkMode();
-            dataUpdate(1,13.37,1,1); //This should be added to a time triggered function as well
+            dataUpdate(1,13.37,1,37)
+            x=0;
         }
 
-        //This script calls the data update function every second. The data input need to be updated with actual data
-        window.setInterval(dataUpdate(1,13.37,1,37), 1000);
+        //todo: Replace h,l,tH and tM with actual data points
+        let h=1,l=13.37,tH=1,tM=1; //todo: remove this row when real values are in place
+        setInterval(dataUpdate, 1000,h,l,tH,tM); //This function-call calls the data update function every second.
 
         function dataUpdate(height,length,tHour,tMin){
             let cookie = getCookie("unit","metric");
@@ -88,7 +91,6 @@
             document.getElementById("heightInfoData").innerHTML= height.toString()+hUnit;
             document.getElementById("distanceInfoData").innerHTML= length.toString()+lUnit;
             document.getElementById("timeInfoData").innerHTML= tHour.toString()+":"+tMin.toString()+ " h:m";
-
         }
     </script>
 
