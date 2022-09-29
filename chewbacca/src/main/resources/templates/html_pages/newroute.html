@@ -25,8 +25,11 @@
             console.log("Your browser does not support this geolocation feature:(")
         }
         else {
+            setInterval(() => {
+                navigator.geolocation.getCurrentPosition(getPosition)
+            }, 1000);
             // should update location each time it changes
-            navigator.geolocation.watchPosition(getPosition)
+            //navigator.geolocation.watchPosition(getPosition)
         }
 
         function getPosition(position) {

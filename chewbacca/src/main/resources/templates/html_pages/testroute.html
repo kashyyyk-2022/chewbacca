@@ -19,8 +19,6 @@
             var circle;
 
 
-
-
             var latlng = [57.691430711424545,11.97191119194031];
             var map = L.map('map', {
                 center: latlng,
@@ -33,8 +31,11 @@
                 console.log("Your browser does not support this geolocation feature:(")
             }
             else {
-                // should update location each time it changes
-                navigator.geolocation.watchPosition(getPosition)
+                    setInterval(() => {
+                        navigator.geolocation.getCurrentPosition(getPosition)
+                    }, 1000);
+                    // should update location each time it changes
+                    //navigator.geolocation.watchPosition(getPosition)
             }
 
             function getPosition(position) {
@@ -49,7 +50,7 @@
                     map.removeLayer(circle);
                 }
                 circle = L.circle([lat, long], {radius:accuracy});
-                marker = L.marker([lat, long], {draggable:true}); //NOT THE CURRENT POSITION, ONLY A MOCK POS.
+                marker = L.marker([lat, long]);
 
                 currentpos = L.featureGroup([marker, circle]).addTo(map);
 
