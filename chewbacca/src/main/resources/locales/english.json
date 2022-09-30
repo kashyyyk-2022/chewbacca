@@ -15,6 +15,11 @@
         "new_route_button": "New route",
         "settings_button":  "Settings",
         "current_route_button": "Current route",
-        "account_button": "Account"
+        "account_button": "Account",
+        "current_route_title": "Current Route",
+        "route_info": "Route Info",
+        "height_info": "Elevation change",
+        "distance_info": "Remaining distance",
+        "time_info": "Approx. time left"
     }
 }

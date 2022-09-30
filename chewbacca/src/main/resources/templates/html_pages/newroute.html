@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+
         <title>New Route</title>
 
         <style>
@@ -34,7 +36,10 @@
     </head>
 
     <body onload="onload()">
+
+   <!-- Do we need this?
     <div class="container">
+
         <div class="d-grid gap-3">
             <div class="row p-4">
                 <h1 class="text-center">New route</h1>
@@ -256,10 +261,9 @@
             </div>
         </div>
     </footer>
-
-
+    
     <script>
-        <!-- Script to be executed when page is loaded-->
+        <!-- Script to be executed when page is loaded -->
         function onload(){
             let cookie = getCookie("hours", "0");
             document.getElementById("customHours").value = cookie;
@@ -319,7 +323,6 @@
         }
 
 
-
     </script>
 
 
@@ -328,6 +331,7 @@
     <!-- länk till js bibliotek -->
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>
+    <script type = "text/javascript" src="/locationHandler.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
 
