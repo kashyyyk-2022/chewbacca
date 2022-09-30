@@ -40,35 +40,42 @@
                 <h1 class="text-center">New route</h1>
             </div>
 
-            <div class="row p-2 row-md-3 row-lg-4">
+            <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <h4 class="text-center">Time</h4>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                    <label for="customLength" class="form-label">Time in hours</label>
                 </div>
 
+                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="disableTime">
+                        <label class="form-check-label">Disable</label>
+                    </div>
+                </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
             </div>
 
-            <div class="row p-2">
+            <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
                 <!--TODO save hours in cookie(?)-->
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customLength" class="form-label">Time in hours</label>
                     <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="hours.value = this.value">
-                    <output id="hours">0</output>
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
             </div>
 
-            <div class="row p-2">
+
+
+
+            <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
@@ -76,7 +83,6 @@
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <label for="customLength" class="form-label">Time in minutes</label>
                     <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="minutes.value = this.value">
-                    <output id="minutes">0</output>
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -84,45 +90,18 @@
             </div>
 
 
-
-
-
-
-            <div class="row w-100 p-2">
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"><!-- en tom col-->
-                    <div class="w-100"></div>
-                </div>
-
-
-                <div class="col-4 col-md-3 col-lg-2">
-                    <div class="w-100 btn btn-info btn-md">Hej</div>
-                </div>
-                <div class="col-4 col-md-3 col-lg-2">
-                    <div class="w-100 btn btn-info btn-md">Hej</div>
-                </div>
-
-
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                    <div class="w-100"></div>
-                </div>
-            </div>
-
-
-
-
-
-            <div class="row p-2">
+            <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
                     <label for="customLength" class="form-label">Length in kilometers</label>
-                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customLength" name="length" oninput="num.value = this.value">
-                    <output id="num">0</output>
-                    <!--TODO save length in cookie(?)-->
+                </div>
+
+                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableLength">
-                        <label class="form-check-label">Disable length</label>
+                        <label class="form-check-label">Disable</label>
                     </div>
                 </div>
 
@@ -132,14 +111,51 @@
 
 
 
-            <div class="row p-2 row-md-3 row-lg-4">
+            <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <h1 class="text-center">Elevation</h1>
+                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customLength" name="length" oninput="num.value = this.value">
+
+                </div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+            </div>
+
+
+            <div class="row p-0">
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <label for="customElevation" class="form-label">Elevations in meters</label>
+                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customElevation" name="elevation" oninput="elevation.value = this.value">
+
                 </div>
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+            </div>
+
+
+            <div class="container w-100 mt-auto pb-2">
+                <div class="row row-md-3 row-lg-4">
+                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                    </div>
+                    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                        <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
+                            Hours:
+                            <output id="hours">0</output>
+                            Minutes:
+                            <output id="minutes">0</output>
+                            Distance:
+                            <output id="num">0</output>
+                            Elevation:
+                            <output id="elevation">0</output>
+                        </div>
+                    </div>
+                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                    </div>
                 </div>
             </div>
 
