@@ -84,18 +84,16 @@
             x=0;
         }
 
-        //todo: Replace h,l,tH and tM with actual data points
-        let h=1,l=13.37,tH=1,tM=1; //todo: remove this row when real values are in place
-        setInterval(dataUpdate, 1000,h,l,tH,tM); //This function-call calls the data update function every second.
+        setInterval(dataUpdate, 1000); //This function-call calls the data update function every second.
 
-        function dataUpdate(height,length,tHour,tMin){
+        function dataUpdate(){
             let cookie = getCookie("unit","metric");
             let hUnit = cookie=="metric" ? " m":" feet";
             let lUnit =  cookie=="metric" ? " km":" miles";
 
-            document.getElementById("heightInfoData").innerHTML= height.toString()+hUnit;
-            document.getElementById("distanceInfoData").innerHTML= length.toString()+lUnit;
-            document.getElementById("timeInfoData").innerHTML= tHour.toString()+":"+tMin.toString()+ " h:m";
+            document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
+            document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
+            document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+":"+getCookie("minutes","1")+ " h:m";
         }
     </script>
 
