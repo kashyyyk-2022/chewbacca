@@ -65,7 +65,7 @@
 
                 <!--TODO save hours in cookie(?)-->
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="hours.value = this.value">
+                    <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="setHours(this.value)">
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -81,8 +81,8 @@
 
                 <!--TODO save minutes in cookie(?)-->
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customLength" class="form-label">Time in minutes</label>
-                    <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="minutes.value = this.value">
+                    <label for="customMin" class="form-label">Time in minutes</label>
+                    <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="setMinutes(this.value)">
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customLength" class="form-label">Length in kilometers</label>
+                    <label for="customDistance" class="form-label">Length in kilometers</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -116,8 +116,27 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customLength" name="length" oninput="num.value = this.value">
+                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customDistance" name="distance" oninput="setDistance(this.value)">
 
+                </div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+                </div>
+            </div>
+
+            <div class="row p-0">
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                    <label for="customDistance" class="form-label">Elevation in meters</label>
+                </div>
+
+                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="disableElevation">
+                        <label class="form-check-label">Disable</label>
+                    </div>
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -128,15 +147,9 @@
             <div class="row p-0">
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
-                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customElevation" class="form-label">Elevations in meters</label>
-                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customElevation" name="elevation" oninput="elevation.value = this.value">
-                </div>
-                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="disableElevation">
-                        <label class="form-check-label">Disable</label>
-                    </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <input type="range" class="form-range"  min="0" max="500" step="10" value="0" id="customElevation" name="elevation" oninput="setElevation(this.value)">
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -155,7 +168,7 @@
                             Minutes:
                             <output id="minutes">0</output>
                             Distance:
-                            <output id="num">0</output>
+                            <output id="distance">0</output>
                             Elevation:
                             <output id="elevation">0</output>
                         </div>
@@ -212,15 +225,57 @@
     </footer>
 
 
-
-
-    </div>
     <script>
         <!-- Script to be executed when page is loaded-->
         function onload(){
+            let cookie = getCookie("hours", "0");
+            document.getElementById("customHours").value = cookie;
+            document.getElementById("hours").value = cookie;
+
+            cookie = getCookie("minutes", "0");
+            document.getElementById("customMin").value = cookie;
+            document.getElementById("minutes").value = cookie;
+
+            cookie = getCookie("distance", "0");
+            document.getElementById("customDistance").value = cookie;
+            document.getElementById("distance").value = cookie;
+
+            cookie = getCookie("elevation", "0");
+            document.getElementById("customElevation").value = cookie;
+            document.getElementById("elevation").value = cookie;
+
+
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
         }
+
+        function setHours(hours){
+            setCookie("hours", hours, 9000);
+            document.getElementById("hours").value = hours;
+            document.getElementById("customHours").value = hours;
+        }
+
+        function setMinutes(minutes){
+            setCookie("minutes", minutes, 9000);
+            document.getElementById("minutes").value = minutes;
+            document.getElementById("customMin").value = minutes;
+        }
+
+        function setDistance(distance){
+            setCookie("distance", distance, 9000);
+            document.getElementById("distance").value = distance;
+            document.getElementById("customDistance").value = distance;
+        }
+
+        function setElevation(elevation){
+            setCookie("elevation", elevation, 9000);
+            document.getElementById("elevation").value = elevation;
+            document.getElementById("customElevation").value = elevation;
+        }
+
+
+
+
     </script>
 
 
