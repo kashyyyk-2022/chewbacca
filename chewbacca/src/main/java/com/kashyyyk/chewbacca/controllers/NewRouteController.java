@@ -19,7 +19,8 @@ public class NewRouteController {
                                  @CookieValue(value = "hours", defaultValue = "0") String hours,
                                  @CookieValue(value = "minutes", defaultValue = "0") String minutes,
                                  @CookieValue(value = "distance", defaultValue = "0") String distance,
-                                 @CookieValue(value = "elevation", defaultValue = "0") String elevation)
+                                 @CookieValue(value = "elevation", defaultValue = "0") String elevation,
+                                 @CookieValue(value = "terrain", defaultValue = "0") String terrain)
     {
 
         model.addAttribute("unit", unit);
@@ -29,6 +30,8 @@ public class NewRouteController {
         model.addAttribute("minutes", minutes);
         model.addAttribute("distance", distance);
         model.addAttribute("elevation", elevation);
+        model.addAttribute("terrain", terrain);
+
 
         try {
             LocaleResources.getLocales(lang).populateModel(model);

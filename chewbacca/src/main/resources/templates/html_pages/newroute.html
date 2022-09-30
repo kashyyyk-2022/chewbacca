@@ -185,15 +185,15 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Language">
+                    <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Terrain" id="Terrain">
 
-                        <input type="radio" class="btn-check" name="btnradio" id="city">
+                        <input type="radio" class="btn-check" name="btnradio" id="city" onClick="setCookie('terrain', 'city', 365)">
                         <label class="btn btn-outline-primary city" for="city">City</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="nature" >
+                        <input type="radio" class="btn-check" name="btnradio" id="nature" onClick="setCookie('terrain', 'nature', 365)">
                         <label class="btn btn-outline-primary nature" for="nature">Nature</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="water">
+                        <input type="radio" class="btn-check" name="btnradio" id="water" onClick="setCookie('terrain', 'water', 365)">
                         <label class="btn btn-outline-primary water" for="water">Water</label>
                     </div>
                     <div class="form-check">
@@ -244,6 +244,18 @@
             document.getElementById("customElevation").value = cookie;
             document.getElementById("elevation").value = cookie;
 
+            cookie = getCookie("terrain", "0");
+            document.getElementById("Terrain").value = cookie;
+            if (cookie === "city") {
+                document.getElementById("city").checked = true;
+            } else if (cookie === "nature") {
+                document.getElementById("nature").checked = true;
+            } else if (cookie === "water") {
+                document.getElementById("water").checked = true;
+            }
+
+
+
 
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
@@ -272,7 +284,6 @@
             document.getElementById("elevation").value = elevation;
             document.getElementById("customElevation").value = elevation;
         }
-
 
 
 
