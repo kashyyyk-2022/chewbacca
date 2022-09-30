@@ -14,92 +14,255 @@
             var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
             var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+            var currentpos;
+            var marker;
+            var circle;
 
-            // (1) change coordinates
-            var latlng = [57.69288261596026,11.981792449951172];
-            var latlng2 = [57.689400699681336,11.973784447764046];
+
+            var latlng = [57.691430711424545,11.97191119194031];
             var map = L.map('map', {
                 center: latlng,
                 zoom: 15,
                 layers: [osm]
             });
 
-            var someFeatures = [{
-                "type": "Feature",
-                "properties": {
-                    "name": "Chalmers",
-                    "show_on_map": true
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [57.689400699681336,11.973784447764046]
-                }
-            }, {
-                "type": "Feature",
-                "properties": {
-                    "name": "Marcus",
-                    "show_on_map": true
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [57.69162567801048,11.972754479502331]
-                }
-            }];
+            // getting current location
+            if(!navigator.geolocation) {
+                console.log("Your browser does not support this geolocation feature:(")
+            }
+            else {
+                /*
+                    setInterval(() => {
+                        navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
+                    }, 1000);
 
-            var test = L.geoJSON(someFeatures, {
-                filter: function(feature, layer) {
-                    return feature.properties.show_on_map;
-                }
-            }).addTo(map);
-
-            L.marker(latlng).addTo(map);
-            L.circle(latlng, {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 500
-            }).addTo(map);
-            L.marker(latlng2).addTo(map);
-
-            var popup = L.popup();
-
-            function onMapClick(e) {
-                popup
-                    .setLatLng(e.latlng)
-                    .setContent("You clicked the map at " + e.latlng.toString())
-                    .openOn(map);
+                 */
+                // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
+                    navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
             }
 
+            function getPosition(position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    if (circle) {
+                        map.removeLayer(circle);
+                    }
+                    circle = L.circle([lat, long], {radius: accuracy});
+                    marker = L.marker([lat, long]);
+
+                    currentpos = L.featureGroup([marker, circle]).addTo(map);
+                    console.log(lat, long, accuracy)
+            }
+
+            function displayError(error) {
+                var errors = {
+                    1: 'Permission denied',
+                    2: 'Position unavailable',
+                    3: 'Request timeout'
+                };
+                alert("Error: " + errors[error.code]);
+            }
+
+
+            // (1) change coordinates
+
+
+
+            /*
+            Copied code from https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers && http://jsfiddle.net/nqDKU/
+            Basically adds a marker on the map based on an onClick event. Adds the marker into the markers array (maybe change so we set the array when inputting)
+            Then we can remove the remove marker function, make it not a marker but a point and at last even remove the point and just show a line.
+            Then make a foreach marker in markers array print out a line from marker[A].latlng to marker[B].latlng.
+            Currently adds a line between two points.
+            Used for testing purposes for onClick event.
+            var markers = new Array();
+            var marker;
+            var oldPoint = 0;
+            var newPoint = 0;
+            */
             map.on('click', onMapClick);
+            const waypointsTest = [];
+            function onMapClick(e) {
+                /* Testing purposes for onClick event.
+                if(newPoint === 0){
+                    marker = new L.marker(e.latlng, {
+                        draggable: true
+                    });
+                    //map.addLayer(marker);
+                    //markers[marker._leaflet_id] = marker;
+                    newPoint = e.latlng;
+                }
+                else{
+                    marker = new L.marker(e.latlng, {
+                        draggable: true
+                    });
+                    //map.addLayer(marker);
+                    //markers[marker._leaflet_id] = marker;
+                    oldPoint = newPoint;
+                    newPoint = e.latlng;
+                    L.polyline([
+                        oldPoint,
+                        newPoint
+                    ]).addTo(map);
+                }*/
+                waypointsTest.push(e.latlng);
+            }
+
+            function generateRoute(){
+                for(let i = 0; i < waypointsTest.length; i++){
+                    L.polyline([
+                        waypointsTest[i],
+                        waypointsTest[i+1]
+                    ]).addTo(map);
+                }
+
+            }
+
+            /* Correct code; TODO: insert a correct array including waypoints data.
+            const waypoints = [
+                [57.691430711424545,11.97191119194031],
+                [57.690375578417566,11.973305940628054],
+                [57.69218190152542,11.973670721054079],
+                [57.69351221524594,11.972994804382326],
+                [57.69266930661859,11.970505714416506],
+                [57.691430711424545,11.97191119194031],
+            ];
+            for(let i = 0; i < waypoints.length; i++){
+                L.polyline([
+                    waypoints[i],
+                    waypoints[i+1]
+                ]).addTo(map);
+            }
+*/
+            //Button event listener to generate a route for testing purposes.
+            let btn = document.getElementById("btn");
+            btn.addEventListener('click', event => {
+                generateRoute();
+            });
         });
+
     </script>
 </head>
 <body>
 <div>
-    <form target="_blank" method="get" action="https://graphhopper.com/maps/">
+    <div id="map" style="width: 600px; height: 400px">
+
+    </div>
+
+    <!-- Button for testing purposes -->
+    Press out a route on the map, then press here! <br>
+    <input id="btn" type="button" value="Generate Route after placing routes." />
+</div>
+
+
+<!-- <html>
+    <head>
+        <title>GraphHopper Form Sample</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
+                                                    integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+                                                    crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"
+                integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s="
+                crossorigin=""></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function (event) {
+
+                // create the tile layer with correct attribution
+                var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+                var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+
+                // (1) change coordinates
+                var latlng = [57.69288261596026,11.981792449951172];
+                var latlng2 = [57.689400699681336,11.973784447764046];
+                var map = L.map('map', {
+                    center: latlng,
+                    zoom: 15,
+                    layers: [osm]
+                });
+
+                var someFeatures = [{
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Chalmers",
+                        "show_on_map": true
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [57.689400699681336,11.973784447764046]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Marcus",
+                        "show_on_map": true
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [57.69162567801048,11.972754479502331]
+                    }
+                }];
+
+                var test = L.geoJSON(someFeatures, {
+                    filter: function(feature, layer) {
+                        return feature.properties.show_on_map;
+                    }
+                }).addTo(map);
+
+                L.marker(latlng).addTo(map);
+                L.circle(latlng, {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                }).addTo(map);
+                L.marker(latlng2).addTo(map);
+
+                var popup = L.popup();
+
+                function onMapClick(e) {
+                    popup
+                        .setLatLng(e.latlng)
+                        .setContent("You clicked the map at " + e.latlng.toString())
+                        .openOn(map);
+                }
+
+                map.on('click', onMapClick);
+            });
+        </script>
+    </head>
+    <body>
         <div>
-            <div style="padding-top: 5px">
-                From
-            </div>
-            <input id="startaddr" type="text" name="point" placeholder="Your Start Address">
-        </div>
-        <div>
-            <div style="padding-top: 5px">
-                To
-            </div>
-            
-
-            <!-- (2) change address -->
-
-
-                                <input id="destinationaddr" type="text" value="57.69288261596026,11.981792449951172" name="point">
-                            </div>
-                            <button class="btn-booking" type="submit">Find Route</button>
-                        </form>
-
-                        <div id="map" style="width: 600px; height: 400px">
-
-                        </div>
+            <form target="_blank" method="get" action="https://graphhopper.com/maps/">
+                <div>
+                    <div style="padding-top: 5px">
+                        From
                     </div>
-                </body>
-            </html>
+                    <input id="startaddr" type="text" name="point" placeholder="Your Start Address">
+                </div>
+                <div>
+                    <div style="padding-top: 5px">
+                        To
+                    </div>
+                    -->
+
+                    <!-- (2) change address -->
+
+<!--
+                    <input id="destinationaddr" type="text" value="57.69288261596026,11.981792449951172" name="point">
+                </div>
+                <button class="btn-booking" type="submit">Find Route</button>
+            </form>
+
+            <div id="map" style="width: 600px; height: 400px">
+
+            </div>
+        </div>
+    </body>
+</html>
+-->
