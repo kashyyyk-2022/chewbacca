@@ -100,6 +100,11 @@
     </script>
 
     <script>
+
+        var currentpos;
+        var marker;
+        var circle;
+
         latlng = [57.68939495267853,11.974072522154591]; //Change later to my position.
         //var map = L.map('map').setView([57.706, 11.937], 13);
         var map = L.map('map', {
@@ -110,6 +115,48 @@
             maxZoom: 19,
             attribution: 'Routemeister'
         }).addTo(map);
+
+        // getting current location
+        if(!navigator.geolocation) {
+            console.log("Your browser does not support this geolocation feature:(")
+        }
+        else {
+            /*
+                setInterval(() => {
+                    navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
+                }, 1000);
+
+             */
+            // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
+            navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
+        }
+
+        function getPosition(position) {
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            if (circle) {
+                map.removeLayer(circle);
+            }
+            circle = L.circle([lat, long], {radius: accuracy});
+            marker = L.marker([lat, long]);
+
+            currentpos = L.featureGroup([marker, circle]).addTo(map);
+            console.log(lat, long, accuracy)
+        }
+
+        function displayError(error) {
+            var errors = {
+                1: 'Permission denied',
+                2: 'Position unavailable',
+                3: 'Request timeout'
+            };
+            alert("Error: " + errors[error.code]);
+        }
     </script>
 
     <script type = "text/javascript" src="/generateRouteHandler.js"></script>
