@@ -1,51 +1,123 @@
 <html>
-    <head>
-        <title>GraphHopper Form Sample</title>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function (event) {
+<head>
+    <title>GraphHopper Form Sample</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
+          integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"
+            integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s="
+            crossorigin=""></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
 
-                // create the tile layer with correct attribution
-                var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-                var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+            // create the tile layer with correct attribution
+            var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+            var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+            var currentpos;
+            var marker;
+            var circle;
 
-                // (1) change coordinates
-                var latlng = [57.69288261596026,11.981792449951172];
-                var map = L.map('map', {
-                    center: latlng,
-                    zoom: 15,
-                    layers: [osm]
-                });
-                
-                var marker = L.marker(latlng).addTo(map);
+
+            var latlng = [57.691430711424545,11.97191119194031];
+            var map = L.map('map', {
+                center: latlng,
+                zoom: 15,
+                layers: [osm]
             });
 
-        </script>
-    </head>
-    <body>
-        <div>
-            <form target="_blank" method="get" action="https://graphhopper.com/maps/">
-                <div>
-                    <div style="padding-top: 5px">
-                        From
-                    </div>
-                    <input id="startaddr" type="text" name="point" placeholder="Your Start Address">
-                </div>
-                <div>
-                    <div style="padding-top: 5px">
-                        To
-                    </div>
-                    <!-- (2) change address -->
-                    <input id="destinationaddr" type="text" value="Am Mainflecklein 10, Bayreuth, 95444" name="point">
-                </div>
-                <button class="btn-booking" type="submit">Find Route</button>
-            </form>
+            // getting current location
+            if(!navigator.geolocation) {
+                console.log("Your browser does not support this geolocation feature:(")
+            }
+            else {
+                /*
+                    setInterval(() => {
+                        navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
+                    }, 1000);
 
-            <div id="map" style="width: 600px; height: 400px">
+                 */
+                // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
+                    navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
+            }
 
-            </div>
+            function getPosition(position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    if (circle) {
+                        map.removeLayer(circle);
+                    }
+                    circle = L.circle([lat, long], {radius: accuracy});
+                    marker = L.marker([lat, long]);
+
+                    currentpos = L.featureGroup([marker, circle]).addTo(map);
+                    console.log(lat, long, accuracy)
+            }
+
+            function displayError(error) {
+                var errors = {
+                    1: 'Permission denied',
+                    2: 'Position unavailable',
+                    3: 'Request timeout'
+                };
+                alert("Error: " + errors[error.code]);
+            }
+
+            map.on('click', onMapClick);
+            const waypointsTest = [];
+            function onMapClick(e) {
+                waypointsTest.push(e.latlng);
+            }
+
+            function generateRoute(){
+                for(let i = 0; i < waypointsTest.length; i++){
+                    L.polyline([
+                        waypointsTest[i],
+                        waypointsTest[i+1]
+                    ]).addTo(map);
+                }
+
+            }
+
+            /* Correct code; TODO: insert a correct array including waypoints data.
+            const waypoints = [
+                [57.691430711424545,11.97191119194031],
+                [57.690375578417566,11.973305940628054],
+                [57.69218190152542,11.973670721054079],
+                [57.69351221524594,11.972994804382326],
+                [57.69266930661859,11.970505714416506],
+                [57.691430711424545,11.97191119194031],
+            ];
+            for(let i = 0; i < waypoints.length; i++){
+                L.polyline([
+                    waypoints[i],
+                    waypoints[i+1]
+                ]).addTo(map);
+            }
+*/
+            //Button event listener to generate a route for testing purposes.
+            let btn = document.getElementById("btn");
+            btn.addEventListener('click', event => {
+                generateRoute();
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div>
+        <div id="map" style="width: 600px; height: 400px">
+
         </div>
+
+        <!-- Button for testing purposes -->
+        Press out a route on the map, then press here! <br>
+        <input id="btn" type="button" value="Generate Route after placing routes." />
+    </div>
     </body>
 </html>

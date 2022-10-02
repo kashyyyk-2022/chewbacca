@@ -12,6 +12,14 @@
         "spanish_button": "Spanska",
         "reset_button": "Återställ inställningar",
         "back_button": "Tillbaka till huvudmeny",
-        "new_route_button": "Ny rutt"
+        "new_route_button": "Ny rutt",
+        "settings_button": "Inställningar",
+        "current_route_button": "Påbörjad rutt",
+        "account_button": "Konto",
+        "current_route_title": "Aktiv rutt",
+        "route_info": "Ruttinformation",
+        "height_info": "Höjdskillnad",
+        "distance_info": "Kvarvarande sträcka",
+        "time_info": "Ungefärlig tid kvar"
     }
 }
