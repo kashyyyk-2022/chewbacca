@@ -48,7 +48,7 @@ public class Osm {
         @JacksonXmlElementWrapper(useWrapping = false)
         @JacksonXmlProperty(localName = "tag")
         @JsonProperty("tag")
-        public Tag[] tag;
+        public Tag[] tag;  //Object (park, bench, trash bin)
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -59,12 +59,12 @@ public class Osm {
         @JacksonXmlElementWrapper(useWrapping = false)
         @JacksonXmlProperty(localName = "nd")
         @JsonProperty("nd")
-        public Nd[] nd;
+        public Nd[] nd; //List of IDS
 
         @JacksonXmlElementWrapper(useWrapping = false)
         @JacksonXmlProperty(localName = "tag")
         @JsonProperty("tag")
-        public Tag[] tag;
+        public Tag[] tag; //Meta data for
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
