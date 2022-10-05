@@ -289,11 +289,13 @@
                 document.getElementById("water").checked = true;
             }
 
-
-
-
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
+
+            setInterval(function() {
+                navigator.geolocation.getCurrentPosition(success);
+            }, 1000);
+
         }
 
         function setHours(hours){
@@ -321,7 +323,13 @@
         }
 
         function generateRoute(){
-            window.location.href = "/current-route";
+            window.location.href = "/loading";
+        }
+
+        function success(pos){
+            setCookie("locationLat", pos.coords.latitude, 9000);
+            setCookie("locationLon", pos.coords.longitude, 9000);
+            console.log("Hello!");
         }
 
 
