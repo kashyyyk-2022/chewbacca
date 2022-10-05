@@ -6,6 +6,7 @@ import com.kashyyyk.chewbacca.controllers.structures.RouteAPIStartResponse;
 import com.kashyyyk.chewbacca.services.LocalRoutingStorage;
 import com.kashyyyk.chewbacca.services.RoutingService;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,14 +30,14 @@ public class RoutingAPIController {
         return routingService;
     }
 
-    @GetMapping("route-api/done")
+    @GetMapping(path = "route-api/done", produces = MediaType.APPLICATION_JSON_VALUE)
     public RouteAPIDoneResponse getDone(
             @RequestParam(name = "id", required = true) String id
     ) {
         return new RouteAPIDoneResponse(id, routingService.isRouteDone(id));
     }
 
-    @GetMapping("route-api/start")
+    @GetMapping(path = "route-api/start", produces = MediaType.APPLICATION_JSON_VALUE)
     public RouteAPIStartResponse getRoute(
             @RequestParam(name = "lat", required = true) String lat,
             @RequestParam(name = "lon", required = true) String lon,
@@ -57,7 +58,7 @@ public class RoutingAPIController {
         ));
     }
 
-    @GetMapping("route-api/content")
+    @GetMapping(path = "route-api/content", produces = MediaType.APPLICATION_JSON_VALUE)
     public RouteAPIContentResponse getContent(
             @RequestParam(name = "id", required = true) String id
     ) {
