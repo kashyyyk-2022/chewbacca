@@ -279,7 +279,7 @@
             document.getElementById("minutes").value = cookie;
 
             cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = cookie;
+            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
             document.getElementById("distance").value = cookie;
 
             cookie = getCookie("elevation", "0");
@@ -319,8 +319,8 @@
 
         function setDistance(distance){
             setCookie("distance", distance, 9000);
-            document.getElementById("distance").value = distance;
-            document.getElementById("customDistance").value = distance;
+            document.getElementById("distance").value = parseFloat(distance).toFixed(1);
+            document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
         }
 
         function setElevation(elevation){
@@ -343,9 +343,6 @@
 
 
     </script>
-
-
-
 
     <!-- länk till js bibliotek -->
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
