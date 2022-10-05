@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
   }
 
-  .city
+  .urban
   {
     background-image: url('https://media.istockphoto.com/photos/professional-use-auto-advertising-backplate-picture-id619498880?b=1&k=20&m=619498880&s=170667a&w=0&h=bExMHjkoS4WIlZ7QWZlHePlVvroStbiGi8WjICodRGY=');
 
@@ -35,13 +35,20 @@
         </style>
     </head>
 
-    <body onload="onload()">
+    <body onload="onload()" class="d-flex flex-column min-vh-100">
 
     <div class="container">
 
         <div class="d-grid gap-3">
             <div class="row p-4">
-                <h1 class="text-center">New route</h1>
+                <h2 class="text-center">
+                    Lat:
+                    <output id="lat"></output>
+                </h2>
+                <h2 class="text-center">
+                    Lon:
+                    <output id="lon"></output>
+                </h2>
             </div>
 
             <div class="row p-0">
@@ -49,13 +56,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Time in hours</label>
+                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time in hours</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableTime">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -67,7 +74,7 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <!--TODO save hours in cookie(?)-->
+
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="setHours(this.value)">
                 </div>
@@ -83,9 +90,8 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <!--TODO save minutes in cookie(?)-->
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customMin" class="form-label">Time in minutes</label>
+                    <label for="customMin" th:text="${time_minutes_slider}" class="form-label">Time in minutes</label>
                     <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="setMinutes(this.value)">
                 </div>
 
@@ -99,13 +105,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Length in kilometers</label>
+                    <label for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableLength">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -133,13 +139,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Elevation in meters</label>
+                    <label for="customDistance" th:text="${elevation_slider}" class="form-label">Elevation in meters</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableElevation">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -167,14 +173,31 @@
                     </div>
                     <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
-                            Hours:
-                            <output id="hours">0</output>
-                            Minutes:
-                            <output id="minutes">0</output>
-                            Distance:
-                            <output id="distance">0</output>
-                            Elevation:
-                            <output id="elevation">0</output>
+                            <div>
+                                <label for="new-route-button" th:text="${hours}"></label>
+                                <output id="hours">0</output>
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${minutes}"></label>
+                                <output id="minutes">0</output>
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${distance}"></label>
+                                <output id="distance">0</output>
+    
+                                <!-- if unit == metric -->
+                                <label th:if="${unit == 'metric'}" for="new-route-button">km</label>
+                                
+                                <!-- if unit == imperial -->
+                                <label th:if="${unit == 'imperial'}" for="new-route-button">miles</label>    
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${elevation}"></label>
+                                <output id="elevation">0</output>
+                            </div>
                         </div>
                     </div>
                     <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -191,18 +214,18 @@
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Terrain" id="Terrain">
 
-                        <input type="radio" class="btn-check" name="btnradio" id="city" onClick="setCookie('terrain', 'city', 365)">
-                        <label class="btn btn-outline-primary city" for="city">City</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="urban" onClick="setCookie('terrain', 'urban', 365)">
+                        <label class="btn btn-outline-primary urban" th:text="${urban_button}" for="urban">Urban</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="nature" onClick="setCookie('terrain', 'nature', 365)">
-                        <label class="btn btn-outline-primary nature" for="nature">Nature</label>
+                        <label class="btn btn-outline-primary nature" th:text="${nature_button}"for="nature">Nature</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="water" onClick="setCookie('terrain', 'water', 365)">
-                        <label class="btn btn-outline-primary water" for="water">Water</label>
+                        <label class="btn btn-outline-primary water" th:text="${water_button}"for="water">Water</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableTerrain">
-                        <label class="form-check-label">Disable terrain</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable terrain</label>
                     </div>
 
                 </div>
@@ -211,25 +234,22 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-    <div class="row p-2">
-        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
-        </div>
-
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Only include routes accesible to people with disabilties
-                    <!--TODO update text and inform what this includes-->
-                </label>
+        
+        <div class="row p-2">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
-        </div>
 
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault" th:text="${accesible_disabilities}">
+                        Only include routes accesible to people with disabilties
+                    </label>
+                </div>
+            </div>
 
-        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+            </div>
         </div>
     </div>
 
@@ -239,7 +259,11 @@
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" onclick="setCookie('routeID', '1', 9000);generateRoute();">
-                    Generate route
+                    <label for="generate-route-button" th:text="${generate_route_button}"></label>
+                </div>
+                
+                <div class="w-100 btn btn-secondary btn-md" id="generate-route-button-waiting" role="button" disabled>
+                    Waiting for location...
                 </div>
             </div>
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -262,6 +286,12 @@
     </footer>
     
     <script>
+        let hasLocation = false;
+
+        // Hide the generate button if the user has not selected a location
+        document.getElementById("generate-route-button").style.display = "none";
+        document.getElementById("generate-route-button-waiting").style.display = "block";
+
         function onload(){
             let cookie = getCookie("hours", "0");
             document.getElementById("customHours").value = cookie;
@@ -272,7 +302,7 @@
             document.getElementById("minutes").value = cookie;
 
             cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = cookie;
+            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
             document.getElementById("distance").value = cookie;
 
             cookie = getCookie("elevation", "0");
@@ -281,19 +311,21 @@
 
             cookie = getCookie("terrain", "0");
             document.getElementById("Terrain").value = cookie;
-            if (cookie === "city") {
-                document.getElementById("city").checked = true;
+            if (cookie === "urban") {
+                document.getElementById("urban").checked = true;
             } else if (cookie === "nature") {
                 document.getElementById("nature").checked = true;
             } else if (cookie === "water") {
                 document.getElementById("water").checked = true;
             }
 
-
-
-
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
+
+            setInterval(function() {
+                navigator.geolocation.getCurrentPosition(success);
+            }, 1000);
+
         }
 
         function setHours(hours){
@@ -310,8 +342,8 @@
 
         function setDistance(distance){
             setCookie("distance", distance, 9000);
-            document.getElementById("distance").value = distance;
-            document.getElementById("customDistance").value = distance;
+            document.getElementById("distance").value = parseFloat(distance).toFixed(1);
+            document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
         }
 
         function setElevation(elevation){
@@ -321,16 +353,45 @@
         }
 
         function generateRoute(){
-            window.location.href = "/current-route";
+            if (!hasLocation) {
+                alert("We have been unable to find your location, please try again later");
+                return;
+            }
+
+            let lat = getCookie("locationLat", "0");
+            let lon = getCookie("locationLon", "0");
+            let hours = document.getElementById("hours").value;
+            let minutes = document.getElementById("minutes").value;
+            let distance = document.getElementById("distance").value;
+            let elevation = document.getElementById("elevation").value;
+            let terrain = document.getElementById("Terrain").value;
+            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
+            $.get(url, function(data) {
+                let routeId = data.id;
+                setCookie("routeID", routeId, 1);
+
+                window.location.href = "/loading";
+            }, "json");
+        }
+
+        function success(pos){
+            setCookie("locationLat", pos.coords.latitude, 9000);
+            setCookie("locationLon", pos.coords.longitude, 9000);
+            document.getElementById("lat").value = pos.coords.latitude;
+            document.getElementById("lon").value = pos.coords.longitude;
+            
+            if (!hasLocation) {
+                hasLocation = true;
+                document.getElementById("generate-route-button").style.display = "block";
+                document.getElementById("generate-route-button-waiting").style.display = "none";
+            }
         }
 
 
     </script>
 
-
-
-
     <!-- länk till js bibliotek -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>
     <script type = "text/javascript" src="/locationHandler.js"></script>
