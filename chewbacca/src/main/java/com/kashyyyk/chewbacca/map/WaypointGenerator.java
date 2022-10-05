@@ -91,10 +91,11 @@ public class WaypointGenerator {
             throw new RuntimeException(e);
         }*/
 
-        points.add(new Waypoint(startLat, startLon));
-
-        if(checkDistance(endLat, endLon) && checkElevation() && checkTerrain()){
-            points.add(new Waypoint(endLat, endLon));
+        OsrmResult osrm = OpenSourceRoutingMachine.getRoute(startLat, startLon, endLat, endLon);
+        for(int i = 0; i < osrm.routes.length; i++){
+            double locLon = osrm.routes[i].legs[0].steps[0].intersections[0].location[0];
+            double locLat = osrm.routes[i].legs[0].steps[0].intersections[0].location[1];
+            points.add(new Waypoint(locLat, locLon));
         }
     }
 
