@@ -8,11 +8,16 @@ import java.util.LinkedList;
 // Will create a list of locations for the route. The list will be read by CurrentRoute.html to draw the route on the map
 public class WaypointGenerator {
     private double totalDistance;
+    private double halfDistance;
     private double totalElevation;
     //Create a preference type variable (ENUM)????? .
 
-    double startLat;
-    double startLon;
+    private double startLat;
+    private double startLon;
+
+    private boolean routeDone = false;
+
+    private LinkedList<Waypoint> points = new LinkedList<>();
 
     public class Waypoint {
         private double lat;
@@ -31,7 +36,6 @@ public class WaypointGenerator {
         }
     }
 
-    private LinkedList<Waypoint> points = new LinkedList<>();
 
     /**
      * This constructor call should generate a waypoint that fulfills all our preferences and criterias.
@@ -44,11 +48,12 @@ public class WaypointGenerator {
      * @throws IOException
      */
 
-    public final boolean testing = true;
+    public final boolean testing = false;
 
     public WaypointGenerator(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) throws Exception {
         if(testing){
-            this.totalDistance = 5000; //Dummy totalDistance. Use totalDistance;
+            this.totalDistance = 10000; //Dummy totalDistance. Use totalDistance;
+            this.halfDistance = totalDistance/2;
             this.totalElevation = 100; //Dummy totalElevation. Use totalElevation;
             this.startLat = 57.68939495267853;
             this.startLon = 11.974072522154591;
@@ -58,17 +63,20 @@ public class WaypointGenerator {
             this.startLon = startLon;
             this.totalDistance = length * 1000;
             this.totalElevation = elevation;
+            this.halfDistance = totalDistance/2;
         }
 
         double tempLat = this.startLat;
         double tempLon = this.startLon;
-        double halfDistance = this.totalDistance * 0.5;
         Osm osm = OpenStreetMap.downloadData(57.692622286683225,11.966922283172607, 57.69652702997704,11.972200870513916);
 
         int currentNode = 0;
         double endLat = osm.node[currentNode].lat;
         double endLon = osm.node[currentNode].lon;
-        int routeDone = 0;
+
+        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        System.out.println("TotalDistance: " + totalDistance);
+        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
         //TODO: Make the downloadData "box" adjust to the distance we want the route to be(?)
         /*for (int i = 0; i < osm.node.length; i++) {
             System.out.println("Lat: " + osm.node[i].lat +" lon: " + osm.node[i].lon);
@@ -96,9 +104,10 @@ public class WaypointGenerator {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }*/
-        while(routeDone < 5){
+        while(!routeDone){
             OsrmResult osrm = OpenSourceRoutingMachine.getRoute(tempLat, tempLon, endLat, endLon);
-            if(checkElevation() && checkTerrain()){
+            System.out.println(osrm.routes[0].distance);
+            if(checkDistance(tempLat, tempLon, endLat, endLon) && checkElevation() && checkTerrain()){
                 for(int i = 0; i < osrm.routes.length; i++){
                     var route = osrm.routes[i];
                     // For each leg in the route
@@ -118,26 +127,25 @@ public class WaypointGenerator {
             }
             tempLat = endLat;
             tempLon = endLon;
-            System.out.println("tmpLat: " + tempLat + " tempLon:" + tempLon);
-            currentNode++;
+            currentNode += 3;
             endLat = osm.node[currentNode].lat;
             endLon = osm.node[currentNode].lon;
-            routeDone++;
-        }
-        OsrmResult osrm = OpenSourceRoutingMachine.getRoute(endLat, endLon, startLat, startLon);
-        if(checkElevation() && checkTerrain()){
-            for(int i = 0; i < osrm.routes.length; i++){
-                var route = osrm.routes[i];
-                // For each leg in the route
-                for (int j = 0; j < route.legs.length; j++) {
-                    var leg = route.legs[j];
-                    // For each step in the leg
-                    for (int k = 0; k < leg.steps.length; k++) {
-                        var step = leg.steps[k];
-                        // For each intersection in the step
-                        for (int l = 0; l < step.intersections.length; l++) {
-                            var intersection = step.intersections[l];
-                            points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+
+            if(routeDone){
+                osrm = OpenSourceRoutingMachine.getRoute(tempLat, tempLon, startLat, startLon);
+                for(int i = 0; i < osrm.routes.length; i++){
+                    var route = osrm.routes[i];
+                    // For each leg in the route
+                    for (int j = 0; j < route.legs.length; j++) {
+                        var leg = route.legs[j];
+                        // For each step in the leg
+                        for (int k = 0; k < leg.steps.length; k++) {
+                            var step = leg.steps[k];
+                            // For each intersection in the step
+                            for (int l = 0; l < step.intersections.length; l++) {
+                                var intersection = step.intersections[l];
+                                points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+                            }
                         }
                     }
                 }
@@ -153,18 +161,15 @@ public class WaypointGenerator {
         return points;
     }
 
-    private void addWaypoint(double lat, double lon){
-
-    }
-
     //TODO: Create a system that checks if the waypoint is out of our distance requirement.
-    private boolean checkDistance(double endLat, double endLon) throws Exception {
+    private boolean checkDistance(double startLat, double startLon, double endLat, double endLon) throws Exception {
         OsrmResult osrm = OpenSourceRoutingMachine.getRoute(startLat, startLon, endLat, endLon);
-        if(totalDistance - osrm.routes[0].distance < 0){
+        if(totalDistance - osrm.routes[0].distance < halfDistance){
+            routeDone = true;
             return false;
         }
         totalDistance = totalDistance - osrm.routes[0].distance;
-
+        System.out.println("TotalDistanceLeft: " + totalDistance);
         return true;
     }
 
