@@ -93,9 +93,21 @@ public class WaypointGenerator {
 
         OsrmResult osrm = OpenSourceRoutingMachine.getRoute(startLat, startLon, endLat, endLon);
         for(int i = 0; i < osrm.routes.length; i++){
-            double locLon = osrm.routes[i].legs[0].steps[0].intersections[0].location[0];
-            double locLat = osrm.routes[i].legs[0].steps[0].intersections[0].location[1];
-            points.add(new Waypoint(locLat, locLon));
+            var route = osrm.routes[i];
+            // For each leg in the route
+            for (int j = 0; j < route.legs.length; j++) {
+                var leg = route.legs[j];
+                // For each step in the leg
+                for (int k = 0; k < leg.steps.length; k++) {
+                    var step = leg.steps[k];
+                    // For each intersection in the step
+                    for (int l = 0; l < step.intersections.length; l++) {
+                        var intersection = step.intersections[l];
+                        
+                        points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+                    }
+                }
+            }
         }
     }
 
