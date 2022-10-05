@@ -35,12 +35,18 @@ public class OpenStreetMapTests {
 
     @Test
     public void testNodeTags() throws Exception{
-        WaypointGenerator tmp = new WaypointGenerator();
+        WaypointGenerator tmp = new WaypointGenerator(0, 0, 0, 0, 0, 0, "");
+    }
+
+    @Test
+    public void testArray() throws Exception{
+        WaypointGenerator tmp = new WaypointGenerator(0, 0, 0, 0, 0, 0, "");
+        assertEquals(tmp.getRoute().get(0).toString(), "[57.6935287, 11.9730049]");
     }
 
     @Test
     public void testElevation() throws Exception{
-        WaypointGenerator tmp = new WaypointGenerator();
+        WaypointGenerator tmp = new WaypointGenerator(0, 0, 0, 0, 0, 0, "");
         tmp.testElevation();
     }
 
