@@ -20,6 +20,21 @@
         "route_info": "Información sobre ruta",
         "height_info": "Diferencia en altura",
         "distance_info": "Distancia restante",
-        "time_info": "Tiempo aproximado restante"
+        "time_info": "Tiempo aproximado restante",
+
+        "time_hours_slider": "Time in hours",
+        "time_minutes_slider": "Time in minutes",
+        "length_slider": "Length",
+        "elevation_slider": "Elevation",
+        "urban_button": "Urban",
+        "nature_button": "Nature",
+        "water_button": "Water",
+        "accesible_disabilities": "Only include a route accesible to people with disabilties",
+        "generate_route_button": "Generate route",
+        "disable_checkbox": "Disable",
+        "hours": "Hours: ",
+        "minutes": "Minutes: ",
+        "distance": "Distance: ",
+        "elevation": "Elevation: "
     }
 }
