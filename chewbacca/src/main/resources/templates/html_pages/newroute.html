@@ -41,7 +41,14 @@
 
         <div class="d-grid gap-3">
             <div class="row p-4">
-                <h1 class="text-center">New route</h1>
+                <h2 class="text-center">
+                    Lat:
+                    <output id="lat"></output>
+                </h2>
+                <h2 class="text-center">
+                    Lon:
+                    <output id="lon"></output>
+                </h2>
             </div>
 
             <div class="row p-0">
@@ -329,6 +336,8 @@
         function success(pos){
             setCookie("locationLat", pos.coords.latitude, 9000);
             setCookie("locationLon", pos.coords.longitude, 9000);
+            document.getElementById("lat").value = pos.coords.latitude;
+            document.getElementById("lon").value = pos.coords.longitude;
             console.log("Hello!");
         }
 
