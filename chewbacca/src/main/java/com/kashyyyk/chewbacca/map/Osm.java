@@ -64,7 +64,7 @@ public class Osm {
         @JacksonXmlElementWrapper(useWrapping = false)
         @JacksonXmlProperty(localName = "tag")
         @JsonProperty("tag")
-        public Tag[] tag; //Meta data for
+        public Tag[] tag; //Meta data for gravel, forest etc...
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

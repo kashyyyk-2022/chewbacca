@@ -33,4 +33,10 @@ public class OpenStreetMapTests {
         endLng = osm.node[0].lon;
 
     }
+
+    @Test
+    public void testNodeTags() throws Exception{
+        WaypointGenerator tmp = new WaypointGenerator();
+    }
+
 }
