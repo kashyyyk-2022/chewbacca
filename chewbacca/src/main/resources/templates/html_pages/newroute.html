@@ -173,14 +173,31 @@
                     </div>
                     <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
-                            <label for="new-route-button" th:text="${hours}"></label>
-                            <output id="hours">0</output>
-                            <label for="new-route-button" th:text="${minutes}"></label>
-                            <output id="minutes">0</output>
-                            <label for="new-route-button" th:text="${distance}"></label>
-                            <output id="distance">0</output>
-                            <label for="new-route-button" th:text="${elevation}"></label>
-                            <output id="elevation">0</output>
+                            <div>
+                                <label for="new-route-button" th:text="${hours}"></label>
+                                <output id="hours">0</output>
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${minutes}"></label>
+                                <output id="minutes">0</output>
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${distance}"></label>
+                                <output id="distance">0</output>
+    
+                                <!-- if unit == metric -->
+                                <label th:if="${unit == 'metric'}" for="new-route-button">km</label>
+                                
+                                <!-- if unit == imperial -->
+                                <label th:if="${unit == 'imperial'}" for="new-route-button">miles</label>    
+                            </div>
+                            
+                            <div>
+                                <label for="new-route-button" th:text="${elevation}"></label>
+                                <output id="elevation">0</output>
+                            </div>
                         </div>
                     </div>
                     <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
