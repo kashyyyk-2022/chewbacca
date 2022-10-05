@@ -44,7 +44,7 @@ public class WaypointGenerator {
      * @throws IOException
      */
 
-    public final boolean testing = true;
+    public final boolean testing = false;
 
     public WaypointGenerator(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) throws Exception {
         if(testing){
@@ -56,7 +56,7 @@ public class WaypointGenerator {
         else{
             this.startLat = startLat;
             this.startLon = startLon;
-            this.totalDistance = length;
+            this.totalDistance = length * 1000;
             this.totalElevation = elevation;
         }
         Osm osm = OpenStreetMap.downloadData(57.692622286683225,11.966922283172607, 57.69652702997704,11.972200870513916);
@@ -91,6 +91,7 @@ public class WaypointGenerator {
             throw new RuntimeException(e);
         }*/
 
+        points.add(new Waypoint(startLat, startLon));
 
         if(checkDistance(endLat, endLon) && checkElevation() && checkTerrain()){
             points.add(new Waypoint(endLat, endLon));
