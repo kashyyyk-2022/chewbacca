@@ -1,6 +1,7 @@
 package com.kashyyyk.chewbacca.map;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 // Will create a list of locations for the route. The list will be read by CurrentRoute.html to draw the route on the map
@@ -41,6 +42,10 @@ public class WaypointGenerator {
 
         double endLat = osm.node[0].lat;
         double endLng = osm.node[0].lon;
+    }
+
+    public Iterator<Waypoint> getIterator() {
+        return points.iterator();
     }
 
 }
