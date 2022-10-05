@@ -44,7 +44,7 @@ public class WaypointGenerator {
      * @throws IOException
      */
 
-    public final boolean testing = false;
+    public final boolean testing = true;
 
     public WaypointGenerator(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) throws Exception {
         if(testing){
@@ -59,10 +59,16 @@ public class WaypointGenerator {
             this.totalDistance = length * 1000;
             this.totalElevation = elevation;
         }
+
+        double tempLat = this.startLat;
+        double tempLon = this.startLon;
+        double halfDistance = this.totalDistance * 0.5;
         Osm osm = OpenStreetMap.downloadData(57.692622286683225,11.966922283172607, 57.69652702997704,11.972200870513916);
 
-        double endLat = osm.node[0].lat;
-        double endLon = osm.node[0].lon;
+        int currentNode = 0;
+        double endLat = osm.node[currentNode].lat;
+        double endLon = osm.node[currentNode].lon;
+        int routeDone = 0;
         //TODO: Make the downloadData "box" adjust to the distance we want the route to be(?)
         /*for (int i = 0; i < osm.node.length; i++) {
             System.out.println("Lat: " + osm.node[i].lat +" lon: " + osm.node[i].lon);
@@ -90,21 +96,49 @@ public class WaypointGenerator {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }*/
-
-        OsrmResult osrm = OpenSourceRoutingMachine.getRoute(startLat, startLon, endLat, endLon);
-        for(int i = 0; i < osrm.routes.length; i++){
-            var route = osrm.routes[i];
-            // For each leg in the route
-            for (int j = 0; j < route.legs.length; j++) {
-                var leg = route.legs[j];
-                // For each step in the leg
-                for (int k = 0; k < leg.steps.length; k++) {
-                    var step = leg.steps[k];
-                    // For each intersection in the step
-                    for (int l = 0; l < step.intersections.length; l++) {
-                        var intersection = step.intersections[l];
-                        
-                        points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+        while(routeDone < 5){
+            OsrmResult osrm = OpenSourceRoutingMachine.getRoute(tempLat, tempLon, endLat, endLon);
+            if(checkElevation() && checkTerrain()){
+                for(int i = 0; i < osrm.routes.length; i++){
+                    var route = osrm.routes[i];
+                    // For each leg in the route
+                    for (int j = 0; j < route.legs.length; j++) {
+                        var leg = route.legs[j];
+                        // For each step in the leg
+                        for (int k = 0; k < leg.steps.length; k++) {
+                            var step = leg.steps[k];
+                            // For each intersection in the step
+                            for (int l = 0; l < step.intersections.length; l++) {
+                                var intersection = step.intersections[l];
+                                points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+                            }
+                        }
+                    }
+                }
+            }
+            tempLat = endLat;
+            tempLon = endLon;
+            System.out.println("tmpLat: " + tempLat + " tempLon:" + tempLon);
+            currentNode++;
+            endLat = osm.node[currentNode].lat;
+            endLon = osm.node[currentNode].lon;
+            routeDone++;
+        }
+        OsrmResult osrm = OpenSourceRoutingMachine.getRoute(endLat, endLon, startLat, startLon);
+        if(checkElevation() && checkTerrain()){
+            for(int i = 0; i < osrm.routes.length; i++){
+                var route = osrm.routes[i];
+                // For each leg in the route
+                for (int j = 0; j < route.legs.length; j++) {
+                    var leg = route.legs[j];
+                    // For each step in the leg
+                    for (int k = 0; k < leg.steps.length; k++) {
+                        var step = leg.steps[k];
+                        // For each intersection in the step
+                        for (int l = 0; l < step.intersections.length; l++) {
+                            var intersection = step.intersections[l];
+                            points.add(new Waypoint(intersection.location[1], intersection.location[0]));
+                        }
                     }
                 }
             }
@@ -129,6 +163,8 @@ public class WaypointGenerator {
         if(totalDistance - osrm.routes[0].distance < 0){
             return false;
         }
+        totalDistance = totalDistance - osrm.routes[0].distance;
+
         return true;
     }
 

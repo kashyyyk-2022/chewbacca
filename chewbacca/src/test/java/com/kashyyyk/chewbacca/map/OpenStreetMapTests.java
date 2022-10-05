@@ -29,8 +29,6 @@ public class OpenStreetMapTests {
 
         Osm osm = OpenStreetMap.downloadData(57.692622286683225,11.966922283172607, 57.69652702997704,11.972200870513916);
         System.out.println("Lat: " + osm.node[0].lat +"Lng: " + osm.node[0].lon);
-        endLat = osm.node[0].lat;
-        endLng = osm.node[0].lon;
     }
 
     @Test
