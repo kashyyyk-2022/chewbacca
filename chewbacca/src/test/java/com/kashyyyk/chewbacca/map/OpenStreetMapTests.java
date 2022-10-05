@@ -31,12 +31,17 @@ public class OpenStreetMapTests {
         System.out.println("Lat: " + osm.node[0].lat +"Lng: " + osm.node[0].lon);
         endLat = osm.node[0].lat;
         endLng = osm.node[0].lon;
-
     }
 
     @Test
     public void testNodeTags() throws Exception{
         WaypointGenerator tmp = new WaypointGenerator();
+    }
+
+    @Test
+    public void testElevation() throws Exception{
+        WaypointGenerator tmp = new WaypointGenerator();
+        tmp.testElevation();
     }
 
 }
