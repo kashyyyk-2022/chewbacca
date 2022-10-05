@@ -35,7 +35,7 @@
         </style>
     </head>
 
-    <body onload="onload()">
+    <body onload="onload()" class="d-flex flex-column min-vh-100">
 
     <div class="container">
 
@@ -219,25 +219,25 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="row p-2">
-        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
-        </div>
-
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Only include routes accesible to people with disabilties
-                    <!--TODO update text and inform what this includes-->
-                </label>
+        <div class="row p-2">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+    
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Only include routes accesible to people with disabilties
+                        <!--TODO update text and inform what this includes-->
+                    </label>
+                </div>
+            </div>
+    
+    
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
             </div>
         </div>
 
-
-        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-        </div>
     </div>
 
     <div class="container w-100 mt-auto pb-2">
@@ -245,8 +245,12 @@
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" onclick="setCookie('routeID', '1', 9000);generateRoute();">
+                <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" disabled onclick="setCookie('routeID', '1', 9000);generateRoute();">
                     Generate route
+                </div>
+                
+                <div class="w-100 btn btn-secondary btn-md" id="generate-route-button-waiting" role="button" disabled>
+                    Waiting for location...
                 </div>
             </div>
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -269,6 +273,12 @@
     </footer>
     
     <script>
+        let hasLocation = false;
+
+        // Hide the generate button if the user has not selected a location
+        document.getElementById("generate-route-button").style.display = "none";
+        document.getElementById("generate-route-button-waiting").style.display = "block";
+
         function onload(){
             let cookie = getCookie("hours", "0");
             document.getElementById("customHours").value = cookie;
@@ -330,7 +340,25 @@
         }
 
         function generateRoute(){
-            window.location.href = "/loading";
+            if (!hasLocation) {
+                alert("We have been unable to find your location, plase try again later");
+                return;
+            }
+
+            let lat = getCookie("locationLat", "0");
+            let lon = getCookie("locationLon", "0");
+            let hours = document.getElementById("hours").value;
+            let minutes = document.getElementById("minutes").value;
+            let distance = document.getElementById("distance").value;
+            let elevation = document.getElementById("elevation").value;
+            let terrain = document.getElementById("Terrain").value;
+            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
+            $.get(url, function(data) {
+                let routeId = data.id;
+                setCookie("routeID", routeId, 1);
+
+                window.location.href = "/loading";
+            }, "json");
         }
 
         function success(pos){
@@ -338,7 +366,12 @@
             setCookie("locationLon", pos.coords.longitude, 9000);
             document.getElementById("lat").value = pos.coords.latitude;
             document.getElementById("lon").value = pos.coords.longitude;
-            console.log("Hello!");
+            
+            if (!hasLocation) {
+                hasLocation = true;
+                document.getElementById("generate-route-button").style.display = "block";
+                document.getElementById("generate-route-button-waiting").style.display = "none";
+            }
         }
 
 
@@ -348,6 +381,7 @@
 
 
     <!-- länk till js bibliotek -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>
     <script type = "text/javascript" src="/locationHandler.js"></script>

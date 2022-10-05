@@ -58,12 +58,12 @@
 
 
 <script>
-  <!-- Script to be executed when page is loaded-->
   function onload(){
     toggleDarkMode();
 
     setInterval(function() {
-      $.get("route-api/done?id=1234", function(data){
+      let routeID = getCookie("routeID");
+      $.get("route-api/done?id=" + routeID, function(data){
         if(data.done){
           window.location = "current-route"
         }

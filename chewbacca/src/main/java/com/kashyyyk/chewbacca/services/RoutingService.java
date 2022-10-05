@@ -24,7 +24,7 @@ public class RoutingService {
      * @param terrain           the terrain type of the route
      * @return                  the id of the new route
      */
-    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, int terrain) {
+    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) {
         var id = storage.newRoute();
 
         executorService.submit(() -> {
@@ -38,7 +38,7 @@ public class RoutingService {
 
             // Set the route to done
             storage.setRouteDone(id, true);
-            
+
             storage.setRoute(id, new double[][] { 
                 { 57.68939495267853, 11.974072522154591 }, 
                 { 57.690375578417566, 11.973305940628054 }, 
