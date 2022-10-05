@@ -22,19 +22,19 @@
         "distance_info": "Distancia restante",
         "time_info": "Tiempo aproximado restante",
 
-        "time_hours_slider": "Time in hours",
-        "time_minutes_slider": "Time in minutes",
-        "length_slider": "Length",
-        "elevation_slider": "Elevation",
-        "urban_button": "Urban",
-        "nature_button": "Nature",
-        "water_button": "Water",
-        "accesible_disabilities": "Only include a route accesible to people with disabilties",
-        "generate_route_button": "Generate route",
-        "disable_checkbox": "Disable",
-        "hours": "Hours: ",
-        "minutes": "Minutes: ",
-        "distance": "Distance: ",
-        "elevation": "Elevation: "
+        "time_hours_slider": "Tiempo en horas",
+        "time_minutes_slider": "Tiempo en minutes",
+        "length_slider": "Distancia",
+        "elevation_slider": "Elevación",
+        "urban_button": "Urbano",
+        "nature_button": "Naturaleza",
+        "water_button": "Agua",
+        "accesible_disabilities": "Incluir únicamente rutas accesibles a deshabilitados",
+        "generate_route_button": "Generar ruta",
+        "disable_checkbox": "Deshabilitar",
+        "hours": "Horas: ",
+        "minutes": "Minutos: ",
+        "distance": "Distancia: ",
+        "elevation": "Elevación: "
     }
 }
