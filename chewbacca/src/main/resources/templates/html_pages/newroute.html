@@ -41,7 +41,14 @@
 
         <div class="d-grid gap-3">
             <div class="row p-4">
-                <h1 class="text-center">New route</h1>
+                <h2 class="text-center">
+                    Lat:
+                    <output id="lat"></output>
+                </h2>
+                <h2 class="text-center">
+                    Lon:
+                    <output id="lon"></output>
+                </h2>
             </div>
 
             <div class="row p-0">
@@ -270,7 +277,7 @@
             document.getElementById("minutes").value = cookie;
 
             cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = cookie;
+            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
             document.getElementById("distance").value = cookie;
 
             cookie = getCookie("elevation", "0");
@@ -310,8 +317,8 @@
 
         function setDistance(distance){
             setCookie("distance", distance, 9000);
-            document.getElementById("distance").value = distance;
-            document.getElementById("customDistance").value = distance;
+            document.getElementById("distance").value = parseFloat(distance).toFixed(1);
+            document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
         }
 
         function setElevation(elevation){
@@ -327,14 +334,13 @@
         function success(pos){
             setCookie("locationLat", pos.coords.latitude, 9000);
             setCookie("locationLon", pos.coords.longitude, 9000);
+            document.getElementById("lat").value = pos.coords.latitude;
+            document.getElementById("lon").value = pos.coords.longitude;
             console.log("Hello!");
         }
 
 
     </script>
-
-
-
 
     <!-- länk till js bibliotek -->
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
