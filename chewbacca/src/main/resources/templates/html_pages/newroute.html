@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
   }
 
-  .city
+  .urban
   {
     background-image: url('https://media.istockphoto.com/photos/professional-use-auto-advertising-backplate-picture-id619498880?b=1&k=20&m=619498880&s=170667a&w=0&h=bExMHjkoS4WIlZ7QWZlHePlVvroStbiGi8WjICodRGY=');
 
@@ -49,13 +49,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Time in hours</label>
+                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time in hours</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableTime">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <!--TODO save hours in cookie(?)-->
+
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="setHours(this.value)">
                 </div>
@@ -83,9 +83,8 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <!--TODO save minutes in cookie(?)-->
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customMin" class="form-label">Time in minutes</label>
+                    <label for="customMin" th:text="${time_minutes_slider}" class="form-label">Time in minutes</label>
                     <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="setMinutes(this.value)">
                 </div>
 
@@ -99,13 +98,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Length in kilometers</label>
+                    <label for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableLength">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -133,13 +132,13 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" class="form-label">Elevation in meters</label>
+                    <label for="customDistance" th:text="${elevation_slider}" class="form-label">Elevation in meters</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableElevation">
-                        <label class="form-check-label">Disable</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable</label>
                     </div>
                 </div>
 
@@ -167,13 +166,13 @@
                     </div>
                     <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
-                            Hours:
+                            <label for="new-route-button" th:text="${hours}"></label>
                             <output id="hours">0</output>
-                            Minutes:
+                            <label for="new-route-button" th:text="${minutes}"></label>
                             <output id="minutes">0</output>
-                            Distance:
+                            <label for="new-route-button" th:text="${distance}"></label>
                             <output id="distance">0</output>
-                            Elevation:
+                            <label for="new-route-button" th:text="${elevation}"></label>
                             <output id="elevation">0</output>
                         </div>
                     </div>
@@ -191,18 +190,18 @@
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Terrain" id="Terrain">
 
-                        <input type="radio" class="btn-check" name="btnradio" id="city" onClick="setCookie('terrain', 'city', 365)">
-                        <label class="btn btn-outline-primary city" for="city">City</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="urban" onClick="setCookie('terrain', 'urban', 365)">
+                        <label class="btn btn-outline-primary urban" th:text="${urban_button}" for="urban">Urban</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="nature" onClick="setCookie('terrain', 'nature', 365)">
-                        <label class="btn btn-outline-primary nature" for="nature">Nature</label>
+                        <label class="btn btn-outline-primary nature" th:text="${nature_button}"for="nature">Nature</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="water" onClick="setCookie('terrain', 'water', 365)">
-                        <label class="btn btn-outline-primary water" for="water">Water</label>
+                        <label class="btn btn-outline-primary water" th:text="${water_button}"for="water">Water</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="disableTerrain">
-                        <label class="form-check-label">Disable terrain</label>
+                        <label class="form-check-label" th:text="${disable_checkbox}">Disable terrain</label>
                     </div>
 
                 </div>
@@ -221,9 +220,8 @@
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault" th:text="${accesible_disabilities}">
                     Only include routes accesible to people with disabilties
-                    <!--TODO update text and inform what this includes-->
                 </label>
             </div>
         </div>
@@ -239,7 +237,7 @@
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" onclick="setCookie('routeID', '1', 9000);generateRoute();">
-                    Generate route
+                    <label for="generate-route-button" th:text="${generate_route_button}"></label>
                 </div>
             </div>
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -281,8 +279,8 @@
 
             cookie = getCookie("terrain", "0");
             document.getElementById("Terrain").value = cookie;
-            if (cookie === "city") {
-                document.getElementById("city").checked = true;
+            if (cookie === "urban") {
+                document.getElementById("urban").checked = true;
             } else if (cookie === "nature") {
                 document.getElementById("nature").checked = true;
             } else if (cookie === "water") {
