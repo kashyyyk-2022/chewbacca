@@ -20,6 +20,21 @@
         "route_info": "Ruttinformation",
         "height_info": "Höjdskillnad",
         "distance_info": "Kvarvarande sträcka",
-        "time_info": "Ungefärlig tid kvar"
+        "time_info": "Ungefärlig tid kvar",
+
+        "time_hours_slider": "Tid i timmar",
+        "time_minutes_slider": "Tid i minuter",
+        "length_slider": "Längd",
+        "elevation_slider": "Höjdskillnad",
+        "urban_button": "Stad",
+        "nature_button": "Natur",
+        "water_button": "Vatten",
+        "accesible_disabilities": "Inkludera endast en rutt som är tillgängliga för människor med funktionshinder  ",
+        "generate_route_button": "Generera rutt",
+        "disable_checkbox": "inaktivera",
+        "hours": "Timmar: ",
+        "minutes": "Minuter: ",
+        "distance": "Distans: ",
+        "elevation": "Höjdskillnad: "
     }
 }
