@@ -10,7 +10,16 @@ public class WaypointGenerator {
     private double totalDistance;
     private double halfDistance;
     private double totalElevation;
-    //Create a preference type variable (ENUM)????? .
+    //Create a preference type variable (ENUM)?????.
+
+    private static String[] Terrains_Urban = {};
+    private static String[] Terrains_Nature = {};
+    private static String[] Terrains_Water = {};
+
+    private static String[][] Terrains = {
+        Terrains_Urban, Terrains_Nature, Terrains_Water
+    };
+
 
     private double startLat;
     private double startLon;
@@ -107,7 +116,7 @@ public class WaypointGenerator {
         while(!routeDone){
             OsrmResult osrm = OpenSourceRoutingMachine.getRoute(tempLat, tempLon, endLat, endLon);
             System.out.println(osrm.routes[0].distance);
-            if(checkDistance(tempLat, tempLon, endLat, endLon) && checkElevation() && checkTerrain()){
+            if(checkDistance(tempLat, tempLon, endLat, endLon) && checkElevation() && checkTerrain(osm.node[currentNode], terrain)){
                 for(int i = 0; i < osrm.routes.length; i++){
                     var route = osrm.routes[i];
                     // For each leg in the route
@@ -179,8 +188,22 @@ public class WaypointGenerator {
     }
 
     //TODO: Create a system that checks if the waypoint is considered a preferred terrain.
-    private boolean checkTerrain(){
-        return true;
+    private boolean checkTerrain(Osm.Node n, String terrain){
+        int a = 0;
+        switch (terrain) {
+            case "Urban" -> a = 0;
+            case "Nature" -> a = 1;
+            case "Water" -> a = 2;
+        }
+        int i = 0;
+        while(n.tag[i] != null) {
+            if(Terrains[a][0].contains(n.tag[i].v)) {
+                return true;
+            }
+            i++;
+        }
+
+        return false;
     }
 
     public Iterator<Waypoint> getIterator() {
