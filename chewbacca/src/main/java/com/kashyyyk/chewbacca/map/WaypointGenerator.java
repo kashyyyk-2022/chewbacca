@@ -46,9 +46,11 @@ public class WaypointGenerator {
     }
 
 
+    public final boolean testing = false;
+
     /**
      * This constructor call should generate a waypoint that fulfills all our preferences and criterias.
-     *
+     * @param length -should be 0 if length is not specified by user. In this case time will be used instead
      * Needs to be done:
      *  - checkDistance
      *  - checkElevation
@@ -56,8 +58,6 @@ public class WaypointGenerator {
      *
      * @throws IOException
      */
-
-    public final boolean testing = false;
 
     public WaypointGenerator(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) throws Exception {
         if(testing){
@@ -70,7 +70,7 @@ public class WaypointGenerator {
         else{
             this.startLat = startLat;
             this.startLon = startLon;
-            this.totalDistance = length * 1000;
+            this.totalDistance = length!=0 ? length * 1000 : timeToDistance(timeHours,timeMinutes);
             this.totalElevation = elevation;
             this.halfDistance = totalDistance/2;
         }
@@ -204,6 +204,11 @@ public class WaypointGenerator {
         }
 
         return false;
+    }
+
+    //method to get distance in meters by using time and average walking speed 5 km/h
+    private double timeToDistance(double hour,double minutes){
+        return (hour+minutes/60)*5*1000;
     }
 
     public Iterator<Waypoint> getIterator() {
