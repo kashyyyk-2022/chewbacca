@@ -53,5 +53,39 @@ public class Point {
                 this.longitude + (dx/R_EARTH)*((180/Math.PI)/Math.cos(this.latitude*(Math.PI/180))));
     }
 
+    /**
+     * Calculates the distance between two points in kilometers.
+     * 
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @return The distance between the two points in kilometers.
+     */
+    public static double distance(Point p1, Point p2){
+        double lat1 = p1.getLatitude();
+        double lat2 = p2.getLatitude();
+        double lon1 = p1.getLongitude();
+        double lon2 = p2.getLongitude();
+        double dLat = (lat2-lat1)*(Math.PI/180);
+        double dLon = (lon2-lon1)*(Math.PI/180);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1*(Math.PI/180)) * Math.cos(lat2*(Math.PI/180)) *
+                        Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R_EARTH * c;
+    }
+
+    /**
+     * Get a comparable distance between two points. This method is a lot
+     * faster than distance(Point p1, Point p2) but doesn't give a value which
+     * represents any tangible distance, just a value which can be used to
+     * compare distances between two points.
+     * 
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @return A comparable distance between the two points.
+     */
+    public static double comparableDistance(Point p1, Point p2){
+        return Math.abs(p1.getLatitude() - p2.getLatitude()) + Math.abs(p1.getLongitude() - p2.getLongitude());
+    }
 
 }

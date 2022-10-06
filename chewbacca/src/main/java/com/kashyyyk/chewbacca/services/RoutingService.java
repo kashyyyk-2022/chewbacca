@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.kashyyyk.chewbacca.map.Point;
 import com.kashyyyk.chewbacca.map.WaypointGenerator;
+import com.kashyyyk.chewbacca.map.rstar.RoutingStar;
 
 public class RoutingService {
     private RoutingStorage storage;
@@ -33,19 +35,34 @@ public class RoutingService {
 
         executorService.submit(() -> {
             try {
-                final WaypointGenerator generator = new WaypointGenerator(startLat, startLon, length, timeHours, timeMinutes, elevation, terrain);
+                //final WaypointGenerator generator = new WaypointGenerator(startLat, startLon, length, timeHours, timeMinutes, elevation, terrain);
                 
+                var rstar = new RoutingStar();
+                rstar.start = new Point(startLat, startLon);
+                rstar.idealDistance = (float) length * 1000;
+                //rstar.idealTerrain = new String[] { terrain };
+                rstar.distanceBias = 1;
+                rstar.distanceToStartBias = 2f;
+                rstar.elevationBias = 1;
+                rstar.terrainBias = 0.01f;
+                rstar.surfaceBias = 1;
+                rstar.seed = 0;
+
+                rstar.Initialize();
+
+                var points = rstar.getRoute();
+
                 // Set the route to done
                 storage.setRouteDone(id, true);
 
-                LinkedList<WaypointGenerator.Waypoint> points = generator.getRoute();
+                //LinkedList<WaypointGenerator.Waypoint> points = generator.getRoute();
 
                 // Extract the route from the waypoints into a 2D array
                 double[][] route = new double[points.size()][2];
                 int i = 0;
-                for (WaypointGenerator.Waypoint point : points) {
-                    route[i][0] = point.getLat();
-                    route[i][1] = point.getlon();
+                for (Point point : points) {
+                    route[i][0] = point.getLatitude();
+                    route[i][1] = point.getLongitude();
                     i++;
                 }
 
