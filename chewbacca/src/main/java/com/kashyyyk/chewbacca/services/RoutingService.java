@@ -22,7 +22,8 @@ public class RoutingService {
      * @param startLat          the latitude of the start point
      * @param startLon          the longitude of the start point
      * @param length            the length of the route
-     * @param time              the time of the route
+     * @param timeHours         the time of the route in hours
+     * @param timeMinutes       the time of the route in minutes
      * @param elevation         the elevation of the route
      * @param terrain           the terrain type of the route
      * @return                  the id of the new route
