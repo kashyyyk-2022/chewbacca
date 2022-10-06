@@ -12,9 +12,9 @@ public class WaypointGenerator {
     private double totalElevation;
     //Create a preference type variable (ENUM)?????.
 
-    private static String[] Terrains_Urban = {};
-    private static String[] Terrains_Nature = {};
-    private static String[] Terrains_Water = {};
+    private static String[] Terrains_Urban = {"city","residential","urban"};
+    private static String[] Terrains_Nature = {"wood","forest"};
+    private static String[] Terrains_Water = {"water","coastline","ocean"};
 
     private static String[][] Terrains = {
         Terrains_Urban, Terrains_Nature, Terrains_Water
