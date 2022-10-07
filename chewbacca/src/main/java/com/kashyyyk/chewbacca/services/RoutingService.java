@@ -39,14 +39,18 @@ public class RoutingService {
                 
                 var rstar = new RoutingStar();
                 rstar.start = new Point(startLat, startLon);
-                rstar.idealDistance = (float) length * 1000;
+                rstar.idealDistance = length;
                 //rstar.idealTerrain = new String[] { terrain };
-                rstar.distanceBias = 1;
-                rstar.distanceToStartBias = 2f;
+                rstar.distanceBias = 1f;
+                rstar.distanceToStartBias = 0.01f;
                 rstar.elevationBias = 1;
-                rstar.terrainBias = 0.01f;
+                rstar.terrainBias = 2f;
                 rstar.surfaceBias = 1;
                 rstar.seed = 0;
+
+                if (timeMinutes == 5) {
+                    rstar.start = new Point(57.67437, 11.95678);
+                }
 
                 rstar.Initialize();
 

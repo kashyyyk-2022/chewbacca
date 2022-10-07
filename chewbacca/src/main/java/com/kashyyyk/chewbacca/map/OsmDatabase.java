@@ -15,7 +15,7 @@ public class OsmDatabase {
     /**
      * The size of the download area in kilometers
      */
-    private final double DOWNLOAD_SIZE = 0.5;
+    private final double DOWNLOAD_SIZE = 1;
 
     /**
      * HashMap of all nodes
@@ -358,7 +358,7 @@ public class OsmDatabase {
             }
             // Get the node
 
-            nodes.add(getNode(member.ref));
+            //nodes.add(getNode(member.ref));
         }
 
         // Convert the list to an array

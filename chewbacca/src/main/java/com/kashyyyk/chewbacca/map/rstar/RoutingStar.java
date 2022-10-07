@@ -3,6 +3,7 @@ package com.kashyyyk.chewbacca.map.rstar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RoutingStar {
     /**
      * The ideal distance of the route
      */
-    public float idealDistance;
+    public double idealDistance;
 
     /**
      * The ideal terrain of the route
@@ -107,7 +108,7 @@ public class RoutingStar {
     /**
      * The priority queue
      */
-    private PriorityQueue<RNode> priorityQueue;
+    private PriorityQueue<REntry> priorityQueue;
 
     /**
      * Visited nodes
@@ -120,7 +121,8 @@ public class RoutingStar {
      * @return the route
      */
     public List<Point> getRoute() {
-        var result = new ArrayList<Point>();
+        return route;
+        /*var result = new ArrayList<Point>();
 
         var previous = route.get(0);
         // Use OSRM to get the route between the points
@@ -132,7 +134,7 @@ public class RoutingStar {
             previous = current;
         }
 
-        return result;
+        return result;*/
     }
 
     /**
@@ -162,60 +164,20 @@ public class RoutingStar {
 
         database.downloadData(start);
 
-        var features = graph.getFeatures("water");
+        var origin = graph.findNearestNode(start);
 
-        var nearest = graph.findNearestNode(start);
+        start = runRStar(null).node.point;
 
-        priorityQueue = new PriorityQueue<RNode>((a, b) -> {
-            var pa = Point.comparableDistance(a.point, start) * distanceToStartBias;
-            pa += getClosestFeaturePoint(a.point, features) * terrainBias;
+        distanceToStartBias = 1;
+        terrainBias = 0;
 
-            var pb = Point.comparableDistance(b.point, start) * distanceToStartBias;
-            pb += getClosestFeaturePoint(b.point, features) * terrainBias;
+        /*runRStar(origin);
 
-            return (int) (pa * 1000 - pb * 1000);
-        });
+        route.remove(route.size() - 1);
+        route.remove(route.size() - 1);*/
 
-        priorityQueue.add(nearest);
+        //runAStar(start, origin.point);
 
-        var maxNodes = 3;
-
-        while (!priorityQueue.isEmpty())
-        {
-            var current = priorityQueue.poll();
-
-            if (current == null)
-            {
-                break;
-            }
-
-            if (visited.contains(current.id))
-            {
-                continue;
-            }
-
-            visited.add(current.id);
-
-            var connected = graph.getConnected(current);
-
-            if (connected.size() >= 3)
-            {
-                route.add(current.point);
-
-                start = current.point;
-            }
-
-            for (var node : connected)
-            {
-                priorityQueue.add(node);
-            }
-
-            if (route.size() >= maxNodes)
-            {
-                break;
-            }
-        }
-        
         /*
         var paths = database.queryWays("highway", "track", "path");
 
@@ -226,6 +188,110 @@ public class RoutingStar {
                 route.add(new Point(node.lat, node.lon));
             }
         } */
+    }
+
+    private REntry runRStar(RNode destionation) throws IOException {
+        var features = graph.getFeatures("water");
+
+        var nearest = graph.findNearestNode(start);
+
+        visited.clear();
+
+        priorityQueue = new PriorityQueue<REntry>(Comparator.comparingDouble((REntry entry) -> {
+            if (destionation != null) {
+                return Point.comparableDistance(entry.node.point, destionation.point);
+            }
+
+            double p = entry.cost;
+            p += distanceToStartBias * Point.comparableDistance(entry.node.point, start);
+            p += terrainBias * getClosestFeaturePoint(entry.node.point, features);
+            return p;
+        }));
+
+        priorityQueue.add(new REntry(
+            nearest,
+            0,
+            null,
+            0,
+            null
+        ));
+
+        int iterations = 0;
+
+        REntry end = null;
+
+        int maxDownloads = 10;
+
+        while (!priorityQueue.isEmpty())
+        {
+            iterations++;
+
+            final var currentEntry = priorityQueue.poll();
+            final var current = currentEntry.node;
+
+            if (visited.contains(current.id)) {
+                continue;
+            }
+
+            visited.add(current.id);
+
+            end = currentEntry;
+
+            if (destionation != null && current == destionation) {
+                break;
+            }
+
+            if (currentEntry.distance > idealDistance || Point.distance(start, current.point) > idealDistance / 2) {
+                break;
+            }
+
+            double p = currentEntry.cost;
+            p += distanceToStartBias * Point.comparableDistance(current.point, start);
+            p += terrainBias * getClosestFeaturePoint(current.point, features);
+
+            var connected = graph.getConnected(current);
+
+            if (connected.size() == 1 && maxDownloads > 0) {
+                database.downloadData(current.point);
+
+                connected = graph.getConnected(current);
+
+                maxDownloads--;
+
+                System.out.println("Downloaded data");
+            }
+
+            for (RNode edgeNode : connected) {
+                final var cost = p;
+
+                final var edgeEntry = new REntry(
+                    edgeNode,
+                    cost,
+                    current,
+                    currentEntry.cost,
+                    currentEntry
+                );
+
+                edgeEntry.distance = currentEntry.distance + Point.distance(current.point, edgeNode.point);
+
+                priorityQueue.add(edgeEntry);
+            }
+        }
+
+        System.out.println("Iterations: " + iterations);
+
+        if (end != null) {
+            var current = end;
+
+            while (current != null) {
+                route.add(current.node.point);
+                current = current.previous;
+            }
+
+            Collections.reverse(route);
+        }
+
+        return end;
     }
 
     private static double getClosestFeaturePoint(Point point, Set<RFeature> features) {

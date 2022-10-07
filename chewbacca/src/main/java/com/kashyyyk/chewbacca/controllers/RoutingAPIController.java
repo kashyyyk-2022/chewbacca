@@ -50,9 +50,9 @@ public class RoutingAPIController {
         return new RouteAPIStartResponse(routingService.generateRoute(
             Double.parseDouble(lat),
             Double.parseDouble(lon),
+            Double.parseDouble(distance),
             Double.parseDouble(hours),
             Double.parseDouble(minutes),
-            Double.parseDouble(distance),
             Double.parseDouble(elevation),
             terrain
         ));
