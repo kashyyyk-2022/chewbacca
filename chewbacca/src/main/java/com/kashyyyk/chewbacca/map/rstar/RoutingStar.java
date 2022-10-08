@@ -160,16 +160,16 @@ public class RoutingStar {
 
         distance = 0;
 
-        // Testing
 
         database.downloadData(start);
 
         var origin = graph.findNearestNode(start);
 
+
         start = runRStar(null).node.point;
 
         distanceToStartBias = 1;
-        terrainBias = 0;
+        terrainBias = 1;
 
         /*runRStar(origin);
 
@@ -190,16 +190,15 @@ public class RoutingStar {
         } */
     }
 
-    private REntry runRStar(RNode destionation) throws IOException {
-        var features = graph.getFeatures("water");
-
+    private REntry runRStar(RNode destination) throws IOException {
+        var features = graph.getFeatures("water");  //todo Ensure that features is collected from graph
         var nearest = graph.findNearestNode(start);
 
         visited.clear();
 
         priorityQueue = new PriorityQueue<REntry>(Comparator.comparingDouble((REntry entry) -> {
-            if (destionation != null) {
-                return Point.comparableDistance(entry.node.point, destionation.point);
+            if (destination != null) {
+                return Point.comparableDistance(entry.node.point, destination.point);
             }
 
             double p = entry.cost;
@@ -237,7 +236,7 @@ public class RoutingStar {
 
             end = currentEntry;
 
-            if (destionation != null && current == destionation) {
+            if (destination != null && current == destination) {
                 break;
             }
 
@@ -294,14 +293,18 @@ public class RoutingStar {
         return end;
     }
 
+    /**
+     * @param point - point to check distance to feature
+     * @param features - set of all features that fulfill user demands
+     * @return distance to feature if the point is outside the feature area. 0 if point is within feature area.
+     */
     private static double getClosestFeaturePoint(Point point, Set<RFeature> features) {
         var closest = Double.MAX_VALUE;
-
-        for (var feature : features) {
+            for (var feature : features) {
             var closestPoint = feature.closestPoint(point);
-            if (closestPoint == null) continue;
-            var distance = Point.comparableDistance(point, closestPoint);
 
+            if (closestPoint == null) continue;
+            var distance = !feature.contains(point) ? Point.comparableDistance(point, closestPoint) : 0;
             if (distance < closest) {
                 closest = distance;
             }
