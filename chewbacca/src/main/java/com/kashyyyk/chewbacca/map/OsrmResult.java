@@ -66,6 +66,6 @@ public class OsrmResult {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Intersection {
-        public double[] location;
+        public double[] location; //Needs to convert to Lat and Lng alone.
     }
 }

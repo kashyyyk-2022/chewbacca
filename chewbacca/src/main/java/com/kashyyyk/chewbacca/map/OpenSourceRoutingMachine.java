@@ -1,6 +1,7 @@
 package com.kashyyyk.chewbacca.map;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -21,9 +22,9 @@ public final class OpenSourceRoutingMachine {
      * @param endLat        End latitude
      * @param endLon        End longitude
      * @return              Route
-     * @throws Exception    If the GET request fails
+     * @throws IOException  If the GET request fails
      */
-    public static OsrmResult getRoute(double startLat, double startLon, double endLat, double endLon) throws Exception {
+    public static OsrmResult getRoute(double startLat, double startLon, double endLat, double endLon) throws IOException {
         String url = String.format(ENDPOINT, startLon, startLat, endLon, endLat);
 
         // Download data from url
