@@ -13,7 +13,7 @@ $(document).ready(function() {
         var endPos = L.marker(waypoints[waypoints.length-1]).addTo(map);
         endPos._icon.classList.add("huechangeGoal");
 
-        for(let i = 0; i < waypoints.length; i++){
+        for(let i = 0; i < waypoints.length - 1; i++) {
             L.polyline([
                 waypoints[i],
                 waypoints[i+1]

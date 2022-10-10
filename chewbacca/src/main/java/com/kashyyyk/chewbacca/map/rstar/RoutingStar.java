@@ -96,6 +96,11 @@ public class RoutingStar {
     private ArrayList<Point> route;
 
     /**
+     * The current route in nodes
+     */
+    private ArrayList<Long> routeNodes;
+
+    /**
      * The current distance
      */
     private float distance;
@@ -156,6 +161,8 @@ public class RoutingStar {
 
         route = new ArrayList<Point>();
 
+        routeNodes = new ArrayList<Long>();
+
         visited = new HashSet<Long>();
 
         distance = 0;
@@ -166,15 +173,24 @@ public class RoutingStar {
         var origin = graph.findNearestNode(start);
 
 
-        start = runRStar(null).node.point;
+        var startNode = runRStar(null).node;
+
+        start = startNode.point;
 
         distanceToStartBias = 1;
         terrainBias = 1;
+        
+        visited.clear();
 
-        /*runRStar(origin);
+        // Add the ID of each node from the graph to the visited list
+        for (var node : routeNodes) {
+            visited.add(node);
+        }
 
-        route.remove(route.size() - 1);
-        route.remove(route.size() - 1);*/
+        visited.remove(startNode.id);
+        visited.remove(origin.id);
+        
+        runRStar(origin);
 
         //runAStar(start, origin.point);
 
@@ -194,7 +210,8 @@ public class RoutingStar {
         var features = graph.getFeatures("water");  //todo Ensure that features is collected from graph
         var nearest = graph.findNearestNode(start);
 
-        visited.clear();
+        
+        //visited.clear();
 
         priorityQueue = new PriorityQueue<REntry>(Comparator.comparingDouble((REntry entry) -> {
             if (destination != null) {
@@ -240,7 +257,7 @@ public class RoutingStar {
                 break;
             }
 
-            if (currentEntry.distance > idealDistance || Point.distance(start, current.point) > idealDistance / 2) {
+            if (destination == null && (currentEntry.distance > idealDistance || Point.distance(start, current.point) > idealDistance / 2)) {
                 break;
             }
 
@@ -284,10 +301,11 @@ public class RoutingStar {
 
             while (current != null) {
                 route.add(current.node.point);
+                routeNodes.add(current.node.id);
                 current = current.previous;
             }
 
-            Collections.reverse(route);
+            //Collections.reverse(route);
         }
 
         return end;
@@ -311,63 +329,6 @@ public class RoutingStar {
         }
 
         return closest;
-    }
-
-    /**
-     * Normal A* search
-     * 
-     * @param start the start node
-     * @param end   the end node
-     * @return the path
-     */
-    private List<Point> runAStar(Point start, Point end)
-    {
-        var points = new ArrayList<Point>();
-
-        try {
-            var osrm = OpenSourceRoutingMachine.getRoute(
-                start.getLatitude(), start.getLongitude(),
-                end.getLatitude(), end.getLongitude()
-            );
-
-            Point previous = null;
-
-            for(int i = 0; i < osrm.routes.length; i++){
-                var route = osrm.routes[i];
-                // For each leg in the route
-                for (int j = 0; j < route.legs.length; j++) {
-                    var leg = route.legs[j];
-                    // For each step in the leg
-                    for (int k = 0; k < leg.steps.length; k++) {
-                        var step = leg.steps[k];
-                        // For each intersection in the step
-                        for (int l = 0; l < step.intersections.length; l++) {
-                            var intersection = step.intersections[l];
-
-                            if (previous == null) {
-                                previous = new Point(intersection.location[1], intersection.location[0]);
-                                continue;
-                            }
-
-                            var closestA = graph.findNearestNode(new Point(intersection.location[1], intersection.location[0]));
-                            var closestB = graph.findNearestNode(previous);
-                            
-                            var path = graph.getWay(closestA, closestB);
-
-                            points.addAll(path);
-
-                            previous = new Point(intersection.location[1], intersection.location[0]);
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            points.add(start);
-            points.add(end);
-            e.printStackTrace();
-        }
-
-        return points;
     }
 
 }
