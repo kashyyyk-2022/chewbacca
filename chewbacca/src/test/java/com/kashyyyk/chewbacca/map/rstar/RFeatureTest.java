@@ -22,7 +22,7 @@ class RFeatureTest {
         assertEquals(true,rf.contains(p1));
         assertEquals(true,rf.contains(p2));
         assertEquals(false,rf.contains(p3));
-        System.out.println("Simple rectangle passed");
+        System.out.println("Test: Simple rectangle passed");
 
         Point[] points2={new Point(1,1),new Point(0,2),new Point(2,3), new Point(2,4),
                 new Point(3,5),new Point(5,4),new Point(4,3),new Point(4,2)};
@@ -31,7 +31,7 @@ class RFeatureTest {
 
         Point p4 = new Point(0,0);
         Point p5 = new Point(1,2);
-        Point p6 = new Point(3,3);
+        Point p6 = new Point(4,4);
         Point p7 = new Point(1,3);
 
         assertEquals(false,rf2.contains(p4));
@@ -39,6 +39,6 @@ class RFeatureTest {
         assertEquals(true,rf2.contains(p6));
         assertEquals(false,rf2.contains(p7));
 
-        System.out.println("Advanced polygon passed");
+        System.out.println("Test: Advanced polygon passed");
     }
 }
