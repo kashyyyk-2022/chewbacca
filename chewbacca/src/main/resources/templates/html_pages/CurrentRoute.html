@@ -66,7 +66,7 @@
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                <a class="btn btn-secondary w-100" type="back" id="back-button" href="/">
+                <a class="btn btn-secondary w-100" type="back" id="back-button" onclick="clearWatchPosition()" href="/">
                     <label for="back-button" th:text="${back_button}"></label>
                 </a>
             </div>
@@ -94,6 +94,11 @@
             document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
             document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
             document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+":"+getCookie("minutes","1")+ " h:m";
+
+            // checks if the goal is reached - if so the application stops watching the device's location
+            if (getCookie("distance", "1") === 0) {
+                clearWatchPosition();
+            }
         }
     </script>
 
@@ -102,6 +107,7 @@
         var currentpos;
         var marker;
         var circle;
+        var id;
 
         latlng = [57.68939495267853,11.974072522154591]; //Change later to my position.
         //var map = L.map('map').setView([57.706, 11.937], 13);
@@ -119,14 +125,8 @@
             console.log("Your browser does not support this geolocation feature:(")
         }
         else {
-            /*
-                setInterval(() => {
-                    navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
-                }, 1000);
-
-             */
             // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
-            navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
+            id = navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
         }
 
         function getPosition(position) {
@@ -154,6 +154,11 @@
                 3: 'Request timeout'
             };
             alert("Error: " + errors[error.code]);
+        }
+
+        // function to clearWatch when user return to main menu
+        function clearWatchPosition() {
+            navigator.geolocation.clearWatch(id);
         }
     </script>
 
