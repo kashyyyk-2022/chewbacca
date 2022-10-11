@@ -1,11 +1,9 @@
 package com.kashyyyk.chewbacca.services;
 
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.kashyyyk.chewbacca.map.Point;
-import com.kashyyyk.chewbacca.map.WaypointGenerator;
 import com.kashyyyk.chewbacca.map.rstar.RoutingStar;
 
 public class RoutingService {
@@ -99,5 +97,25 @@ public class RoutingService {
      */
     public double[][] getRoute(String id) {
         return storage.getRoute(id);
+    }
+
+    /**
+     * Get the start of the route with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the start of the route
+     */
+    public double[] getRouteStart(String id) {
+        return storage.getRouteStart(id);
+    }
+
+    /**
+     * Get the end of the route with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the end of the route
+     */
+    public double[] getRouteEnd(String id) {
+        return storage.getRouteEnd(id);
     }
 }

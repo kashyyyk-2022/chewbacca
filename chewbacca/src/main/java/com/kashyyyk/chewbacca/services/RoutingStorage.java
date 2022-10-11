@@ -28,6 +28,22 @@ public interface RoutingStorage {
     public double[][] getRoute(String id);
 
     /**
+     * Get the start of the route with the given id
+     * 
+     * @param id the id of the route
+     * @return the start of the route
+     */
+    public double[] getRouteStart(String id);
+
+    /**
+     * Get the end of the route with the given id
+     * 
+     * @param id the id of the route
+     * @return the end of the route
+     */
+    public double[] getRouteEnd(String id);
+
+    /**
      * Set if the route is done
      * 
      * @param id the id of the route
@@ -42,6 +58,22 @@ public interface RoutingStorage {
      * @param route the route
      */
     public void setRoute(String id, double[][] route);
+
+    /**
+     * Set the start of the route with the given id
+     * 
+     * @param id    the id of the route
+     * @param start the start of the route
+     */
+    public void setRouteStart(String id, double[] start);
+
+    /**
+     * Set the end of the route with the given id
+     * 
+     * @param id  the id of the route
+     * @param end the end of the route
+     */
+    public void setRouteEnd(String id, double[] end);
 
     /**
      * Delete the route with the given id

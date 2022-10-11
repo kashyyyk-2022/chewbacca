@@ -121,6 +121,16 @@ public class RoutingStar {
     private HashSet<Long> visited;
 
     /**
+     * The start of the route
+     */
+    private Point startPoint;
+
+    /**
+     * The end of the route
+     */
+    private Point endPoint;
+
+    /**
      * Get the route
      * 
      * @return the route
@@ -140,6 +150,24 @@ public class RoutingStar {
         }
 
         return result;*/
+    }
+
+    /**
+     * Get the start point
+     * 
+     * @return the start point
+     */
+    public Point getStartPoint() {
+        return startPoint;
+    }
+
+    /**
+     * Get the end point
+     * 
+     * @return the end point
+     */
+    public Point getEndPoint() {
+        return endPoint;
     }
 
     /**
@@ -167,13 +195,15 @@ public class RoutingStar {
 
         distance = 0;
 
-
         database.downloadData(start);
 
         var origin = graph.findNearestNode(start);
 
+        startPoint = origin.point;
 
         var startNode = runRStar(null).node;
+
+        endPoint = startNode.point;
 
         start = startNode.point;
 

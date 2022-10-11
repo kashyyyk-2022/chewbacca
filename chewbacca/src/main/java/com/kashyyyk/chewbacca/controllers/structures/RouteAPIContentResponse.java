@@ -21,16 +21,28 @@ public class RouteAPIContentResponse {
     private double[][] route;
 
     /**
+     * The start of the route
+     */
+    private double[] start;
+
+    /**
+     * The end of the route
+     */
+    private double[] end;
+
+    /**
      * Create a new route content response
      * 
      * @param id    the id of the route
      * @param done  if the route is done
      * @param route the route
      */
-    public RouteAPIContentResponse(String id, boolean done, double[][] route) {
+    public RouteAPIContentResponse(String id, boolean done, double[][] route, double[] start, double[] end) {
         this.id = id;
         this.done = done;
         this.route = route;
+        this.start = start;
+        this.end = end;
     }
 
     /**
@@ -85,5 +97,23 @@ public class RouteAPIContentResponse {
      */
     public void setRoute(double[][] route) {
         this.route = route;
+    }
+
+    /**
+     * Get the start of the route
+     * 
+     * @return the start of the route
+     */
+    public double[] getStart() {
+        return start;
+    }
+
+    /**
+     * Set the start of the route
+     * 
+     * @param start the new start of the route
+     */
+    public void setStart(double[] start) {
+        this.start = start;
     }
 }
