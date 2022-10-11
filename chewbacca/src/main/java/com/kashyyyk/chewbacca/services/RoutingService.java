@@ -57,6 +57,12 @@ public class RoutingService {
                 // Set the route to done
                 storage.setRouteDone(id, true);
 
+                var start = rstar.getStartPoint();
+                var end = rstar.getEndPoint();
+
+                storage.setRouteStart(id, new double[] { start.getLatitude(), start.getLongitude() });
+                storage.setRouteEnd(id, new double[] { end.getLatitude(), end.getLongitude() });
+
                 //LinkedList<WaypointGenerator.Waypoint> points = generator.getRoute();
 
                 // Extract the route from the waypoints into a 2D array

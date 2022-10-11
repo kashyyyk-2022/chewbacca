@@ -7,10 +7,10 @@ $(document).ready(function() {
         const waypoints = data.route; // 2D array of coordinates
         
         //Marks the first position (start) in the array with a blue marker.
-        var startPos = L.marker(waypoints[0]).addTo(map); //NOT THE CURRENT POSITION, ONLY A MOCK POS.
+        var startPos = L.marker(data.start).addTo(map); //NOT THE CURRENT POSITION, ONLY A MOCK POS.
         startPos._icon.classList.add("huechangeStart");
         //Marks the last position (goal) in the array with a red marker.
-        var endPos = L.marker(waypoints[waypoints.length-1]).addTo(map);
+        var endPos = L.marker(data.end).addTo(map);
         endPos._icon.classList.add("huechangeGoal");
 
         for(let i = 0; i < waypoints.length - 1; i++) {

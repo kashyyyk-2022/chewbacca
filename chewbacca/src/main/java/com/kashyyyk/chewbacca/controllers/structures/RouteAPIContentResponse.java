@@ -116,4 +116,22 @@ public class RouteAPIContentResponse {
     public void setStart(double[] start) {
         this.start = start;
     }
+
+    /**
+     * Get the end of the route
+     * 
+     * @return the end of the route
+     */
+    public double[] getEnd() {
+        return end;
+    }
+
+    /**
+     * Set the end of the route
+     * 
+     * @param end the new end of the route
+     */
+    public void setEnd(double[] end) {
+        this.end = end;
+    }
 }
