@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import com.kashyyyk.chewbacca.map.OsmDatabase;
 import com.kashyyyk.chewbacca.map.OsmGraph;
@@ -180,6 +181,15 @@ public class RoutingStarGraph implements OsmGraph {
         }
 
         return nearest;
+    }
+
+    @Override
+    public void processElevations(Map<Long, Double> elevations) {
+        for (var node : nodes.values()) {
+            if (elevations.containsKey(node.id)) {
+                node.elevation = elevations.get(node.id);
+            }
+        }
     }
     
 }

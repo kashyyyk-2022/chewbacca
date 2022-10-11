@@ -41,7 +41,7 @@ public class RoutingService {
                 //rstar.idealTerrain = new String[] { terrain };
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
-                rstar.elevationBias = 1;
+                rstar.elevationBias = -0.5 + (elevation / 500.0);
                 rstar.terrainBias = 2f;
                 rstar.surfaceBias = 1;
                 rstar.seed = 0;

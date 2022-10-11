@@ -63,7 +63,7 @@ public class RoutingStar {
     /**
      * The bias for the elevation
      */
-    public float elevationBias;
+    public double elevationBias;
 
     /**
      * The bias for the terrain
@@ -251,6 +251,7 @@ public class RoutingStar {
             double p = entry.cost;
             p += distanceToStartBias * Point.comparableDistance(entry.node.point, start);
             p += terrainBias * getClosestFeaturePoint(entry.node.point, features);
+            p += elevationBias * entry.node.elevation;
             return p;
         }));
 

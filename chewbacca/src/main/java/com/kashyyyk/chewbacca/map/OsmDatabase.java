@@ -110,6 +110,9 @@ public class OsmDatabase {
             graph.processNode(node);
         }
 
+        var newNodes = new ArrayList<Long>();
+        var newPoints = new ArrayList<Double>();
+
         // Add ways
         for (Way way : osm.way) {
             if (ways.containsKey(way.id)) continue;
@@ -117,7 +120,112 @@ public class OsmDatabase {
             ways.put(way.id, way);
 
             graph.processWay(way);
+
+            var nodes = getNodes(way);
+
+            for (var node : nodes) {
+                newNodes.add(node.id);
+                newPoints.add(node.lat);
+                newPoints.add(node.lon);
+            }
+            
+            /*
+            newNodes.add(nodes[0].id);
+            newPoints.add(nodes[0].lat);
+            newPoints.add(nodes[0].lon);
+
+            newNodes.add(nodes[nodes.length - 1].id);
+            newPoints.add(nodes[nodes.length - 1].lat);
+            newPoints.add(nodes[nodes.length - 1].lon);
+            */
         }
+
+        var elevationGrid = new HashMap<Point, Double>();
+        var elevationList = new ArrayList<Point>();
+        var elevationPoints = new ArrayList<Double>();
+
+        // Devide the new nodes into grids
+        for (var i = 0; i < newNodes.size(); i++) {
+            var lat = newPoints.get(i * 2);
+            var lon = newPoints.get(i * 2 + 1);
+            
+            // Round to 3 decimal places
+            var point = new Point((int) (lat * 1000), (int) (lon * 1000));
+
+            if (!elevationGrid.containsKey(point)) {
+                elevationGrid.put(point, 0.0);
+                elevationPoints.add(lat);
+                elevationPoints.add(lon);
+                elevationList.add(point);
+            }
+        }
+
+        System.out.println("Downloading elevations for " + elevationList.size() + " nodes");
+
+        // Add elevations
+        // Get the elvation in batches of 100
+        for (int i = 0; i < elevationList.size(); i += 100) {
+            var points = new ArrayList<Point>();
+            var latlon = new ArrayList<Double>();
+
+            for (int j = 0; j < 100 && i + j < elevationList.size(); j++) {
+                points.add(elevationList.get(i + j));
+                latlon.add(elevationPoints.get((i + j) * 2));
+                latlon.add(elevationPoints.get((i + j) * 2 + 1));
+            }
+
+            var fails = 0;
+
+            while (true)
+            {
+                try {
+                    var batchElevations = OpenElevation.getElevation(latlon);
+    
+                    for (int j = 0; j < points.size(); j++) {
+                        elevationGrid.put(points.get(j), batchElevations[j]);
+                    }
+                    
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println("Downloaded elevations for " + (i + 100) + " / " + elevationList.size() + " nodes");
+
+                    break;
+                } catch (IOException ei) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    fails++;
+
+                    System.out.println("Failed to download elevations for " + elevationList.size() + " nodes, retrying (" + fails + ")");
+
+                    if (fails > 10) {
+                        throw ei;
+                    }
+                }
+            }
+        }
+
+        var elevations = new HashMap<Long, Double>();
+
+        for (var i = 0; i < newNodes.size(); i++) {
+            var node = nodes.get(newNodes.get(i));
+            var lat = newPoints.get(i * 2);
+            var lon = newPoints.get(i * 2 + 1);
+            
+            // Round to 3 decimal places
+            var point = new Point((int) (lat * 1000), (int) (lon * 1000));
+
+            elevations.put(node.id, elevationGrid.get(point));
+        }
+
+        graph.processElevations(elevations);
 
         // Add relations
         for (Relation relation : osm.relation) {
