@@ -138,8 +138,19 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
                 </div>
 
-                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${elevation_slider}" class="form-label">Elevation in meters</label>
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <label for="customDistance" th:text="${elevation_buttons}" class="form-label">Elevation</label>
+                    <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Elevation" id="Elevation">
+
+                        <input type="radio" class="btn-check" name="btnradio" id="low" onClick="setCookie('elevation', 'low', 365)">
+                        <label class="btn btn-outline-primary low_elevation" th:text="${low_elevation_button}" for="low">Low</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="medium" onClick="setCookie('elevation', 'medium', 365)">
+                        <label class="btn btn-outline-primary medium_elevation" th:text="${medium_elevation_button}"for="medium">Medium</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="high" onClick="setCookie('elevation', 'high', 365)">
+                        <label class="btn btn-outline-primary high_elevation" th:text="${high_elevation_button}"for="high">High</label>
+                    </div>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -155,18 +166,18 @@
                 </div>
             </div>
 
-
+<!--
             <div class="row p-0">
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                </div>
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> --> <!-- en tom col-->
+   <!--             </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <input type="range" class="form-range"  min="0" max="500" step="10" value="0" id="customElevation" name="elevation" oninput="setElevation(this.value)">
                 </div>
 
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                </div>
-            </div>
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> --> <!-- en tom col-->
+    <!--            </div>
+            </div> -->
 
 
             <div class="container w-100 mt-auto pb-2">
@@ -307,9 +318,19 @@
             document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
             document.getElementById("distance").value = cookie;
 
-            cookie = getCookie("elevation", "0");
+           /* cookie = getCookie("elevation", "0");
             document.getElementById("customElevation").value = cookie;
-            document.getElementById("elevation").value = cookie;
+            document.getElementById("elevation").value = cookie;*/
+
+            cookie = getCookie("elevation", "0");
+            document.getElementById("Elevation").value = cookie;
+            if (cookie === "low") {
+                document.getElementById("low").checked = true;
+            } else if (cookie === "medium") {
+                document.getElementById("medium").checked = true;
+            } else if (cookie === "high") {
+                document.getElementById("high").checked = true;
+            }
 
             cookie = getCookie("terrain", "0");
             document.getElementById("Terrain").value = cookie;
@@ -322,7 +343,7 @@
             }
 
             document.getElementById("customDistance").disabled = true;
-            document.getElementById("customElevation").disabled = true;
+           //document.getElementById("customElevation").disabled = true;
             document.getElementById("disableLength").checked = true;
 
             toggleDarkMode();
@@ -352,11 +373,11 @@
             document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
         }
 
-        function setElevation(elevation){
+  /*      function setElevation(elevation){
             setCookie("elevation", elevation, 9000);
             document.getElementById("elevation").value = elevation;
             document.getElementById("customElevation").value = elevation;
-        }
+        } */
 
         function generateRoute(){
             if (!hasLocation) {
@@ -369,7 +390,7 @@
             let hours = document.getElementById("hours").value;
             let minutes = document.getElementById("minutes").value;
             let distance = document.getElementById("distance").value;
-            let elevation = document.getElementById("elevation").value;
+            let elevation = document.getElementById("Elevation").value;
             let terrain = document.getElementById("Terrain").value;
             let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
             $.get(url, function(data) {
