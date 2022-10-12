@@ -4,9 +4,10 @@ public class TerrainsKeyValue {
 
     /*Setup of key-value pairs that are suitable for terrain urban*/
     private static final String[][] urb = new String[][]{
-            {"landuse","residental"},
+            {"landuse","residential"},
             {"landuse","retail"},
-            {"landuse","institutional"}
+            {"landuse","institutional"},
+            {"landuse","commercial"}
     };
     private static final KeyValue urban = new KeyValue(urb);
 
