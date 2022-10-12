@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static com.kashyyyk.chewbacca.map.Osm.*;
 
@@ -495,5 +496,18 @@ public class OsmDatabase {
         }
 
         return null;
+    }
+
+
+    /** Used to find all tag values for an osm node, way or relation
+     * @param tags - the tags to get the tag values from
+     * @return - a set of all values found inside the tags
+     */
+    public HashMap<String,String> getTagValues(Tag[] tags){
+        HashMap<String,String> result = new HashMap<>();
+        for(Tag tag:tags){
+            result.put(tag.k,tag.v);
+        }
+        return result;
     }
 }
