@@ -45,7 +45,7 @@ public class RoutingStar {
     /**
      * The ideal terrain of the route
      */
-    public String[] idealTerrain;
+    public KeyValue idealTerrain;
 
     /**
      * The ideal surface of the route
@@ -278,7 +278,7 @@ public class RoutingStar {
     }
 
     private REntry runRStar(RNode destination) throws IOException {
-        var features = graph.getFeatures("water");  //todo Ensure that features is collected from graph
+        var features = graph.getFeatures(idealTerrain);
         var nearest = graph.findNearestNode(start);
 
         
@@ -417,16 +417,17 @@ public class RoutingStar {
      */
     private static double getClosestFeaturePoint(Point point, Set<RFeature> features) {
         var closest = Double.MAX_VALUE;
+        if(features!=null) {
             for (var feature : features) {
-            var closestPoint = feature.closestPoint(point);
+                var closestPoint = feature.closestPoint(point);
 
-            if (closestPoint == null) continue;
-            var distance = Point.distance(point, closestPoint); //!feature.contains(point) ? Point.comparableDistance(point, closestPoint) : 0;
-            if (distance < closest) {
-                closest = distance;
+                if (closestPoint == null) continue;
+                var distance = Point.distance(point, closestPoint); //!feature.contains(point) ? Point.comparableDistance(point, closestPoint) : 0;
+                if (distance < closest) {
+                    closest = distance;
+                }
             }
         }
-
         return closest;
     }
 

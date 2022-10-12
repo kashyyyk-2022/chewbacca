@@ -4,7 +4,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.kashyyyk.chewbacca.map.Point;
+import com.kashyyyk.chewbacca.map.rstar.KeyValue;
 import com.kashyyyk.chewbacca.map.rstar.RoutingStar;
+import com.kashyyyk.chewbacca.map.rstar.TerrainsKeyValue;
 
 public class RoutingService {
     private RoutingStorage storage;
@@ -38,7 +40,7 @@ public class RoutingService {
                 var rstar = new RoutingStar();
                 rstar.start = new Point(startLat, startLon);
                 rstar.idealDistance = length;
-                //rstar.idealTerrain = new String[] { terrain };
+                rstar.idealTerrain = TerrainsKeyValue.getTerrainKV(terrain);
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
                 rstar.elevationBias = (elevation / 500.0) * 0.1f;
