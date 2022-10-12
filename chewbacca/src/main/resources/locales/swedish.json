@@ -35,6 +35,8 @@
         "hours": "Timmar: ",
         "minutes": "Minuter: ",
         "distance": "Distans: ",
-        "elevation": "Höjdskillnad: "
+        "elevation": "Höjdskillnad: ",
+        "time": "Tid",
+        "generate_route_button_waiting": "Hämtar platsinformation..."
     }
 }

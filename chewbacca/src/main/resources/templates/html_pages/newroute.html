@@ -76,23 +76,7 @@
 
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range" min="0" max="23" step="1" value="0" id="customHours" name="length" oninput="setHours(this.value)">
-                </div>
-
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                </div>
-            </div>
-
-
-
-
-            <div class="row p-0">
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
-                </div>
-
-                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customMin" th:text="${time_minutes_slider}" class="form-label">Time in minutes</label>
-                    <input type="range" class="form-range" min="0" max="59" step="1" value="0" id="customMin" name="min" oninput="setMinutes(this.value)">
+                    <input type="range" class="form-range" min="0" max="40" step="1" value="0" id="customTime" name="length" oninput="setTime(this.value)">
                 </div>
 
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -176,13 +160,11 @@
                     <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
                             <div>
-                                <label for="new-route-button" th:text="${hours}"></label>
-                                <output id="hours">0</output>
-                            </div>
-                            
-                            <div>
-                                <label for="new-route-button" th:text="${minutes}"></label>
-                                <output id="minutes">0</output>
+                                <label for="new-route-button" th:text="${time}"></label>
+                                <output id="hours"></output>
+                                <label>h</label>
+                                <output id="minutes">min</output>
+                                <label>min</label>
                             </div>
                             
                             <div>
@@ -265,7 +247,7 @@
                 </div>
                 
                 <div class="w-100 btn btn-secondary btn-md" id="generate-route-button-waiting" role="button" disabled>
-                    Waiting for location...
+                    <label for="generate-route-button-waiting" th:text="${generate_route_button_waiting}"></label>
                 </div>
             </div>
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
@@ -296,12 +278,18 @@
 
         function onload(){
             let cookie = getCookie("hours", "0");
-            document.getElementById("customHours").value = cookie;
+            //document.getElementById("customHours").value = cookie;
             document.getElementById("hours").value = cookie;
 
-            cookie = getCookie("minutes", "0");
-            document.getElementById("customMin").value = cookie;
-            document.getElementById("minutes").value = cookie;
+            cookie = getCookie("minutes", "00");
+
+            if(cookie === "00"){
+                document.getElementById("minutes").value = "00";
+                //document.getElementById("customMin").value = "00";
+            } else {
+                document.getElementById("minutes").value = cookie;
+                //document.getElementById("customMin").value = cookie;
+            }
 
             cookie = getCookie("distance", "0");
             document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
@@ -344,6 +332,19 @@
             setCookie("minutes", minutes, 9000);
             document.getElementById("minutes").value = minutes;
             document.getElementById("customMin").value = minutes;
+        }
+
+        function setTime(time){
+            let hours = Math.floor(time / 4);
+            let minutes = (time % 4)*15;
+            setCookie("hours", hours, 9000);
+            setCookie("minutes", minutes, 9000);
+            if(minutes === 0){
+                document.getElementById("minutes").value = "00";
+            } else {
+                document.getElementById("minutes").value = minutes;
+            }
+            document.getElementById("hours").value = hours;
         }
 
         function setDistance(distance){

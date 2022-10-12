@@ -35,6 +35,8 @@
         "hours": "Hours: ",
         "minutes": "Minutes: ",
         "distance": "Distance: ",
-        "elevation": "Elevation: "
+        "elevation": "Elevation: ",
+        "time": "Time: ",
+        "generate_route_button_waiting": "Waiting for location..."
     }
 }
