@@ -17,6 +17,12 @@
     </head>
     <body onload="onload()" class="d-flex flex-column min-vh-100">
     <div class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Please notice: </strong> Always be aware of your suroundings while using the Routemeister application,
+            and do not enter restricted or dangerous areas.
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <div class="d-grid gap-3">
             <div class="row p-2">
                 <h1 class="text-center" th:text="${current_route_title}"></h1>
