@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time in hours</label>
+                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time</label>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -174,7 +174,7 @@
                                 <label for="new-route-button" th:text="${time}"></label>
                                 <output id="hours"></output>
                                 <label>h</label>
-                                <output id="minutes">min</output>
+                                <output id="minutes"></output>
                                 <label>min</label>
                             </div>
                             
@@ -289,26 +289,24 @@
 
         function onload(){
             let cookie = getCookie("hours", "0");
-            //document.getElementById("customHours").value = cookie;
             document.getElementById("hours").value = cookie;
 
             cookie = getCookie("minutes", "00");
 
             if(cookie === "00"){
                 document.getElementById("minutes").value = "00";
-                //document.getElementById("customMin").value = "00";
             } else {
                 document.getElementById("minutes").value = cookie;
-                //document.getElementById("customMin").value = cookie;
             }
+
+            document.getElementById("customTime").value = getTimeSliderValue();
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
 
             cookie = getCookie("distance", "0");
             document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
             document.getElementById("distance").value = cookie;
 
-           /* cookie = getCookie("elevation", "0");
-            document.getElementById("customElevation").value = cookie;
-            document.getElementById("elevation").value = cookie;*/
 
             cookie = getCookie("elevation", "0");
             document.getElementById("Elevation").value = cookie;
@@ -331,7 +329,6 @@
             }
 
             document.getElementById("customDistance").disabled = true;
-           //document.getElementById("customElevation").disabled = true;
             document.getElementById("disableLength").checked = true;
 
             toggleDarkMode();
@@ -341,18 +338,6 @@
                 navigator.geolocation.getCurrentPosition(success);
             }, 1000);
 
-        }
-
-        function setHours(hours){
-            setCookie("hours", hours, 9000);
-            document.getElementById("hours").value = hours;
-            document.getElementById("customHours").value = hours;
-        }
-
-        function setMinutes(minutes){
-            setCookie("minutes", minutes, 9000);
-            document.getElementById("minutes").value = minutes;
-            document.getElementById("customMin").value = minutes;
         }
 
         function setTime(time){
@@ -374,11 +359,6 @@
             document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
         }
 
-  /*      function setElevation(elevation){
-            setCookie("elevation", elevation, 9000);
-            document.getElementById("elevation").value = elevation;
-            document.getElementById("customElevation").value = elevation;
-        } */
 
         function generateRoute(){
             if (!hasLocation) {
@@ -415,21 +395,74 @@
             }
         }
 
+        function getTimeSliderValue(){
+            let hours = getCookie("hours", "0");
+            let minutes = getCookie("minutes", "0");
+
+            return hours*4 + minutes/15;
+        }
+
+        function getDistanceSliderValue(){
+            return getCookie("distance", "0");
+        }
+
+        function enableTime(){
+            document.getElementById("customTime").disabled = false;
+
+            document.getElementById("customTime").value = getTimeSliderValue();
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+        }
+
+        function disableTime(){
+            document.getElementById("customTime").disabled = true;
+
+            document.getElementById("customTime").value = 0;
+            document.getElementById("hours").value = 0;
+            document.getElementById("minutes").value = 0;
+        }
+
+        function enableDistance(){
+            document.getElementById("customDistance").disabled = false;
+
+            document.getElementById("customDistance").value = getDistanceSliderValue();
+            document.getElementById("distance").value = getDistanceSliderValue();
+        }
+
+        function disableDistance(){
+            document.getElementById("customDistance").disabled = true;
+
+            document.getElementById("customDistance").value = 0;
+            document.getElementById("distance").value = 0;
+        }
+
         function toggleDisableLength(){
             if(document.getElementById("disableLength").checked){
                 document.getElementById("disableTime").checked = false;
 
+                enableTime();
+                disableDistance();
             } else {
                 document.getElementById("disableTime").checked = true;
+
+                disableTime();
+                enableDistance();
             }
         }
 
 
         function toggleDisableTime(){
+            console.log("disableTime triggered!");
             if(document.getElementById("disableTime").checked){
                 document.getElementById("disableLength").checked = false;
+
+                disableTime();
+                enableDistance();
             } else {
                 document.getElementById("disableLength").checked = true;
+
+                enableTime();
+                disableDistance();
             }
         }
 
