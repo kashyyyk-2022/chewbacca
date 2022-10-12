@@ -32,7 +32,7 @@
         "urban_button": "Urbano",
         "nature_button": "Naturaleza",
         "water_button": "Agua",
-        "accesible_disabilities": "Incluir únicamente rutas accesibles a deshabilitados",
+        "accesible_disabilities": "Ruta personalizada para silla de ruedas o cochecito",
         "generate_route_button": "Generar ruta",
         "disable_checkbox": "Deshabilitar",
         "hours": "Horas: ",
