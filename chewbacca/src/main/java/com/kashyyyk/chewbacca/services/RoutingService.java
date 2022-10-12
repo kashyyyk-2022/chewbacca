@@ -41,10 +41,11 @@ public class RoutingService {
                 //rstar.idealTerrain = new String[] { terrain };
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
-                rstar.elevationBias = -0.5 + (elevation / 500.0);
-                rstar.terrainBias = 2f;
+                rstar.elevationBias = (elevation / 500.0) * 0.1f;
+                rstar.terrainBias = 0.1f;
                 rstar.surfaceBias = 1;
-                rstar.seed = 0;
+                rstar.seed = System.currentTimeMillis();
+                rstar.randomBias = 0.0000001f;
 
                 if (timeMinutes == 5) {
                     rstar.start = new Point(57.67437, 11.95678);
@@ -62,6 +63,7 @@ public class RoutingService {
 
                 storage.setRouteStart(id, new double[] { start.getLatitude(), start.getLongitude() });
                 storage.setRouteEnd(id, new double[] { end.getLatitude(), end.getLongitude() });
+                storage.setRouteLabels(id, rstar.getLabels());
 
                 //LinkedList<WaypointGenerator.Waypoint> points = generator.getRoute();
 
@@ -124,4 +126,15 @@ public class RoutingService {
     public double[] getRouteEnd(String id) {
         return storage.getRouteEnd(id);
     }
+
+    /**
+     * Get the route labels with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the route labels
+     */
+    public RouteLabel[] getRouteLabels(String id) {
+        return storage.getRouteLabels(id);
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
@@ -17,6 +18,7 @@ import com.kashyyyk.chewbacca.map.OsmDatabase;
 import com.kashyyyk.chewbacca.map.Point;
 import com.kashyyyk.chewbacca.map.Osm.Node;
 import com.kashyyyk.chewbacca.map.Osm.Way;
+import com.kashyyyk.chewbacca.services.RouteLabel;
 
 /**
  * <h4>R* — Routing Star</h4>
@@ -86,6 +88,11 @@ public class RoutingStar {
     private Random random;
 
     /**
+     * Random bias
+     */
+    public double randomBias;
+
+    /**
      * OsmDatabase
      */
     private OsmDatabase database;
@@ -121,6 +128,11 @@ public class RoutingStar {
     private HashSet<Long> visited;
 
     /**
+     * Avoid nodes
+     */
+    private HashSet<Long> avoid;
+
+    /**
      * The start of the route
      */
     private Point startPoint;
@@ -129,6 +141,11 @@ public class RoutingStar {
      * The end of the route
      */
     private Point endPoint;
+
+    /**
+     * Labels for the nodes
+     */
+    private Map<Point, String> labels;
 
     /**
      * Get the route
@@ -171,6 +188,29 @@ public class RoutingStar {
     }
 
     /**
+     * Get the labels
+     * 
+     * @return the labels
+     */
+    public RouteLabel[] getLabels() {
+        var result = new RouteLabel[labels.size()];
+
+        var i = 0;
+
+        for (var entry : labels.entrySet()) {
+            
+            result[i] = new RouteLabel(new double[] {
+                entry.getKey().getLatitude(),
+                entry.getKey().getLongitude()
+            }, entry.getValue());
+
+            i++;
+        }
+
+        return result;
+    }
+
+    /**
      * Get the database
      * 
      * @return the database
@@ -193,6 +233,10 @@ public class RoutingStar {
 
         visited = new HashSet<Long>();
 
+        avoid = new HashSet<Long>();
+
+        labels = new HashMap<Point, String>();
+
         distance = 0;
 
         database.downloadData(start);
@@ -214,11 +258,8 @@ public class RoutingStar {
 
         // Add the ID of each node from the graph to the visited list
         for (var node : routeNodes) {
-            visited.add(node);
+            avoid.add(node);
         }
-
-        visited.remove(startNode.id);
-        visited.remove(origin.id);
         
         runRStar(origin);
 
@@ -243,17 +284,9 @@ public class RoutingStar {
         
         //visited.clear();
 
-        priorityQueue = new PriorityQueue<REntry>(Comparator.comparingDouble((REntry entry) -> {
-            if (destination != null) {
-                return Point.comparableDistance(entry.node.point, destination.point);
-            }
-
-            double p = entry.cost;
-            p += distanceToStartBias * Point.comparableDistance(entry.node.point, start);
-            p += terrainBias * getClosestFeaturePoint(entry.node.point, features);
-            p += elevationBias * entry.node.elevation;
-            return p;
-        }));
+        priorityQueue = new PriorityQueue<REntry>((a, b) -> {
+            return Comparator.comparingDouble((REntry r) -> r.priority).compare(a, b);
+        });
 
         priorityQueue.add(new REntry(
             nearest,
@@ -267,10 +300,49 @@ public class RoutingStar {
 
         REntry end = null;
 
-        int maxDownloads = 10;
+        int maxDownloads = 5;
 
         while (!priorityQueue.isEmpty())
         {
+            // Calculate the priorities for the queue entries
+            priorityQueue.forEach((REntry entry) -> {
+                /*if (destination != null) {
+                    entry.priority = Point.comparableDistance(entry.node.point, destination.point);
+
+                    return;
+                }*/
+
+                if (entry.previous == null) {
+                    labels.put(entry.node.point, "Start");
+
+                    return;
+                }
+
+                var label = new StringBuilder();
+
+                var cost = entry.cost;
+                label.append(String.format("Cost: %.5f\r\n", cost));
+                var distancePart = 0.0; //distanceToStartBias * Point.comparableDistance(entry.node.point, start);
+                label.append(String.format("Distance: %.5f\r\n", distancePart));
+                var terrainPart = terrainBias * getClosestFeaturePoint(entry.node.point, features);
+                label.append(String.format("Terrain: %.5f\r\n", terrainPart));
+                var elevationPart = elevationBias * Math.abs(entry.node.elevation - entry.previous.node.elevation);
+                label.append(String.format("Elevation: %.5f\r\n", elevationPart));
+                entry.priority = cost + (distancePart + terrainPart + elevationPart) * Point.distance(entry.node.point, entry.previous.node.point);
+                // If we are avoiding this node, then increase the priority
+                if (avoid.contains(entry.node.id)) {
+                    entry.priority *= 100;
+                }
+                if (destination != null) {
+                    entry.priority *= Point.distance(entry.node.point, destination.point) * 0.01;
+                }
+                entry.priority += random.nextDouble() * randomBias;
+                label.append(String.format("Priority: %.5f\r\n", entry.priority));
+                labels.put(entry.node.point, label.toString());
+
+                return;
+            });
+
             iterations++;
 
             final var currentEntry = priorityQueue.poll();
@@ -292,10 +364,6 @@ public class RoutingStar {
                 break;
             }
 
-            double p = currentEntry.cost;
-            p += distanceToStartBias * Point.comparableDistance(current.point, start);
-            p += terrainBias * getClosestFeaturePoint(current.point, features);
-
             var connected = graph.getConnected(current);
 
             if (connected.size() == 1 && maxDownloads > 0) {
@@ -309,7 +377,7 @@ public class RoutingStar {
             }
 
             for (RNode edgeNode : connected) {
-                final var cost = p;
+                final var cost = currentEntry.priority;
 
                 final var edgeEntry = new REntry(
                     edgeNode,
@@ -353,7 +421,7 @@ public class RoutingStar {
             var closestPoint = feature.closestPoint(point);
 
             if (closestPoint == null) continue;
-            var distance = !feature.contains(point) ? Point.comparableDistance(point, closestPoint) : 0;
+            var distance = Point.distance(point, closestPoint); //!feature.contains(point) ? Point.comparableDistance(point, closestPoint) : 0;
             if (distance < closest) {
                 closest = distance;
             }

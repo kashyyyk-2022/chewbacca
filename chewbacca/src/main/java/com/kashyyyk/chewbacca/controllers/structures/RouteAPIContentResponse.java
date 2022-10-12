@@ -1,5 +1,9 @@
 package com.kashyyyk.chewbacca.controllers.structures;
 
+import java.util.Map;
+
+import com.kashyyyk.chewbacca.services.RouteLabel;
+
 /**
  * A response for the route api content
  */
@@ -31,18 +35,24 @@ public class RouteAPIContentResponse {
     private double[] end;
 
     /**
+     * Labels for the route
+     */
+    private RouteLabel[] labels;
+
+    /**
      * Create a new route content response
      * 
      * @param id    the id of the route
      * @param done  if the route is done
      * @param route the route
      */
-    public RouteAPIContentResponse(String id, boolean done, double[][] route, double[] start, double[] end) {
+    public RouteAPIContentResponse(String id, boolean done, double[][] route, double[] start, double[] end, RouteLabel[] labels) {
         this.id = id;
         this.done = done;
         this.route = route;
         this.start = start;
         this.end = end;
+        this.labels = labels;
     }
 
     /**
@@ -133,5 +143,23 @@ public class RouteAPIContentResponse {
      */
     public void setEnd(double[] end) {
         this.end = end;
+    }
+
+    /**
+     * Get the labels of the route
+     * 
+     * @return the labels of the route
+     */
+    public RouteLabel[] getLabels() {
+        return labels;
+    }
+
+    /**
+     * Set the labels of the route
+     * 
+     * @param labels the new labels of the route
+     */
+    public void setLabels(RouteLabel[] labels) {
+        this.labels = labels;
     }
 }

@@ -29,6 +29,11 @@ public class LocalRoute {
      * The end of the route
      */
     private double[] end;
+
+    /**
+     * Labels for the route
+     */
+    private RouteLabel[] labels;
     
     /**
      * Create a new route
@@ -37,12 +42,13 @@ public class LocalRoute {
      * @param done  if the route is done
      * @param route the route
      */
-    public LocalRoute(String id, boolean done, double[][] route, double[] start, double[] end) {
+    public LocalRoute(String id, boolean done, double[][] route, double[] start, double[] end, RouteLabel[] labels) {
         this.id = id;
         this.done = done;
         this.route = route;
         this.start = start;
         this.end = end;
+        this.labels = labels;
     }
 
     /**
@@ -91,6 +97,15 @@ public class LocalRoute {
     }
 
     /**
+     * Get the labels of the route
+     * 
+     * @return the labels of the route
+     */
+    public RouteLabel[] getLabels() {
+        return labels;
+    }
+
+    /**
      * Set if the route is done
      * 
      * @param done true if the route is done, false otherwise
@@ -124,5 +139,14 @@ public class LocalRoute {
      */
     public void setEnd(double[] end) {
         this.end = end;
+    }
+
+    /**
+     * Set the labels of the route
+     * 
+     * @param labels the labels of the route
+     */
+    public void setLabels(RouteLabel[] labels) {
+        this.labels = labels;
     }
 }

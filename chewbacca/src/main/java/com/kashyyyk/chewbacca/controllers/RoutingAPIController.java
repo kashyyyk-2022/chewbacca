@@ -67,7 +67,8 @@ public class RoutingAPIController {
             routingService.isRouteDone(id),
             routingService.getRoute(id),
             routingService.getRouteStart(id),
-            routingService.getRouteEnd(id)
+            routingService.getRouteEnd(id),
+            routingService.getRouteLabels(id)
         );
     }
 

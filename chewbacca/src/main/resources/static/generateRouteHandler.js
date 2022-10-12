@@ -13,11 +13,29 @@ $(document).ready(function() {
         var endPos = L.marker(data.end).addTo(map);
         endPos._icon.classList.add("huechangeGoal");
 
-        for(let i = 0; i < waypoints.length - 1; i++) {
-            L.polyline([
+        var hasPassedEnd = false;
+        for (let i = 0; i < waypoints.length - 1; i++) {
+            var line = L.polyline([
                 waypoints[i],
                 waypoints[i+1]
             ]).addTo(map);
+
+            //Checks if the current position is the end
+            if (waypoints[i][0] == data.start[0] && waypoints[i][1] == data.start[1]) {
+                hasPassedEnd = true;
+            }
+
+            // TODO: Delete this
+            if (hasPassedEnd) {
+                line.setStyle({color: 'red'});
+            }
+        }
+
+        const labels = data.labels;
+
+        // TODO: Delete this
+        for (let i = 0; i < labels.length; i++) {
+            //L.marker(labels[i].position).addTo(map).bindPopup(labels[i].text);
         }
 
     }, "json");

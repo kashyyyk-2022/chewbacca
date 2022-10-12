@@ -44,6 +44,14 @@ public interface RoutingStorage {
     public double[] getRouteEnd(String id);
 
     /**
+     * Get the route labels with the given id
+     * 
+     * @param id
+     * @return the route labels
+     */
+    public RouteLabel[] getRouteLabels(String id);
+
+    /**
      * Set if the route is done
      * 
      * @param id the id of the route
@@ -74,6 +82,14 @@ public interface RoutingStorage {
      * @param end the end of the route
      */
     public void setRouteEnd(String id, double[] end);
+
+    /**
+     * Set the route labels with the given id
+     * 
+     * @param id    the id of the route
+     * @param labels the route labels
+     */
+    public void setRouteLabels(String id, RouteLabel[] labels);
 
     /**
      * Delete the route with the given id

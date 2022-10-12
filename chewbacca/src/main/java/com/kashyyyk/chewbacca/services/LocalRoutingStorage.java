@@ -11,7 +11,7 @@ public class LocalRoutingStorage implements RoutingStorage {
     @Override
     public String newRoute() {
         String id = UUID.randomUUID().toString();
-        routes.put(id, new LocalRoute(id, false, null, null, null));
+        routes.put(id, new LocalRoute(id, false, null, null, null, null));
         return id;
     }
 
@@ -39,6 +39,11 @@ public class LocalRoutingStorage implements RoutingStorage {
     public void setRouteDone(String id, boolean done) {
         routes.get(id).setDone(done);
     }
+    
+    @Override
+    public RouteLabel[] getRouteLabels(String id) {
+        return routes.get(id).getLabels();
+    }
 
     @Override
     public double[] getRouteStart(String id) {
@@ -58,6 +63,11 @@ public class LocalRoutingStorage implements RoutingStorage {
     @Override
     public void setRouteEnd(String id, double[] end) {
         routes.get(id).setEnd(end);
+    }
+
+    @Override
+    public void setRouteLabels(String id, RouteLabel[] labels) {
+        routes.get(id).setLabels(labels);
     }
     
 }
