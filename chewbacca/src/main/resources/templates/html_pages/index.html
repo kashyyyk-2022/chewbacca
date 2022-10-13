@@ -94,9 +94,17 @@
         </div>
     </div>
     <script>
+/*
+        $(document).ready(function(){
+                $("#cookieModal").modal('show');
+        }); */
 
         $(document).ready(function(){
-            $("#cookieModal").modal('show');
+            let cookie = getCookie('modal_shown', false);
+            if( cookie == false) {
+                setCookie('modal_shown', true, 1);
+                $("#cookieModal").modal('show');
+            }
         });
 
         function onload(){
