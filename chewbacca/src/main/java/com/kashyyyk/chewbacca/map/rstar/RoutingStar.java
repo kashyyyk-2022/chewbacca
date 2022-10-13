@@ -304,13 +304,10 @@ public class RoutingStar {
 
         while (!priorityQueue.isEmpty())
         {
+            /*
             // Calculate the priorities for the queue entries
             priorityQueue.forEach((REntry entry) -> {
-                /*if (destination != null) {
-                    entry.priority = Point.comparableDistance(entry.node.point, destination.point);
-
-                    return;
-                }*/
+                
 
                 if (entry.previous == null) {
                     labels.put(entry.node.point, "Start");
@@ -342,6 +339,7 @@ public class RoutingStar {
 
                 return;
             });
+            */
 
             iterations++;
 
@@ -388,6 +386,20 @@ public class RoutingStar {
                 );
 
                 edgeEntry.distance = currentEntry.distance + Point.distance(current.point, edgeNode.point);
+
+                var edgeCost = edgeEntry.cost;
+                var distancePart = 0.0;
+                var terrainPart = terrainBias * getClosestFeaturePoint(edgeEntry.node.point, features);
+                var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation);
+                edgeEntry.priority = edgeCost + (distancePart + terrainPart + elevationPart) * Point.distance(edgeEntry.node.point, edgeEntry.previous.node.point);
+                // If we are avoiding this node, then increase the priority
+                if (avoid.contains(edgeEntry.node.id)) {
+                    edgeEntry.priority *= 100;
+                }
+                if (destination != null) {
+                    edgeEntry.priority *= Point.distance(edgeEntry.node.point, destination.point) * 0.01;
+                }
+                edgeEntry.priority += random.nextDouble() * randomBias;
 
                 priorityQueue.add(edgeEntry);
             }
