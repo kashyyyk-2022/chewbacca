@@ -6,7 +6,7 @@ function toggleDarkMode() {
 
         /*Script to toggle color of element to dark mode. Add name of class inside one of the selectors by
         typing ',.classname' after .card-body or .card-header */
-        let cards = document.querySelectorAll(".card-body");
+        let cards = document.querySelectorAll(".card-body,.card,.modal-body");
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundColor = "black";
         }
@@ -20,7 +20,7 @@ function toggleDarkMode() {
 
         /*Script to toggle color of element to light mode. Add name of class inside one of the selectors by
         typing ',.classname' after .card-body or .card-header */
-        let cards = document.querySelectorAll(".card-body");
+        let cards = document.querySelectorAll(".card-body,.card,.modal-body");
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundColor = "white";
         }
