@@ -204,43 +204,6 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
             </div>
-
-            <div class="container w-100 mt-auto pb-2">
-                <div class="row row-md-3 row-lg-4">
-                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
-                    </div>
-                    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                        <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
-                            <div>
-                                <label for="new-route-button" th:text="${time}"></label>
-                                <output id="hours2"></output>
-                                <label>h</label>
-                                <output id="minutes2"></output>
-                                <label>min</label>
-                            </div>
-
-                            <div>
-                                <label for="new-route-button" th:text="${distance}"></label>
-                                <output id="distance2">0</output>
-
-                                <!-- if unit == metric -->
-                                <label th:if="${unit == 'metric'}" for="new-route-button">km</label>
-
-                                <!-- if unit == imperial -->
-                                <label th:if="${unit == 'imperial'}" for="new-route-button">miles</label>
-                            </div>
-
-                            <div>
-                                <label for="new-route-button" th:text="${elevation}"></label>
-                                <output id="elevation2">0</output>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                    </div>
-                </div>
-            </div>
-
         </div>
         
         <div class="row p-2">
@@ -359,18 +322,12 @@
             setCookie("hours", hours, 9000);
             setCookie("minutes", minutes, 9000);
 
-            //Cookies used for "information box at the bottom of page
-            setCookie("hours2", hours, 9000);
-            setCookie("minutes2", minutes, 9000);
             if(minutes === 0){
                 document.getElementById("minutes").value = "00";
-                document.getElementById("minutes2").value = "00";
             } else {
                 document.getElementById("minutes").value = minutes;
-                document.getElementById("minutes2").value = minutes;
             }
             document.getElementById("hours").value = hours;
-            document.getElementById("hours2").value = hours;
         }
 
         function setDistance(distance){
@@ -378,9 +335,6 @@
 
             document.getElementById("distance").value = parseFloat(distance).toFixed(1);
             document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
-            //Cookie used for "information box at the bottom of page
-            setCookie("distance2", distance, 9000);
-            document.getElementById("distance2").value = parseFloat(distance).toFixed(1);
         }
 
 
@@ -437,10 +391,6 @@
             document.getElementById("customTime").value = getTimeSliderValue();
             document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
             document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
-
-            //For info-box
-            document.getElementById("hours2").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes2").value = (getTimeSliderValue() % 4)*15;
         }
 
         function disableTime(){
@@ -449,10 +399,6 @@
             document.getElementById("customTime").value = 0;
             document.getElementById("hours").value = 0;
             document.getElementById("minutes").value = 0;
-
-            //For info-box
-            document.getElementById("hours2").value = 0;
-            document.getElementById("minutes2").value = 0;
         }
 
         function enableDistance(){
@@ -460,9 +406,6 @@
 
             document.getElementById("customDistance").value = getDistanceSliderValue();
             document.getElementById("distance").value = getDistanceSliderValue();
-
-            //For info-box
-            document.getElementById("distance2").value = getDistanceSliderValue();
         }
 
         function disableDistance(){
@@ -470,9 +413,6 @@
 
             document.getElementById("customDistance").value = 0;
             document.getElementById("distance").value = 0;
-
-            //For info-box
-            document.getElementById("distance2").value = 0;
         }
 
         function toggleDisableLength(){
