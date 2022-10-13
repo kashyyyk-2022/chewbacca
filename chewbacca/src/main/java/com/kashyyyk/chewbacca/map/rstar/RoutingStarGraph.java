@@ -76,11 +76,12 @@ public class RoutingStarGraph implements OsmGraph {
 
         var highway = database.getTagValue(way.tag, "highway");
 
-        if (highway == null) return;
+        if (highway == null || highway.equals("motorway") || highway.equals("primary") || highway.equals("trunk")) return;
 
         var access = database.getTagValue(way.tag, "access");
 
         if (access != null && access.equals("private")) return;
+
 
         RNode previous = null;
         for (Node node : nodes) {
