@@ -372,7 +372,7 @@
             let minutes = document.getElementById("minutes").value;
             let distance = document.getElementById("distance").value;
             let elevation = document.getElementById("elevation").value;
-            let terrain = document.getElementById("Terrain").value;
+            let terrain = getCookie("terrain", "0");
             let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
             $.get(url, function(data) {
                 let routeId = data.id;
