@@ -32,6 +32,7 @@ public class RoutingService {
      */
     public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) {
         var id = storage.newRoute();
+        boolean accessible = true;
 
         executorService.submit(() -> {
             try {
@@ -48,6 +49,7 @@ public class RoutingService {
                 rstar.surfaceBias = 1;
                 rstar.seed = System.currentTimeMillis();
                 rstar.randomBias = 0.0000001f;
+                rstar.accessibility = accessible; //Kan jag inte göra detta? Test - Marcus
 
                 if (timeMinutes == 5) {
                     rstar.start = new Point(57.67437, 11.95678);

@@ -47,13 +47,20 @@ public class RoutingAPIController {
             @RequestParam(name = "elevation", required = true) String elevation,
             @RequestParam(name = "terrain", required = true) String terrain
     ) {
+        double convertedElevation = 10;
+        switch(elevation){
+            case "low": convertedElevation = 10; break;
+            case "medium": convertedElevation = 50; break;
+            case "high": convertedElevation = 100; break;
+        }
+
         return new RouteAPIStartResponse(routingService.generateRoute(
             Double.parseDouble(lat),
             Double.parseDouble(lon),
             Double.parseDouble(distance),
             Double.parseDouble(hours),
             Double.parseDouble(minutes),
-            Double.parseDouble(elevation),
+            convertedElevation,
             terrain
         ));
     }

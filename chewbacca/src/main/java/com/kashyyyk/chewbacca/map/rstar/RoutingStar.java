@@ -147,6 +147,11 @@ public class RoutingStar {
      */
     private Map<Point, String> labels;
 
+    /**TEST - MARCUS
+     * Accessibility of the route
+     */
+    public boolean accessibility;
+
     /**
      * Get the route
      * 
@@ -236,6 +241,9 @@ public class RoutingStar {
         avoid = new HashSet<Long>();
 
         labels = new HashMap<Point, String>();
+
+        //Test - Marcus
+        accessibility = true;
 
         distance = 0;
 
@@ -392,6 +400,13 @@ public class RoutingStar {
                 var terrainPart = terrainBias * getClosestFeaturePoint(edgeEntry.node.point, features);
                 var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation);
                 edgeEntry.priority = edgeCost + (distancePart + terrainPart + elevationPart) * Point.distance(edgeEntry.node.point, edgeEntry.previous.node.point);
+
+                //If the edge is not accessible then add it to avoid
+                if(accessibility){
+                    if(!getAccessible(edgeEntry.node)){
+                        avoid.add(edgeEntry.node.id);
+                    }
+                }
                 // If we are avoiding this node, then increase the priority
                 if (avoid.contains(edgeEntry.node.id)) {
                     edgeEntry.priority *= 100;
@@ -443,4 +458,28 @@ public class RoutingStar {
         return closest;
     }
 
+    /**
+     * Check if the way of the node contains the tag "wheelchair: no" or "highway: steps"
+     * If so return false since it's not accessible for wheelchairs.
+     * @param rNode - node to check if accessible.
+     * @return true or false based on if the node is accessible or not.
+     */
+    private boolean getAccessible(RNode rNode){
+        System.out.println("getAccessible");
+        var ways = getDatabase().getWay(rNode.id); //Fråga hur jag kommer åt Ways key och value.
+        for (var tag : ways.tag) {
+            System.out.println("key: "+ tag.k + " value: " + tag.v);
+            if(tag.k.equals("wheelchair")) {
+                if (tag.v.equals("no")) {
+                    return false;
+                }
+            }
+            else if(tag.k.equals("highway")){
+                if(tag.v.equals("steps")){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
