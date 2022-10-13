@@ -13,7 +13,10 @@ function getCookie(name, defaultValue = "") {
             c = c.substring(1);
         }
         if(c.indexOf(name) === 0) {
-            return c.substring(name.length + 1);
+            var cookie = c.substring(name.length + 1);
+            // Remove = from cookie
+            cookie = cookie.replace("=", "");
+            return cookie;
         }
     }
     return defaultValue;
