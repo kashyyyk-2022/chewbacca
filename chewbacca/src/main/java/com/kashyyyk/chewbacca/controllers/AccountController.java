@@ -8,9 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AccountController {
 
-    @GetMapping("account")
+    @GetMapping("about")
     public ModelAndView getIndex(Model model) {
-        return new ModelAndView("html_pages/Account.html", model.asMap());
+        return new ModelAndView("html_pages/About.html", model.asMap());
     }
 
 }
