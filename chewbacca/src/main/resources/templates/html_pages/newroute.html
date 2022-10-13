@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time</label>
+                    <h6 for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time</h6>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</label>
+                    <h6 for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</h6>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customDistance" th:text="${elevation_buttons}" class="form-label">Elevation</label>
+                    <h6 for="customDistance" th:text="${elevation_buttons}" class="form-label">Elevation</h6>
                     <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Elevation" id="Elevation">
 
                         <input type="radio" class="btn-check" name="btnradio1" id="low" onClick="setCookie('elevation', 'low', 365)">
@@ -222,7 +222,9 @@
         </div>
     </div>
 
-    <div class="container w-100 mt-auto pb-2">
+
+
+    <footer class="container w-100 mt-auto pb-2">
         <div class="row row-md-3 row-lg-4">
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
@@ -230,7 +232,7 @@
                 <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" onclick="setCookie('routeID', '1', 9000);generateRoute();">
                     <label for="generate-route-button" th:text="${generate_route_button}"></label>
                 </div>
-                
+
                 <div class="w-100 btn btn-secondary btn-md" id="generate-route-button-waiting" role="button" disabled>
                     <label for="generate-route-button-waiting" th:text="${generate_route_button_waiting}"></label>
                 </div>
@@ -238,9 +240,11 @@
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
             </div>
         </div>
-    </div>
 
-    <footer class="container w-100 mt-auto pb-2">
+        <div class="row p-2 row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+        </div>
         <div class="row row-md-3 row-lg-4">
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
