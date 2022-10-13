@@ -351,7 +351,9 @@
             let distance = document.getElementById("distance").value;
             let terrain = getCookie("terrain", "0");
             let elevation = document.getElementById("Elevation").value;
-            
+
+            if(getCookie("unit","metric")==="imperial") distance=distance*1.609344; //If user has imperial unit, the distance will be recalculated to metric befor being sent route generator.
+
             let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
             $.get(url, function(data) {
                 let routeId = data.id;
