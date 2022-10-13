@@ -31,6 +31,12 @@ $(document).ready(function() {
             }
         }
 
+        // Focus the map on the route
+        map.fitBounds([
+            data.start,
+            data.end
+        ]);
+
         const labels = data.labels;
 
         // TODO: Delete this

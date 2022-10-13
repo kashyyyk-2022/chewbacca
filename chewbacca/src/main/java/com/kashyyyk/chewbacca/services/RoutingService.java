@@ -45,9 +45,9 @@ public class RoutingService {
                 rstar.distanceToStartBias = 0.01f;
                 double elev;
                 switch(elevation){
-                    case "low": elev=1; break;
-                    case "medium": elev=0.5; break;
-                    default: elev=0.25; break;
+                    case "low": elev=500.0; break;
+                    case "medium": elev=250.0; break;
+                    default: elev=-50.0; break;
                 };
                 rstar.elevationBias = (elev / 500.0) * 0.1f;
                 rstar.terrainBias = 0.1f;
