@@ -145,10 +145,6 @@ public class RoutingService {
      * @param walk - A boolean that should be set to true if user wants to walk, or false if user wants to run
      * @return The optimal distance (in km) for a route that should last for a given time as a double
      */
-    private double timeToDistance(double hour,double minutes, boolean walk){
-        double res= (hour+minutes/60)*5;
-        System.out.println("Time to distance, distance: "+res+" km");
-        return walk ? (hour+minutes/60)*5 : (hour+minutes/60)*8.4;
-    }
+    private double timeToDistance(double hour,double minutes, boolean walk){ return walk ? (hour+minutes/60)*5 : (hour+minutes/60)*8.4;}
 
 }
