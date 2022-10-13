@@ -53,7 +53,7 @@ public class RoutingAPIController {
             Double.parseDouble(distance),
             Double.parseDouble(hours),
             Double.parseDouble(minutes),
-            Double.parseDouble(elevation),
+            elevation,
             terrain
         ));
     }
