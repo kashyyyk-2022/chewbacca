@@ -17,7 +17,7 @@ public class NewRouteController {
                                  @CookieValue(value = "lang", defaultValue = "english") String lang,
                                  @CookieValue(value = "darkMode", defaultValue = "false") String darkMode,
                                  @CookieValue(value = "hours", defaultValue = "0") String hours,
-                                 @CookieValue(value = "minutes", defaultValue = "0") String minutes,
+                                 @CookieValue(value = "minutes", defaultValue = "00") String minutes,
                                  @CookieValue(value = "distance", defaultValue = "0") String distance,
                                  @CookieValue(value = "elevation", defaultValue = "0") String elevation,
                                  @CookieValue(value = "terrain", defaultValue = "0") String terrain)

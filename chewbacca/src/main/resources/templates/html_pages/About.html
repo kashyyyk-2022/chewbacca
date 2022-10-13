@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>CurrentRoute</title>
+
+    <style>
+      .chalmers
+      {
+     background-image: url('https://images.squarespace-cdn.com/content/v1/58514e22b3db2bd1b02764e8/1502723227731-V0M6LNIO7H6JCG894SMC/Chalmers-logo.jpg');
+    background-repeat: no-repeat;
+    background-size: 150px 130px;
+    width: 150px;
+    height: 130px;
+    </style>
+  </head>
+
+  <body onload="onload()">
+  <div class="container">
+    <div class="d-grid gap-3">
+      <div class="row p-4">
+        <h1 class="text-center" th:text="${about_title}"></h1>
+      </div>
+
+      <div class="row p-2 row-md-3 row-lg-4">
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum
+          </p>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+        </div>
+      </div>
+
+
+
+      <div class="row p-2 row-md-3 row-lg-4">
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+          <div class="btn btn-outline-light chalmers btn-lg ">
+          </div>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <script>
+      
+      function onload(){
+        toggleDarkMode();
+      }
+    </script>
+
+    <script type = "text/javascript" src="/darkModeHandler.js"></script>
+    <script type = "text/javascript" src="/cookieHandler.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+  </body>
+</html>
