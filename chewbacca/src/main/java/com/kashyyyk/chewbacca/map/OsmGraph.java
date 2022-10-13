@@ -2,6 +2,9 @@ package com.kashyyyk.chewbacca.map;
 
 import static com.kashyyyk.chewbacca.map.Osm.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface OsmGraph {
 
     /**
@@ -17,6 +20,13 @@ public interface OsmGraph {
      * @param node                      The node to process
      */
     public void processNode(Node node);
+
+    /**
+     * Process elevation data
+     * 
+     * @param elevations                The elevation data
+     */
+    public void processElevations(Map<Long, Double> elevations);
 
     /**
      * Process a new way

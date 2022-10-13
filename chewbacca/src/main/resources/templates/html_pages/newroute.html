@@ -339,8 +339,10 @@
                 document.getElementById("water").checked = true;
             }
 
+            /*
             document.getElementById("customDistance").disabled = true;
             document.getElementById("disableLength").checked = true;
+            */
 
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
@@ -393,8 +395,9 @@
             let hours = document.getElementById("hours").value;
             let minutes = document.getElementById("minutes").value;
             let distance = document.getElementById("distance").value;
+            let terrain = getCookie("terrain", "0");
             let elevation = document.getElementById("Elevation").value;
-            let terrain = document.getElementById("Terrain").value;
+            
             let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
             $.get(url, function(data) {
                 let routeId = data.id;

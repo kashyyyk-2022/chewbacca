@@ -36,6 +36,11 @@ public class REntry {
     public double distance;
 
     /**
+     * Priority of this entry.
+     */
+    public double priority;
+
+    /**
      * Create a new entry.
      * 
      * @param node                      The node

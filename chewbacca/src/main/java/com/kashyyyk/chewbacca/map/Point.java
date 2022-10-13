@@ -88,4 +88,29 @@ public class Point {
         return Math.abs(p1.getLatitude() - p2.getLatitude()) + Math.abs(p1.getLongitude() - p2.getLongitude());
     }
 
+    /**
+     * Equals method for Point.
+     * 
+     * @param o The object to compare to.
+     * @return True if the object is a point and has the same latitude and longitude as this point.
+     */
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Point){
+            Point p = (Point) o;
+            return this.latitude == p.getLatitude() && this.longitude == p.getLongitude();
+        }
+        return false;
+    }
+
+    /**
+     * Hashcode method for Point.
+     * 
+     * @return The hashcode of the point.
+     */
+    @Override
+    public int hashCode(){
+        return (int) (this.latitude + this.longitude);
+    }
+
 }
