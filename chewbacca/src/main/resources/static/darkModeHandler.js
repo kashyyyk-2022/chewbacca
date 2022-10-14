@@ -15,11 +15,25 @@ function toggleDarkMode() {
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundColor = "darkgray";
         }
+        document.body.style.backgroundImage = "url('https://cdn.wallpapersafari.com/21/64/5ZxD6J.png')";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.color="black";
+
+        var icon = document.getElementById("icon-display")
+        if (icon != null) {
+            icon.style.backgroundColor = "#202F55";
+        }
     } else {
         document.body.style.backgroundImage = "url('https://cdn.wallpapersafari.com/91/60/M9k5Ka.png')";
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
-        document.body.style.color="black"
+        document.body.style.color="black";
+
+        var icon = document.getElementById("icon-display")
+        if (icon != null) {
+            icon.style.backgroundColor = "#B7CBFA";
+        }
 
         /*Script to toggle color of element to light mode. Add name of class inside one of the selectors by
         typing ',.classname' after .card-body or .card-header */
