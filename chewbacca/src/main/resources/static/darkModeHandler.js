@@ -15,7 +15,7 @@ function toggleDarkMode() {
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundColor = "darkgray";
         }
-        document.body.style.backgroundImage = "url('https://cdn.wallpapersafari.com/21/64/5ZxD6J.png')";
+        document.body.style.backgroundImage = "url('/dark.png')";
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
         //document.body.style.color="black";
@@ -25,7 +25,7 @@ function toggleDarkMode() {
             icon.style.backgroundColor = "#202F55";
         }
     } else {
-        document.body.style.backgroundImage = "url('https://cdn.wallpapersafari.com/91/60/M9k5Ka.png')";
+        document.body.style.backgroundImage = "url('/light.png')";
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
         document.body.style.color="black";
