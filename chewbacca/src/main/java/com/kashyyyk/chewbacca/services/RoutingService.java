@@ -44,7 +44,12 @@ public class RoutingService {
                 rstar.idealTerrain = TerrainsKeyValue.getTerrainKV(terrain);
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
-                rstar.elevationBias = (elevation / 500.0) * 0.1f;
+                if(accessible){
+                    rstar.elevationBias = (elevation / 500.0) * 0.1f * 100;
+                }
+                else{
+                    rstar.elevationBias = (elevation / 500.0) * 0.1f;
+                }
                 rstar.terrainBias = 0.1f;
                 rstar.surfaceBias = 1;
                 rstar.seed = System.currentTimeMillis();
