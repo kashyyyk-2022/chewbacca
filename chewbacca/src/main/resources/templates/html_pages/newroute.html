@@ -49,31 +49,35 @@
 
             </div>
 
+            <!--
             <div class="row p-0">
 
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4">
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4"></div>
 
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4">
                 </div>
 
             </div>
+            -->
 
+            <!--
             <div class="row p-0">
 
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4">
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                     <h2 class="text-center" for="new-route" th:text="${new_route_button}"></h2>
                 </div>
 
-                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4">
                 </div>
 
             </div>
+            -->
 
             <div class="row p-0">
 
@@ -437,7 +441,7 @@
             let hours = getCookie("hours", "0");
             let minutes = getCookie("minutes", "0");
 
-            return hours*4 + minutes/15;
+            return hours*12 + minutes/5;
         }
 
         function getDistanceSliderValue(){
@@ -448,8 +452,8 @@
             document.getElementById("customTime").disabled = false;
 
             document.getElementById("customTime").value = getTimeSliderValue();
-            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 12);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 12)*5;
 
             setCookie("disabledTime", "false");
         }
