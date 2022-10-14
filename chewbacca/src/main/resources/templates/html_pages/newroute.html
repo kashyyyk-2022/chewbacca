@@ -60,15 +60,67 @@
         </div>
 
         <div class="d-grid gap-3">
-            <div class="row p-4">
-                <h2 class="text-center">
-                    Lat:
-                    <output id="lat"></output>
-                </h2>
-                <h2 class="text-center">
-                    Lon:
-                    <output id="lon"></output>
-                </h2>
+
+            <div class="row p-0">
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4"></div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+            </div>
+
+            <div class="row p-0">
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4"></div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+            </div>
+
+            <div class="row p-0">
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+                    <h2 class="text-center" for="new-route" th:text="${new_route_button}"></h2>
+                </div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+            </div>
+
+            <div class="row p-0">
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4"></div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+            </div>
+
+            <div class="row p-0">
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
+                <div class="col-10 col-sm-8 col-md-6 col-lg-4"></div>
+
+                <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+                </div>
+
             </div>
 
             <div class="row p-0">
@@ -96,7 +148,7 @@
 
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range" min="0" max="40" step="1" value="0" id="customTime" name="length" oninput="setTime(this.value)">
+                    <input type="range" class="form-range" min="0" max="36" step="1" value="0" id="customTime" name="length" oninput="setTime(this.value)">
 
                     <!-- diplay time adjacent to slider -->
                     <output id="hours"></output>
@@ -136,7 +188,7 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customDistance" name="distance" oninput="setDistance(this.value)">
+                    <input type="range" class="form-range"  min="0" max="10" step="0.25" value="0" id="customDistance" name="distance" oninput="setDistance(this.value)">
 
                     <!-- display distance adjacent to slider -->
                     <output id="distance">0</output>
@@ -298,11 +350,11 @@
             }
 
             document.getElementById("customTime").value = getTimeSliderValue();
-            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 12);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 12)*5;
 
             cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
+            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(2);
             document.getElementById("distance").value = cookie;
 
 
@@ -341,8 +393,8 @@
         }
 
         function setTime(time){
-            let hours = Math.floor(time / 4);
-            let minutes = (time % 4)*15;
+            let hours = Math.floor(time / 12);
+            let minutes = (time % 12)*5;
             setCookie("hours", hours, 9000);
             setCookie("minutes", minutes, 9000);
 
@@ -357,8 +409,8 @@
         function setDistance(distance){
             setCookie("distance", distance, 9000);
 
-            document.getElementById("distance").value = parseFloat(distance).toFixed(1);
-            document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
+            document.getElementById("distance").value = parseFloat(distance).toFixed(2);
+            document.getElementById("customDistance").value = parseFloat(distance).toFixed(2);
         }
 
 
@@ -376,9 +428,10 @@
             let terrain = getCookie("terrain", "0");
             let elevation = document.getElementById("Elevation").value;
 
-            if(getCookie("unit","metric")==="imperial") distance=distance*1.609344; //If user has imperial unit, the distance will be recalculated to metric befor being sent route generator.
+            let accessible = document.getElementById("flexCheckDefault").checked;
+            
+            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon + "&accessible=" + accessible;
 
-            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
             $.get(url, function(data) {
                 let routeId = data.id;
                 setCookie("routeID", routeId, 1);
@@ -390,8 +443,6 @@
         function success(pos){
             setCookie("locationLat", pos.coords.latitude, 9000);
             setCookie("locationLon", pos.coords.longitude, 9000);
-            document.getElementById("lat").value = pos.coords.latitude;
-            document.getElementById("lon").value = pos.coords.longitude;
             
             if (!hasLocation) {
                 hasLocation = true;

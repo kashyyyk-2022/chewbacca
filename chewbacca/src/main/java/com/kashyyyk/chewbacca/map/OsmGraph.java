@@ -33,7 +33,7 @@ public interface OsmGraph {
      * 
      * @param way                       The way to process
      */
-    public void processWay(Way way);
+    public void processWay(Way way, boolean accessibility);
 
     /**
      * Process a new relation
