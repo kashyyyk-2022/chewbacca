@@ -52,10 +52,10 @@ public class RoutingService {
                     default: elev=-50.0; break;
                 };
                 if(accessible){
-                    rstar.elevationBias = (elevation / 500.0) * 0.1f * 100;
+                    rstar.elevationBias = (elev / 500.0) * 0.1f * 100;
                 }
                 else{
-                    rstar.elevationBias = (elevation / 500.0) * 0.1f;
+                    rstar.elevationBias = (elev / 500.0) * 0.1f;
                 }
                 
                 rstar.terrainBias = 0.1f;
