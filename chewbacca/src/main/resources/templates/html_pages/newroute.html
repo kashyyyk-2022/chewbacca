@@ -233,30 +233,30 @@
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div class="card-group">
                             <div class="card text-center">
-                                <img src="/urban.jpg" class="card-img-top" alt="urban" onClick="terrainImgClick('urban')">
+                                <img src="/urban.jpg" class="card-img-top" alt="urban" id="urbanIMG" onClick="terrainImgClick('urban')">
                                 <div class="card-footer">
-                                    <input type="radio" class="btn-check" name="terrain" id="urban" onClick="setCookie('terrain', 'urban', 365)">
+                                    <input type="radio" class="btn-check" name="terrain" id="urban" onClick="setCookie('terrain', 'urban', 365);toggleGrayScale();">
                                     <label class="btn urban" for="urban" th:text="${urban_button}"></label>
                                 </div>
                             </div>
                             <div class="card text-center">
-                                <img src="/nature.png" class="card-img-top" alt="nature" onClick="terrainImgClick('nature')">
+                                <img src="/nature.png" class="card-img-top" alt="nature" id="natureIMG" onClick="terrainImgClick('nature')">
                                 <div class="card-footer">
-                                    <input type="radio" class="btn-check" name="terrain" id="nature" onClick="setCookie('terrain', 'nature', 365)">
+                                    <input type="radio" class="btn-check" name="terrain" id="nature" onClick="setCookie('terrain', 'nature', 365);toggleGrayScale();">
                                     <label class="btn nature" for="nature" th:text="${nature_button}"></label>
                                 </div>
                             </div>
                             <div class="card text-center">
-                                <img src="/water.jpg" class="card-img-top" alt="water" onClick="terrainImgClick('water')">
+                                <img src="/water.jpg" class="card-img-top" alt="water" id="waterIMG" onClick="terrainImgClick('water')">
                                 <div class="card-footer">
-                                    <input type="radio" class="btn-check" name="terrain" id="water" onClick="setCookie('terrain', 'water', 365)">
+                                    <input type="radio" class="btn-check" name="terrain" id="water" onClick="setCookie('terrain', 'water', 365);toggleGrayScale();">
                                     <label class="btn water" for="water" th:text="${water_button}"></label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="disableTerrain" onClick="disableTerrain()">
+                            <input class="form-check-input" type="checkbox" id="disableTerrain" onClick="disableTerrain();toggleGrayScale()">
                             <label class="form-check-label" th:text="${disable_checkbox}"></label>
                         </div>
                 </div>
@@ -369,6 +369,8 @@
             setInterval(function() {
                 navigator.geolocation.getCurrentPosition(success);
             }, 1000);
+
+            toggleGrayScale();
 
         }
 
@@ -532,6 +534,7 @@
                 enableTime();
                 disableDistance();
             }
+            toggleGrayScale();
         }
 
         function terrainImgClick(t) {
@@ -539,6 +542,25 @@
                 setCookie("terrain", t, 365);
                 document.getElementById(t).checked = true;
             }
+
+            toggleGrayScale();
+        }
+
+        function toggleGrayScale() {
+            if(document.getElementById("urban").disabled || !document.getElementById("urban").checked) {
+                document.getElementById("urbanIMG").style.filter = "grayscale(100%)";
+            }
+            else document.getElementById("urbanIMG").style.filter = "grayscale(0%)";
+
+            if(document.getElementById("nature").disabled || !document.getElementById("nature").checked) {
+                document.getElementById("natureIMG").style.filter = "grayscale(100%)";
+            }
+            else document.getElementById("natureIMG").style.filter = "grayscale(0%)";
+
+            if(document.getElementById("water").disabled || !document.getElementById("water").checked) {
+                document.getElementById("waterIMG").style.filter = "grayscale(100%)";
+            }
+            else document.getElementById("waterIMG").style.filter = "grayscale(0%)";
         }
 
 
