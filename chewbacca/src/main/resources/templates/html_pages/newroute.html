@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range"  min="0" max="20" step="0.5" value="0" id="customDistance" name="distance" oninput="setDistance(this.value)">
+                    <input type="range" class="form-range"  min="0" max="10" step="0.25" value="0" id="customDistance" name="distance" oninput="setDistance(this.value)">
 
                     <!-- display distance adjacent to slider -->
                     <output id="distance">0</output>
@@ -334,7 +334,7 @@
             document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
 
             cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(1);
+            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(2);
             document.getElementById("distance").value = cookie;
 
 
@@ -389,8 +389,8 @@
         function setDistance(distance){
             setCookie("distance", distance, 9000);
 
-            document.getElementById("distance").value = parseFloat(distance).toFixed(1);
-            document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
+            document.getElementById("distance").value = parseFloat(distance).toFixed(2);
+            document.getElementById("customDistance").value = parseFloat(distance).toFixed(2);
         }
 
 
