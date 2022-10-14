@@ -31,7 +31,7 @@ public class RoutingService {
      * @return                  the id of the new route
      */
 
-    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain, boolean accessible) {
+    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, String elevation, String terrain, boolean accessible) {
         var id = storage.newRoute();
 
         executorService.submit(() -> {
