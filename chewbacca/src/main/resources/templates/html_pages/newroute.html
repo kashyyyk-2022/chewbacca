@@ -435,7 +435,7 @@
             let hours = getCookie("hours", "0");
             let minutes = getCookie("minutes", "0");
 
-            return hours*4 + minutes/15;
+            return hours*12 + minutes/5;
         }
 
         function getDistanceSliderValue(){
@@ -446,8 +446,8 @@
             document.getElementById("customTime").disabled = false;
 
             document.getElementById("customTime").value = getTimeSliderValue();
-            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 12);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 12)*5;
 
             setCookie("disabledTime", "false");
         }
