@@ -159,19 +159,6 @@ public class RoutingStar {
      */
     public List<Point> getRoute() {
         return route;
-        /*var result = new ArrayList<Point>();
-
-        var previous = route.get(0);
-        // Use OSRM to get the route between the points
-        for (var i = 1; i < route.size(); i++) {
-            var current = route.get(i);
-
-            result.addAll(runAStar(previous, current));
-
-            previous = current;
-        }
-
-        return result;*/
     }
 
     /**
@@ -266,19 +253,6 @@ public class RoutingStar {
         }
         
         runRStar(origin);
-
-        //runAStar(start, origin.point);
-
-        /*
-        var paths = database.queryWays("highway", "track", "path");
-
-        for (var path : paths) {
-            var nodes = database.getNodes(path);
-
-            for (var node : nodes) {
-                route.add(new Point(node.lat, node.lon));
-            }
-        } */
     }
 
     private REntry runRStar(RNode destination) throws IOException {
@@ -308,43 +282,6 @@ public class RoutingStar {
 
         while (!priorityQueue.isEmpty())
         {
-            /*
-            // Calculate the priorities for the queue entries
-            priorityQueue.forEach((REntry entry) -> {
-                
-
-                if (entry.previous == null) {
-                    labels.put(entry.node.point, "Start");
-
-                    return;
-                }
-
-                var label = new StringBuilder();
-
-                var cost = entry.cost;
-                label.append(String.format("Cost: %.5f\r\n", cost));
-                var distancePart = 0.0; //distanceToStartBias * Point.comparableDistance(entry.node.point, start);
-                label.append(String.format("Distance: %.5f\r\n", distancePart));
-                var terrainPart = terrainBias * getClosestFeaturePoint(entry.node.point, features);
-                label.append(String.format("Terrain: %.5f\r\n", terrainPart));
-                var elevationPart = elevationBias * Math.abs(entry.node.elevation - entry.previous.node.elevation);
-                label.append(String.format("Elevation: %.5f\r\n", elevationPart));
-                entry.priority = cost + (distancePart + terrainPart + elevationPart) * Point.distance(entry.node.point, entry.previous.node.point);
-                // If we are avoiding this node, then increase the priority
-                if (avoid.contains(entry.node.id)) {
-                    entry.priority *= 100;
-                }
-                if (destination != null) {
-                    entry.priority *= Point.distance(entry.node.point, destination.point) * 0.01;
-                }
-                entry.priority += random.nextDouble() * randomBias;
-                label.append(String.format("Priority: %.5f\r\n", entry.priority));
-                labels.put(entry.node.point, label.toString());
-
-                return;
-            });
-            */
-
             iterations++;
 
             final var currentEntry = priorityQueue.poll();
@@ -404,7 +341,7 @@ public class RoutingStar {
                 if (destination != null) {
                     edgeEntry.priority *= Point.distance(edgeEntry.node.point, destination.point) * 0.01;
                 }
-                edgeEntry.priority += random.nextDouble() * randomBias;
+                edgeEntry.priority += random.nextDouble() * randomBias * 100;
 
                 priorityQueue.add(edgeEntry);
             }
@@ -420,8 +357,6 @@ public class RoutingStar {
                 routeNodes.add(current.node.id);
                 current = current.previous;
             }
-
-            //Collections.reverse(route);
         }
 
         return end;

@@ -62,7 +62,7 @@ public class RoutingService {
                 rstar.surfaceBias = 1;
                 rstar.seed = System.currentTimeMillis();
                 rstar.randomBias = 0.0000001f;
-                rstar.accessibility = accessible; //Kan jag inte göra detta? Test - Marcus
+                rstar.accessibility = accessible;
 
                 rstar.Initialize();
 
