@@ -71,17 +71,16 @@ public class RoutingStarGraph implements OsmGraph {
     }
 
     @Override
-    public void processWay(Way way) {
+    public void processWay(Way way, boolean accesibility) {
         var nodes = database.getNodes(way);
 
         var highway = database.getTagValue(way.tag, "highway");
 
-        if (highway == null || highway.equals("motorway") || highway.equals("primary") || highway.equals("trunk")) return;
+        if (highway == null || highway.equals("motorway") || highway.equals("primary") || highway.equals("trunk") || (accesibility && highway.equals("steps"))) return;
 
         var access = database.getTagValue(way.tag, "access");
 
         if (access != null && access.equals("private")) return;
-
 
         RNode previous = null;
         for (Node node : nodes) {

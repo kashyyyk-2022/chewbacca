@@ -20,8 +20,8 @@
         "current_route_title": "Aktiv rutt",
         "route_info": "Ruttinformation",
         "height_info": "Höjdskillnad",
-        "distance_info": "Kvarvarande sträcka",
-        "time_info": "Ungefärlig tid kvar",
+        "distance_info": "Ruttens sträcka",
+        "time_info": "Ungefärlig tid för rutt",
 
         "time_hours_slider": "Tid",
         "time_minutes_slider": "Tid i minuter",
