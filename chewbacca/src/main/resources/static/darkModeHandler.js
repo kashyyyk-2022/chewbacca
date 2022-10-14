@@ -18,7 +18,7 @@ function toggleDarkMode() {
         document.body.style.backgroundImage = "url('https://cdn.wallpapersafari.com/21/64/5ZxD6J.png')";
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
-        document.body.style.color="black";
+        //document.body.style.color="black";
 
         var icon = document.getElementById("icon-display")
         if (icon != null) {

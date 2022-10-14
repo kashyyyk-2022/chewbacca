@@ -258,9 +258,6 @@ public class RoutingStar {
 
         start = startNode.point;
 
-        distanceToStartBias = 1;
-        terrainBias = 1;
-        
         visited.clear();
 
         // Add the ID of each node from the graph to the visited list
