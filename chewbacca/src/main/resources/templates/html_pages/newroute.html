@@ -338,25 +338,22 @@
         document.getElementById("generate-route-button-waiting").style.display = "block";
 
         function onload(){
-            let cookie = getCookie("hours", "0");
-            document.getElementById("hours").value = cookie;
 
-            cookie = getCookie("minutes", "00");
+            let cookie = getCookie("disabledTime", "false");
 
-            if(cookie === "00"){
-                document.getElementById("minutes").value = "00";
+            console.log("disabledTime: " + cookie);
+
+            if(cookie === "false"){
+                document.getElementById("disableLength").checked = true;
+
+                enableTime();
+                disableDistance();
             } else {
-                document.getElementById("minutes").value = cookie;
+                document.getElementById("disableTime").checked = true;
+
+                enableDistance();
+                disableTime();
             }
-
-            document.getElementById("customTime").value = getTimeSliderValue();
-            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 12);
-            document.getElementById("minutes").value = (getTimeSliderValue() % 12)*5;
-
-            cookie = getCookie("distance", "0");
-            document.getElementById("customDistance").value = parseFloat(cookie).toFixed(2);
-            document.getElementById("distance").value = cookie;
-
 
             cookie = getCookie("elevation", "0");
             document.getElementById("Elevation").value = cookie;
@@ -377,10 +374,6 @@
             } else if (cookie === "water") {
                 document.getElementById("water").checked = true;
             }
-
-            //Disable distance on page load
-            document.getElementById("customDistance").disabled = true;
-            document.getElementById("disableLength").checked = true;
 
 
             toggleDarkMode();
@@ -468,6 +461,8 @@
             document.getElementById("customTime").value = getTimeSliderValue();
             document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
             document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+
+            setCookie("disabledTime", "false");
         }
 
         function disableTime(){
@@ -476,6 +471,8 @@
             document.getElementById("customTime").value = 0;
             document.getElementById("hours").value = 0;
             document.getElementById("minutes").value = 0;
+
+            setCookie("disabledTime", "true");
         }
 
         function enableDistance(){
@@ -483,6 +480,8 @@
 
             document.getElementById("customDistance").value = getDistanceSliderValue();
             document.getElementById("distance").value = getDistanceSliderValue();
+
+            setCookie("disabledTime", "true");
         }
 
         function disableDistance(){
@@ -490,15 +489,21 @@
 
             document.getElementById("customDistance").value = 0;
             document.getElementById("distance").value = 0;
+
+            setCookie("disabledTime", "false");
         }
 
         function toggleDisableLength(){
             if(document.getElementById("disableLength").checked){
+                setCookie("disabledTime", "false");
+
                 document.getElementById("disableTime").checked = false;
 
                 enableTime();
                 disableDistance();
             } else {
+                setCookie("disabledTime", "true");
+
                 document.getElementById("disableTime").checked = true;
 
                 disableTime();
@@ -510,11 +515,15 @@
         function toggleDisableTime(){
             console.log("disableTime triggered!");
             if(document.getElementById("disableTime").checked){
+                setCookie("disabledTime", "true");
+
                 document.getElementById("disableLength").checked = false;
 
                 disableTime();
                 enableDistance();
             } else {
+                setCookie("disabledTime", "false");
+
                 document.getElementById("disableLength").checked = true;
 
                 enableTime();
