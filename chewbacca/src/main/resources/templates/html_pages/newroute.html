@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time</label>
+                    <h6 for="customDistance" th:text="${time_hours_slider}" class="form-label" >Time</h6>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <label for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</label>
+                    <h6 for="customDistance" th:text="${length_slider}" class="form-label">Length in kilometers</h6>
                 </div>
 
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <label for="customDistance" th:text="${elevation_buttons}" class="form-label">Elevation</label>
+                    <h6 for="customDistance" th:text="${elevation_buttons}" class="form-label">Elevation</h6>
                     <div class="btn-group btn-group-lg d-flex" role="group" aria-label="Elevation" id="Elevation">
 
                         <input type="radio" class="btn-check" name="btnradio1" id="low" onClick="setCookie('elevation', 'low', 365)">
@@ -204,43 +204,6 @@
                 <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
                 </div>
             </div>
-
-            <div class="container w-100 mt-auto pb-2">
-                <div class="row row-md-3 row-lg-4">
-                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
-                    </div>
-                    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                        <div class="w-100 btn btn-info btn-md disabled" id="new-route-button" role="button">
-                            <div>
-                                <label for="new-route-button" th:text="${time}"></label>
-                                <output id="hours2"></output>
-                                <label>h</label>
-                                <output id="minutes2"></output>
-                                <label>min</label>
-                            </div>
-
-                            <div>
-                                <label for="new-route-button" th:text="${distance}"></label>
-                                <output id="distance2">0</output>
-
-                                <!-- if unit == metric -->
-                                <label th:if="${unit == 'metric'}" for="new-route-button">km</label>
-
-                                <!-- if unit == imperial -->
-                                <label th:if="${unit == 'imperial'}" for="new-route-button">miles</label>
-                            </div>
-
-                            <div>
-                                <label for="new-route-button" th:text="${elevation}"></label>
-                                <output id="elevation2">0</output>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
-                    </div>
-                </div>
-            </div>
-
         </div>
         
         <div class="row p-2">
@@ -259,7 +222,9 @@
         </div>
     </div>
 
-    <div class="container w-100 mt-auto pb-2">
+
+
+    <footer class="container w-100 mt-auto pb-2">
         <div class="row row-md-3 row-lg-4">
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
@@ -267,7 +232,7 @@
                 <div class="w-100 btn btn-success btn-md" id="generate-route-button" role="button" onclick="setCookie('routeID', '1', 9000);generateRoute();">
                     <label for="generate-route-button" th:text="${generate_route_button}"></label>
                 </div>
-                
+
                 <div class="w-100 btn btn-secondary btn-md" id="generate-route-button-waiting" role="button" disabled>
                     <label for="generate-route-button-waiting" th:text="${generate_route_button_waiting}"></label>
                 </div>
@@ -275,9 +240,11 @@
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
             </div>
         </div>
-    </div>
 
-    <footer class="container w-100 mt-auto pb-2">
+        <div class="row p-2 row-md-3 row-lg-4">
+            <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+            </div>
+        </div>
         <div class="row row-md-3 row-lg-4">
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
@@ -339,10 +306,10 @@
                 document.getElementById("water").checked = true;
             }
 
-            /*
+            //Disable distance on page load
             document.getElementById("customDistance").disabled = true;
             document.getElementById("disableLength").checked = true;
-            */
+
 
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
@@ -359,18 +326,12 @@
             setCookie("hours", hours, 9000);
             setCookie("minutes", minutes, 9000);
 
-            //Cookies used for "information box at the bottom of page
-            setCookie("hours2", hours, 9000);
-            setCookie("minutes2", minutes, 9000);
             if(minutes === 0){
                 document.getElementById("minutes").value = "00";
-                document.getElementById("minutes2").value = "00";
             } else {
                 document.getElementById("minutes").value = minutes;
-                document.getElementById("minutes2").value = minutes;
             }
             document.getElementById("hours").value = hours;
-            document.getElementById("hours2").value = hours;
         }
 
         function setDistance(distance){
@@ -378,9 +339,6 @@
 
             document.getElementById("distance").value = parseFloat(distance).toFixed(1);
             document.getElementById("customDistance").value = parseFloat(distance).toFixed(1);
-            //Cookie used for "information box at the bottom of page
-            setCookie("distance2", distance, 9000);
-            document.getElementById("distance2").value = parseFloat(distance).toFixed(1);
         }
 
 
@@ -397,9 +355,11 @@
             let distance = document.getElementById("distance").value;
             let terrain = getCookie("terrain", "0");
             let elevation = document.getElementById("Elevation").value;
+
             let accessible = document.getElementById("flexCheckDefault").checked;
             
             let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon + "&accessible=" + accessible;
+
             $.get(url, function(data) {
                 let routeId = data.id;
                 setCookie("routeID", routeId, 1);
@@ -438,10 +398,6 @@
             document.getElementById("customTime").value = getTimeSliderValue();
             document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
             document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
-
-            //For info-box
-            document.getElementById("hours2").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes2").value = (getTimeSliderValue() % 4)*15;
         }
 
         function disableTime(){
@@ -450,10 +406,6 @@
             document.getElementById("customTime").value = 0;
             document.getElementById("hours").value = 0;
             document.getElementById("minutes").value = 0;
-
-            //For info-box
-            document.getElementById("hours2").value = 0;
-            document.getElementById("minutes2").value = 0;
         }
 
         function enableDistance(){
@@ -461,9 +413,6 @@
 
             document.getElementById("customDistance").value = getDistanceSliderValue();
             document.getElementById("distance").value = getDistanceSliderValue();
-
-            //For info-box
-            document.getElementById("distance2").value = getDistanceSliderValue();
         }
 
         function disableDistance(){
@@ -471,9 +420,6 @@
 
             document.getElementById("customDistance").value = 0;
             document.getElementById("distance").value = 0;
-
-            //For info-box
-            document.getElementById("distance2").value = 0;
         }
 
         function toggleDisableLength(){

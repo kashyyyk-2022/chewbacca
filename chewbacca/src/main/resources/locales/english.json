@@ -20,8 +20,8 @@
         "current_route_title": "Current Route",
         "route_info": "Route Info",
         "height_info": "Elevation change",
-        "distance_info": "Remaining distance",
-        "time_info": "Approx. time left",
+        "distance_info": "Route distance",
+        "time_info": "Approx. route time",
 
         "time_hours_slider": "Time",
         "time_minutes_slider": "Time in minutes",

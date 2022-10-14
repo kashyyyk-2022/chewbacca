@@ -30,7 +30,7 @@ public class RoutingService {
      * @param terrain           the terrain type of the route
      * @return                  the id of the new route
      */
-    //Add boolean at the end.
+
     public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain, boolean accessible) {
         var id = storage.newRoute();
 
@@ -44,12 +44,20 @@ public class RoutingService {
                 rstar.idealTerrain = TerrainsKeyValue.getTerrainKV(terrain);
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
+                
+                double elev;
+                switch(elevation){
+                    case "low": elev=500.0; break;
+                    case "medium": elev=0.0; break;
+                    default: elev=-50.0; break;
+                };
                 if(accessible){
                     rstar.elevationBias = (elevation / 500.0) * 0.1f * 100;
                 }
                 else{
                     rstar.elevationBias = (elevation / 500.0) * 0.1f;
                 }
+                
                 rstar.terrainBias = 0.1f;
                 rstar.surfaceBias = 1;
                 rstar.seed = System.currentTimeMillis();
