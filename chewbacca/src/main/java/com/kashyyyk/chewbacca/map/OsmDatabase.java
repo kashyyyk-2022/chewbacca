@@ -89,7 +89,7 @@ public class OsmDatabase {
      * @param topRightLat               Top right latitude
      * @param topRightLon               Top right longitude
      */
-    public void downloadData(double bottomLeftLat, double bottomLeftLon, double topRightLat, double topRightLon) throws IOException {
+    public void downloadData(double bottomLeftLat, double bottomLeftLon, double topRightLat, double topRightLon, boolean accessible) throws IOException {
         Osm osm = OpenStreetMap.downloadData(bottomLeftLat, bottomLeftLon, topRightLat, topRightLon);
 
         // Expand bounds
@@ -120,7 +120,8 @@ public class OsmDatabase {
 
             ways.put(way.id, way);
 
-            graph.processWay(way);
+            //Test - Marcus
+            graph.processWay(way, accessible);
 
             var nodes = getNodes(way);
 
@@ -244,7 +245,7 @@ public class OsmDatabase {
      * 
      * @param point                     Point to center the download area on
      */
-    public void downloadData(Point point) throws IOException {
+    public void downloadData(Point point, boolean accessible) throws IOException {
         // Check if the point is within the bounds
         if (bounds != null) {
             if (point.getLatitude()  >= bounds.minlat && point.getLatitude()  <= bounds.maxlat && 
@@ -258,7 +259,7 @@ public class OsmDatabase {
 
         downloadData(
             bottom.getLatitude(), bottom.getLongitude(),
-            top.getLatitude(), top.getLongitude()
+            top.getLatitude(), top.getLongitude(), accessible
         );
     }
 

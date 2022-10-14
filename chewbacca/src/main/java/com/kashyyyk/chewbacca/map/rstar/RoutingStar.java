@@ -147,6 +147,11 @@ public class RoutingStar {
      */
     private Map<Point, String> labels;
 
+    /**TEST - MARCUS
+     * Accessibility of the route
+     */
+    public boolean accessibility = false;
+
     /**
      * Get the route
      * 
@@ -237,9 +242,11 @@ public class RoutingStar {
 
         labels = new HashMap<Point, String>();
 
+        //Test - Marcus
+
         distance = 0;
 
-        database.downloadData(start);
+        database.downloadData(start, accessibility);
 
         var origin = graph.findNearestNode(start);
 
@@ -365,7 +372,7 @@ public class RoutingStar {
             var connected = graph.getConnected(current);
 
             if (connected.size() == 1 && maxDownloads > 0) {
-                database.downloadData(current.point);
+                database.downloadData(current.point, accessibility);
 
                 connected = graph.getConnected(current);
 
@@ -390,8 +397,9 @@ public class RoutingStar {
                 var edgeCost = edgeEntry.cost;
                 var distancePart = 0.0;
                 var terrainPart = terrainBias * getClosestFeaturePoint(edgeEntry.node.point, features);
-                var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation);
+                var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation); //fixa elevationbias
                 edgeEntry.priority = edgeCost + (distancePart + terrainPart + elevationPart) * Point.distance(edgeEntry.node.point, edgeEntry.previous.node.point);
+
                 // If we are avoiding this node, then increase the priority
                 if (avoid.contains(edgeEntry.node.id)) {
                     edgeEntry.priority *= 100;
@@ -442,5 +450,4 @@ public class RoutingStar {
         }
         return closest;
     }
-
 }
