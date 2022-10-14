@@ -333,8 +333,6 @@
 
             let cookie = getCookie("disabledTime", "false");
 
-            console.log("disabledTime: " + cookie);
-
             if(cookie === "false"){
                 document.getElementById("disableLength").checked = true;
 
@@ -520,7 +518,6 @@
         }
 
         function toggleDisableTime(){
-            console.log("disableTime triggered!");
             if(document.getElementById("disableTime").checked){
                 setCookie("disabledTime", "true");
 
