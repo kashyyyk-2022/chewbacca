@@ -17,7 +17,7 @@
     </head>
     <body onload="onload()" class="d-flex flex-column min-vh-100">
     <div class="container">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
             <strong>Please notice: </strong> Always be aware of your suroundings while using the Routemeister application,
             and do not enter prohibited or dangerous areas.
 
@@ -25,30 +25,26 @@
         </div>
         <div class="d-grid gap-3">
             <div class="row p-2">
-                <h1 class="text-center" th:text="${current_route_title}"></h1>
+                <!--<h1 class="text-center" th:text="${current_route_title}"></h1>-->
             </div>
-            <div class="row row-md-3 row-lg-4">
-                <div class="col-1 col-sm-1 col-md-2 col-lg-2"></div>
-                <div class="col-10 col-sm-10 col-md-8 col-lg-8">
-                    <div id="map" style="height:600px;"></div>
+            <div class="row row-md-3 row-lg-4 mb-0">
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mb-0"></div>
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8 mb-0">
+                    <div id="map" style="height:50vh; border-radius:12px; padding: 10px;"></div>
                 </div>
-                <div class="col-1 col-sm-1 col-md-2 col-lg-2"></div>
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mb-0"></div>
             </div>
-            <div class="row">
-                <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
-                <div class="col-10 col-sm-6 col-md-6 col-lg-6">
+            <div class="row row-md-3 row-lg-4 mt-0">
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mt-0"></div>
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8 mt-0">
                         <div class="card text-center">
                             <div class="card-header" id="headingCard">
                                 <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="true" aria-controls="collapseCard" th:text="${route_info}">
                                 </button>
                             </div>
                             <div class="collapse show" id="collapseCard">
-                                <div class="card-body">
+                                <div class="card-body" style="border-radius:12px;">
                                         <div class="row">
-                                            <div class="col">
-                                                <p th:text="${height_info}"></p>
-                                                <p id="heightInfoData"></p>
-                                            </div>
                                             <div class="col">
                                                 <p th:text="${distance_info}"></p>
                                                 <p id="distanceInfoData"></p>
@@ -62,7 +58,7 @@
                             </div>
                         </div>
                 </div>
-                <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mt-0"></div>
             </div>
         </div>
     </div>
@@ -97,7 +93,7 @@
             let hUnit = cookie=="metric" ? " m":" feet";
             let lUnit =  cookie=="metric" ? " km":" miles";
 
-            document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
+            //document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
             document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
             document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+":"+getCookie("minutes","1")+ " h:m";
 
