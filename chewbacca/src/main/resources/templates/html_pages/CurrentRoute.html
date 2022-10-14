@@ -9,40 +9,62 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <title>CurrentRoute</title>
+        <title>Route</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
               integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
               crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js" integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s=" crossorigin=""></script>
+        <link rel="icon" href="favicon.png" type="image/x-icon">
     </head>
     <body onload="onload()" class="d-flex flex-column min-vh-100">
     <div class="container">
+        <!--
+            Icon
+        -->
+        <div class="row mt-0 p-0">
+            <div class="col-2">
+            </div>
+            <div class="col-8 p-0">
+                <div class="w-100 text-center container">
+                    <div id="icon-display" class="h-100 text-center container p-2 mt-0" style="background-color: #B7CBFA !important; border-radius:0 0 50px 50px; width: 80px;">
+                        <a href="/">
+                            <img src="icon.png" alt="icon" width="64" height="64">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>Please notice: </strong> Always be aware of your surroundings while using the Routemeister application,
+            and do not enter prohibited or dangerous areas.
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <div class="d-grid gap-3">
             <div class="row p-2">
-                <h1 class="text-center" th:text="${current_route_title}"></h1>
+                <!--<h1 class="text-center" th:text="${current_route_title}"></h1>-->
             </div>
-            <div class="row row-md-3 row-lg-4">
-                <div class="col-1 col-sm-1 col-md-2 col-lg-2"></div>
-                <div class="col-10 col-sm-10 col-md-8 col-lg-8">
-                    <div id="map" style="height:600px;"></div>
+            <div class="row row-md-3 row-lg-4 mb-0">
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mb-0"></div>
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8 mb-0">
+                    <div id="map" style="height:50vh; border-radius:12px; padding: 10px;"></div>
                 </div>
-                <div class="col-1 col-sm-1 col-md-2 col-lg-2"></div>
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mb-0"></div>
             </div>
-            <div class="row">
-                <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
-                <div class="col-10 col-sm-6 col-md-6 col-lg-6">
+            <div class="row row-md-3 row-lg-4 mt-0">
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mt-0"></div>
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8 mt-0">
                         <div class="card text-center">
                             <div class="card-header" id="headingCard">
                                 <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="true" aria-controls="collapseCard" th:text="${route_info}">
                                 </button>
                             </div>
                             <div class="collapse show" id="collapseCard">
-                                <div class="card-body">
+                                <div class="card-body" style="border-radius:12px;">
                                         <div class="row">
-                                            <div class="col">
-                                                <p th:text="${height_info}"></p>
-                                                <p id="heightInfoData"></p>
-                                            </div>
                                             <div class="col">
                                                 <p th:text="${distance_info}"></p>
                                                 <p id="distanceInfoData"></p>
@@ -56,7 +78,7 @@
                             </div>
                         </div>
                 </div>
-                <div class="col-1 col-sm-3 col-md-3 col-lg-3"></div>
+                <div class="col-1 col-sm-1 col-md-2 col-lg-2 mt-0"></div>
             </div>
         </div>
     </div>
@@ -66,7 +88,7 @@
             <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                <a class="btn btn-secondary w-100" type="back" id="back-button" href="/">
+                <a class="btn btn-secondary w-100" type="back" id="back-button" onclick="clearWatchPosition()" href="/">
                     <label for="back-button" th:text="${back_button}"></label>
                 </a>
             </div>
@@ -88,12 +110,19 @@
 
         function dataUpdate(){
             let cookie = getCookie("unit","metric");
-            let hUnit = cookie=="metric" ? " m":" feet";
             let lUnit =  cookie=="metric" ? " km":" miles";
+            let distance = parseFloat(getCookie("DistanceLeft","1"));
+            if (cookie !== "metric") {
+                distance = distance * 0.621371;
+            }
 
-            document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
-            document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
-            document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+":"+getCookie("minutes","1")+ " h:m";
+            document.getElementById("distanceInfoData").innerHTML= distance.toFixed(2).toString() +lUnit;
+            //document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+"h " +getCookie("minutes","1")+ "m";
+
+            // checks if the goal is reached - if so the application stops watching the device's location
+            if (getCookie("distance", "1") === 0) {
+                clearWatchPosition();
+            }
         }
     </script>
 
@@ -102,6 +131,7 @@
         var currentpos;
         var marker;
         var circle;
+        var id;
 
         latlng = [57.68939495267853,11.974072522154591]; //Change later to my position.
         //var map = L.map('map').setView([57.706, 11.937], 13);
@@ -119,14 +149,8 @@
             console.log("Your browser does not support this geolocation feature:(")
         }
         else {
-            /*
-                setInterval(() => {
-                    navigator.geolocation.getCurrentPosition(getPosition, displayError, {enableHighAccuracy: true})
-                }, 1000);
-
-             */
             // should update location each time it changes -  needs to be cleared when location is reached or trip is cancelled
-            navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
+            id = navigator.geolocation.watchPosition(getPosition, displayError, {enableHighAccuracy: true})
         }
 
         function getPosition(position) {
@@ -155,9 +179,15 @@
             };
             alert("Error: " + errors[error.code]);
         }
+
+        // function to clearWatch when user return to main menu
+        function clearWatchPosition() {
+            navigator.geolocation.clearWatch(id);
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="/PointDistance.js"></script>
     <script type = "text/javascript" src="/generateRouteHandler.js"></script>
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>

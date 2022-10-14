@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import com.kashyyyk.chewbacca.map.OsmDatabase;
 import com.kashyyyk.chewbacca.map.OsmGraph;
@@ -47,19 +48,16 @@ public class RoutingStarGraph implements OsmGraph {
     }
 
     /**
-     * Get features of a type
-     * 
-     * @param type                      The type
+     * Get all features that have one of the tags associated with desired terrain
+     * @param terrains- A map containing all relevant key-values, where the values are used to determine if features match preference
+     * @return a set of all the features that match desired terrain
      */
-    public Set<RFeature> getFeatures(String type) {
+    public Set<RFeature> getFeatures(KeyValue terrains) {
         HashSet<RFeature> result = new HashSet<RFeature>();
 
         for (RFeature feature : features.values()) {
-
             for (int i = 0; i < feature.tags.length; i++) {
-
-                if (feature.tags[i].equals(type)) {
-
+                if(terrains.containsValue(feature.tags[i])) {
                     result.add(feature);
                 }
             }
@@ -73,12 +71,19 @@ public class RoutingStarGraph implements OsmGraph {
     }
 
     @Override
-    public void processWay(Way way) {
+    public void processWay(Way way, boolean accesibility) {
         var nodes = database.getNodes(way);
 
         var highway = database.getTagValue(way.tag, "highway");
 
-        if (highway == null) return;
+        if (highway == null || highway.equals("motorway") || highway.equals("primary")
+                || highway.equals("trunk") || highway.equals("tertiary")
+                || highway.equals("secondary") || highway.equals("tertiary_link")
+                || (accesibility && highway.equals("steps"))) return;
+
+        var access = database.getTagValue(way.tag, "access");
+
+        if (access != null && access.equals("private")) return;
 
         RNode previous = null;
         for (Node node : nodes) {
@@ -113,13 +118,14 @@ public class RoutingStarGraph implements OsmGraph {
         }
     }
 
+
     @Override
     public void processRelation(Relation relation) {
         if (features.containsKey(relation.id)) return;
 
         var nodes = database.getNodes(relation);
 
-        var type = database.getTagValue(relation.tag, "natural");
+        var type = database.getTagValues(relation.tag);
 
         if (type == null) return;
 
@@ -129,7 +135,7 @@ public class RoutingStarGraph implements OsmGraph {
             points[i] = new Point(nodes[i].lat, nodes[i].lon);
         }
 
-        RFeature feature = new RFeature(relation.id, points, new String[] { type });
+        RFeature feature = new RFeature(relation.id, points, type.values().toArray(new String[0]));
 
         features.put(relation.id, feature);
     }
@@ -180,6 +186,15 @@ public class RoutingStarGraph implements OsmGraph {
         }
 
         return nearest;
+    }
+
+    @Override
+    public void processElevations(Map<Long, Double> elevations) {
+        for (var node : nodes.values()) {
+            if (elevations.containsKey(node.id)) {
+                node.elevation = elevations.get(node.id);
+            }
+        }
     }
     
 }

@@ -1,12 +1,12 @@
 package com.kashyyyk.chewbacca.services;
 
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.kashyyyk.chewbacca.map.Point;
-import com.kashyyyk.chewbacca.map.WaypointGenerator;
+import com.kashyyyk.chewbacca.map.rstar.KeyValue;
 import com.kashyyyk.chewbacca.map.rstar.RoutingStar;
+import com.kashyyyk.chewbacca.map.rstar.TerrainsKeyValue;
 
 public class RoutingService {
     private RoutingStorage storage;
@@ -30,34 +30,58 @@ public class RoutingService {
      * @param terrain           the terrain type of the route
      * @return                  the id of the new route
      */
-    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) {
+
+    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, String elevation, String terrain, boolean accessible) {
         var id = storage.newRoute();
 
         executorService.submit(() -> {
             try {
                 //final WaypointGenerator generator = new WaypointGenerator(startLat, startLon, length, timeHours, timeMinutes, elevation, terrain);
-                
+
                 var rstar = new RoutingStar();
                 rstar.start = new Point(startLat, startLon);
-                rstar.idealDistance = length;
-                //rstar.idealTerrain = new String[] { terrain };
+                rstar.idealDistance = length!=0 ? length : timeToDistance(timeHours,timeMinutes,true); //If we want to generate a route for a runner boolean should be false
+                rstar.idealTerrain = TerrainsKeyValue.getTerrainKV(terrain);
                 rstar.distanceBias = 1f;
                 rstar.distanceToStartBias = 0.01f;
-                rstar.elevationBias = 1;
-                rstar.terrainBias = 2f;
+                
+                double elev;
+                switch(elevation){
+                    case "low": elev=500.0; break;
+                    case "medium": elev=0.0; break;
+                    default: elev=-50.0; break;
+                };
+                if(accessible){
+                    rstar.elevationBias = (elev / 500.0) * 0.1f * 100;
+                }
+                else{
+                    rstar.elevationBias = (elev / 500.0) * 0.1f;
+                }
+                
+                rstar.terrainBias = 0.1f;
                 rstar.surfaceBias = 1;
-                rstar.seed = 0;
+                rstar.seed = System.currentTimeMillis();
+                rstar.randomBias = 0.0000001f;
+                rstar.accessibility = accessible;
+
+                rstar.Initialize();
 
                 if (timeMinutes == 5) {
                     rstar.start = new Point(57.67437, 11.95678);
                 }
 
-                rstar.Initialize();
 
                 var points = rstar.getRoute();
 
                 // Set the route to done
                 storage.setRouteDone(id, true);
+
+                var start = rstar.getStartPoint();
+                var end = rstar.getEndPoint();
+
+                storage.setRouteStart(id, new double[] { start.getLatitude(), start.getLongitude() });
+                storage.setRouteEnd(id, new double[] { end.getLatitude(), end.getLongitude() });
+                storage.setRouteLabels(id, rstar.getLabels());
 
                 //LinkedList<WaypointGenerator.Waypoint> points = generator.getRoute();
 
@@ -100,4 +124,43 @@ public class RoutingService {
     public double[][] getRoute(String id) {
         return storage.getRoute(id);
     }
+
+    /**
+     * Get the start of the route with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the start of the route
+     */
+    public double[] getRouteStart(String id) {
+        return storage.getRouteStart(id);
+    }
+
+    /**
+     * Get the end of the route with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the end of the route
+     */
+    public double[] getRouteEnd(String id) {
+        return storage.getRouteEnd(id);
+    }
+
+    /**
+     * Get the route labels with the given id
+     * 
+     * @param id                the id of the route
+     * @return                  the route labels
+     */
+    public RouteLabel[] getRouteLabels(String id) {
+        return storage.getRouteLabels(id);
+    }
+
+    /** Method to get ideal distance of a route based on the time the user want to walk/run
+     * @param hour - Hours the walk/run should be
+     * @param minutes - Minutes the walk/run should be
+     * @param walk - A boolean that should be set to true if user wants to walk, or false if user wants to run
+     * @return The optimal distance (in km) for a route that should last for a given time as a double
+     */
+    private double timeToDistance(double hour,double minutes, boolean walk){ return walk ? (hour+minutes/60)*5 : (hour+minutes/60)*8.4;}
+
 }

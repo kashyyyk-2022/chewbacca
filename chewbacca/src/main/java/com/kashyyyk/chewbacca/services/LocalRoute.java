@@ -19,6 +19,21 @@ public class LocalRoute {
      * The route
      */
     private double[][] route;
+
+    /**
+     * The start of the route
+     */
+    private double[] start;
+
+    /**
+     * The end of the route
+     */
+    private double[] end;
+
+    /**
+     * Labels for the route
+     */
+    private RouteLabel[] labels;
     
     /**
      * Create a new route
@@ -27,10 +42,13 @@ public class LocalRoute {
      * @param done  if the route is done
      * @param route the route
      */
-    public LocalRoute(String id, boolean done, double[][] route) {
+    public LocalRoute(String id, boolean done, double[][] route, double[] start, double[] end, RouteLabel[] labels) {
         this.id = id;
         this.done = done;
         this.route = route;
+        this.start = start;
+        this.end = end;
+        this.labels = labels;
     }
 
     /**
@@ -61,6 +79,33 @@ public class LocalRoute {
     }
 
     /**
+     * Get the start of the route
+     * 
+     * @return the start of the route
+     */
+    public double[] getStart() {
+        return start;
+    }
+
+    /**
+     * Get the end of the route
+     * 
+     * @return the end of the route
+     */
+    public double[] getEnd() {
+        return end;
+    }
+
+    /**
+     * Get the labels of the route
+     * 
+     * @return the labels of the route
+     */
+    public RouteLabel[] getLabels() {
+        return labels;
+    }
+
+    /**
      * Set if the route is done
      * 
      * @param done true if the route is done, false otherwise
@@ -76,5 +121,32 @@ public class LocalRoute {
      */
     public void setRoute(double[][] route) {
         this.route = route;
+    }
+
+    /**
+     * Set the start of the route
+     * 
+     * @param start the start of the route
+     */
+    public void setStart(double[] start) {
+        this.start = start;
+    }
+
+    /**
+     * Set the end of the route
+     * 
+     * @param end the end of the route
+     */
+    public void setEnd(double[] end) {
+        this.end = end;
+    }
+
+    /**
+     * Set the labels of the route
+     * 
+     * @param labels the labels of the route
+     */
+    public void setLabels(RouteLabel[] labels) {
+        this.labels = labels;
     }
 }

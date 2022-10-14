@@ -45,16 +45,19 @@ public class RoutingAPIController {
             @RequestParam(name = "minutes", required = true) String minutes,
             @RequestParam(name = "distance", required = true) String distance,
             @RequestParam(name = "elevation", required = true) String elevation,
-            @RequestParam(name = "terrain", required = true) String terrain
+            @RequestParam(name = "terrain", required = true) String terrain,
+            @RequestParam(name = "accessible", required = true) String accessible
     ) {
+
         return new RouteAPIStartResponse(routingService.generateRoute(
             Double.parseDouble(lat),
             Double.parseDouble(lon),
             Double.parseDouble(distance),
             Double.parseDouble(hours),
             Double.parseDouble(minutes),
-            Double.parseDouble(elevation),
-            terrain
+            elevation,
+            terrain,
+            Boolean.parseBoolean(accessible)
         ));
     }
 
@@ -65,7 +68,10 @@ public class RoutingAPIController {
         return new RouteAPIContentResponse(
             id,
             routingService.isRouteDone(id),
-            routingService.getRoute(id)
+            routingService.getRoute(id),
+            routingService.getRouteStart(id),
+            routingService.getRouteEnd(id),
+            routingService.getRouteLabels(id)
         );
     }
 

@@ -30,7 +30,7 @@ public class RNode {
     /**
      * Elevation of the node
      */
-    public float elevation;
+    public double elevation;
 
     /**
      * Constructor for RNode

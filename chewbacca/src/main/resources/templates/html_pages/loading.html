@@ -2,40 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <title>CurrentRoute</title>
+  <title>Loading...</title>
 
+  <link rel="icon" href="favicon.png" type="image/x-icon">
 
-  <style>
-    .spinner-border{
-    width: 100px;
-    height: 100px;
-    }
-  </style>
 </head>
-<body onload="onload()">
+<body onload="onload()" class="d-flex min-vh-100">
 
 
-<div class="container">
+<div class="container text-center my-auto">
 
   <div class="d-grid gap-3">
 
-    <div class="row p-5">
+    <div class="row p-1 align-items-center">
       <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
       </div>
 
-
       <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only"></span>
-          </div>
-        </div>
-
+        <img src="/loading_walking.gif" alt="Loading gif" class="img-fluid">
       </div>
 
       <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
       </div>
+
+    </div>
+    <div class="row align-items-center">
+      <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
+      </div>
+
+      <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+        <!-- Light green container with the label: "Powered by R*" -->
+        <div class="container-fluid bg-light text-center" style="border-radius:25px; padding: 10px;">
+          <p><strong>Generating your route!</strong></p>
+          <p class="text-success"><small>Powered by the <strong><i>R*</i></strong> routing algorithm</small></p>
+        </div>
+      </div>
+
+      <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
+      </div>
+
     </div>
   </div>
 </div>
@@ -47,7 +54,6 @@
 <!-- länk till js bibliotek -->
 <script type = "text/javascript" src="/darkModeHandler.js"></script>
 <script type = "text/javascript" src="/cookieHandler.js"></script>
-<script type = "text/javascript" src="/locationHandler.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
 
