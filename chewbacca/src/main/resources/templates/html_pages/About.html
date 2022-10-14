@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
     <style>
       .chalmers
       {
@@ -19,8 +20,27 @@
   </head>
 
   <body onload="onload()"class="d-flex flex-column min-vh-100">
-
   <div class="container">
+        
+        <!--
+            Icon
+        -->
+        <div class="row mt-0 p-0">
+          <div class="col-5">
+          </div>
+          <div class="col-2 p-0">
+              <div class="w-100 text-center container">
+                  <div class="h-100 text-center container p-2 mt-0" style="background-color: #B7CBFA !important; border-radius:0 0 50px 50px; width: 80px;">
+                      <a href="/">
+                          <img src="icon.png" alt="icon" width="64" height="64">
+                      </a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-5">
+          </div>
+      </div>
+
     <div class="d-grid gap-3">
       <div class="row p-4">
         <h1 class="text-center" th:text="${about_title}"></h1>
@@ -30,29 +50,29 @@
         <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!--en tom col-->
         </div>
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-          <p> <center>Routemeister is an application suitable for both mobile and website
-            use, whose purpose is to generate a walking route based
+          <p> Routemeister is an application suitable for both mobile and website
+            use, which purpose is to generate a walking route based
             on the user’s preferences. These preferences include length,
             time, elevation, terrain, and availability for wheelchairs
             and strollers. The idea behind Routemeister is to let users find new
-            routes and explore new parts of a city that would otherwise
-            go unexplored.</center>
+            routes and explore new parts of a city or area that would otherwise
+            go unexplored.
 
             </p>
 
           <p>
-              <center>This application is part of a project course in
+              This application is part of a project course in
             agile software programming done at Chalmers university,
             where the scope was to make an application that is somehow connected to
             <a href="https://sdgs.un.org/goals">the United Nations sustainable development goals</a>
             . This project is centred
             around goal 3.4, reduce mortality from non-communicable diseases and promote mental health, and goal
-            11.7, provide access to safe and inclusive green and public spaces.</center>
+            11.7, provide access to safe and inclusive green and public spaces.
 
           </p>
 
-          <p> <center>The people involved in this project is Wincent Holm, Rasmus Standar, Oscar Marrero Engström, Viktoria Hagenbo,
-            Isak Holmdahl, Marcus Phu, and Lovisa Rosin.</center>
+          <p> The people involved in this project are Wincent Stålbert Holm, Rasmus Standar, Oscar Marrero Engström, Viktoria Hagenbo,
+            Isak Holmdahl, Marcus Phu, and Lovisa Rosin.
           </p>
         </div>
         <div class="col-1 col-sm-2 col-md-3 col-lg-4"> <!-- en tom col-->
