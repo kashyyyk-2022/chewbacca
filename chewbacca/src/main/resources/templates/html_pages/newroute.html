@@ -128,7 +128,7 @@
 
 
                 <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <input type="range" class="form-range" min="0" max="40" step="1" value="0" id="customTime" name="length" oninput="setTime(this.value)">
+                    <input type="range" class="form-range" min="0" max="36" step="1" value="0" id="customTime" name="length" oninput="setTime(this.value)">
 
                     <!-- diplay time adjacent to slider -->
                     <output id="hours"></output>
@@ -330,8 +330,8 @@
             }
 
             document.getElementById("customTime").value = getTimeSliderValue();
-            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 4);
-            document.getElementById("minutes").value = (getTimeSliderValue() % 4)*15;
+            document.getElementById("hours").value = Math.floor(getTimeSliderValue() / 12);
+            document.getElementById("minutes").value = (getTimeSliderValue() % 12)*5;
 
             cookie = getCookie("distance", "0");
             document.getElementById("customDistance").value = parseFloat(cookie).toFixed(2);
@@ -373,8 +373,8 @@
         }
 
         function setTime(time){
-            let hours = Math.floor(time / 4);
-            let minutes = (time % 4)*15;
+            let hours = Math.floor(time / 12);
+            let minutes = (time % 12)*5;
             setCookie("hours", hours, 9000);
             setCookie("minutes", minutes, 9000);
 
