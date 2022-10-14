@@ -13,7 +13,7 @@
 
         <title>Index</title>
     </head>
-    <body onload="onload()">
+    <body onload="onload()" class="d-flex flex-column min-vh-100">
     <div id="cookieModal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -32,19 +32,16 @@
     <div class="container">
         <div class="d-grid gap-3">
             <div class="row mt-0 p-0">
-                <div class="col-2 col-md-3 col-lg-4">
+                <div class="col-1 col-md-2 col-lg-2">
                 </div>
-                <div class="col-8 col-md-6 col-lg-4">
+                <div class="col-10 col-md-8 col-lg-8">
                     <div class="w-100 text-center container">
                         <div id="icon-display" class="h-100 text-center container p-2 mt-0" style="background-color: #B7CBFA !important; border-radius:0 0 25px 25px;">
-                            <div style="float:left;">
-                                <img src="icon.png" alt="icon" width="60" height="60">
-                            </div>
                             <i><h1 class="text-center">Routemeister</h1></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-2 col-md-3 col-lg-4">
+                <div class="col-1 col-md-2 col-lg-2">
                 </div>
             </div>
             <div class="row p-2">
@@ -52,7 +49,7 @@
                 </div>
                 <div class="col-8 col-md-6 col-lg-4">
 
-                    <a type="button" class="w-100 btn btn-primary btn-lg px-5 py-3" id="new-route-button" href="/newroute" >
+                    <a class="w-100 btn btn-primary btn-lg px-5 py-3" href="/newroute" id="new-route-button" role="button" >
                         <label for="new-route-button" th:text="${new_route_button}"></label>
                     </a>
 
