@@ -1,3 +1,5 @@
+
+
 $(document).ready(function() {
     let routeID = getCookie("routeID");
 
@@ -14,11 +16,15 @@ $(document).ready(function() {
         endPos._icon.classList.add("huechangeGoal");
 
         var hasPassedEnd = false;
+        let distance = 0;
         for (let i = 0; i < waypoints.length - 1; i++) {
             var line = L.polyline([
                 waypoints[i],
                 waypoints[i+1]
             ]).addTo(map);
+
+            //calculates actual distance of the route
+            distance += PointDistance(waypoints[i],waypoints[i+1]);
 
             //Checks if the current position is the end
             if (waypoints[i][0] == data.start[0] && waypoints[i][1] == data.start[1]) {
@@ -31,18 +37,16 @@ $(document).ready(function() {
             }
         }
 
+        //Set a cookie with the actual length of the calculated
+        setCookie("DistanceLeft",(Math.round(distance*100)/100).toString(),365);
+
+
         // Focus the map on the route
         map.fitBounds([
             data.start,
             data.end
         ]);
 
-        const labels = data.labels;
-
-        // TODO: Delete this
-        for (let i = 0; i < labels.length; i++) {
-            //L.marker(labels[i].position).addTo(map).bindPopup(labels[i].text);
-        }
 
     }, "json");
 });

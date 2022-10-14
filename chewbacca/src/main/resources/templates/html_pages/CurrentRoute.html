@@ -110,11 +110,9 @@
 
         function dataUpdate(){
             let cookie = getCookie("unit","metric");
-            let hUnit = cookie=="metric" ? " m":" feet";
             let lUnit =  cookie=="metric" ? " km":" miles";
 
-            //document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
-            document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
+            document.getElementById("distanceInfoData").innerHTML= getCookie("DistanceLeft","1")+lUnit;
             document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+"h " +getCookie("minutes","1")+ "m";
 
             // checks if the goal is reached - if so the application stops watching the device's location
@@ -185,6 +183,7 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="/PointDistance.js"></script>
     <script type = "text/javascript" src="/generateRouteHandler.js"></script>
     <script type = "text/javascript" src="/darkModeHandler.js"></script>
     <script type = "text/javascript" src="/cookieHandler.js"></script>
