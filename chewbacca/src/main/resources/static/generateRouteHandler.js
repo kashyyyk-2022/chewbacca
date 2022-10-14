@@ -39,6 +39,7 @@ $(document).ready(function() {
 
         //Set a cookie with the actual length of the calculated
         setCookie("DistanceLeft",(Math.round(distance*100)/100).toString(),365);
+        document.getElementById("timeInfoData").innerText = Math.round(((distance / 5) / 60)).toString() + "h " + Math.round(((distance / 5) * 60) % 60).toString() + "min";
 
 
         // Focus the map on the route

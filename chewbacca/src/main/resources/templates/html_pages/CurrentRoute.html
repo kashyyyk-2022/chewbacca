@@ -111,9 +111,13 @@
         function dataUpdate(){
             let cookie = getCookie("unit","metric");
             let lUnit =  cookie=="metric" ? " km":" miles";
+            let distance = parseFloat(getCookie("DistanceLeft","1"));
+            if (cookie !== "metric") {
+                distance = distance * 0.621371;
+            }
 
-            document.getElementById("distanceInfoData").innerHTML= getCookie("DistanceLeft","1")+lUnit;
-            document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+"h " +getCookie("minutes","1")+ "m";
+            document.getElementById("distanceInfoData").innerHTML= distance.toFixed(2).toString() +lUnit;
+            //document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+"h " +getCookie("minutes","1")+ "m";
 
             // checks if the goal is reached - if so the application stops watching the device's location
             if (getCookie("distance", "1") === 0) {
