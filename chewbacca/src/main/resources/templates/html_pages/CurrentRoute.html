@@ -95,7 +95,7 @@
 
             //document.getElementById("heightInfoData").innerHTML= getCookie("elevation","1")+" "+hUnit;
             document.getElementById("distanceInfoData").innerHTML= getCookie("distance","1")+" "+lUnit;
-            document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+":"+getCookie("minutes","1")+ " h:m";
+            document.getElementById("timeInfoData").innerHTML= getCookie("hours","1")+"h " +getCookie("minutes","1")+ "m";
 
             // checks if the goal is reached - if so the application stops watching the device's location
             if (getCookie("distance", "1") === 0) {
