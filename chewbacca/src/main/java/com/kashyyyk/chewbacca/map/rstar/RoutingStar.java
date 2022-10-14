@@ -150,7 +150,7 @@ public class RoutingStar {
     /**TEST - MARCUS
      * Accessibility of the route
      */
-    public boolean accessibility;
+    public boolean accessibility = false;
 
     /**
      * Get the route
@@ -243,11 +243,10 @@ public class RoutingStar {
         labels = new HashMap<Point, String>();
 
         //Test - Marcus
-        accessibility = true;
 
         distance = 0;
 
-        database.downloadData(start);
+        database.downloadData(start, accessibility);
 
         var origin = graph.findNearestNode(start);
 
@@ -373,7 +372,7 @@ public class RoutingStar {
             var connected = graph.getConnected(current);
 
             if (connected.size() == 1 && maxDownloads > 0) {
-                database.downloadData(current.point);
+                database.downloadData(current.point, accessibility);
 
                 connected = graph.getConnected(current);
 
@@ -398,15 +397,17 @@ public class RoutingStar {
                 var edgeCost = edgeEntry.cost;
                 var distancePart = 0.0;
                 var terrainPart = terrainBias * getClosestFeaturePoint(edgeEntry.node.point, features);
-                var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation);
+                var elevationPart = elevationBias * Math.abs(edgeEntry.node.elevation - edgeEntry.previous.node.elevation); //fixa elevationbias
                 edgeEntry.priority = edgeCost + (distancePart + terrainPart + elevationPart) * Point.distance(edgeEntry.node.point, edgeEntry.previous.node.point);
 
+                /*
                 //If the edge is not accessible then add it to avoid
                 if(accessibility){
                     if(!getAccessible(edgeEntry.node)){
                         avoid.add(edgeEntry.node.id);
                     }
                 }
+                */
                 // If we are avoiding this node, then increase the priority
                 if (avoid.contains(edgeEntry.node.id)) {
                     edgeEntry.priority *= 100;
@@ -464,7 +465,7 @@ public class RoutingStar {
      * @param rNode - node to check if accessible.
      * @return true or false based on if the node is accessible or not.
      */
-    private boolean getAccessible(RNode rNode){
+    /*private boolean getAccessible(RNode rNode){
         System.out.println("getAccessible");
         var ways = getDatabase().getWay(rNode.id); //Fråga hur jag kommer åt Ways key och value.
         for (var tag : ways.tag) {
@@ -481,5 +482,5 @@ public class RoutingStar {
             }
         }
         return true;
-    }
+    }*/
 }

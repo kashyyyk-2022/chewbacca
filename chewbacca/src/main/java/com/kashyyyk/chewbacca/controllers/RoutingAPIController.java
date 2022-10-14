@@ -45,7 +45,8 @@ public class RoutingAPIController {
             @RequestParam(name = "minutes", required = true) String minutes,
             @RequestParam(name = "distance", required = true) String distance,
             @RequestParam(name = "elevation", required = true) String elevation,
-            @RequestParam(name = "terrain", required = true) String terrain
+            @RequestParam(name = "terrain", required = true) String terrain,
+            @RequestParam(name = "accessible", required = true) String accessible
     ) {
         double convertedElevation = 10;
         switch(elevation){
@@ -61,7 +62,8 @@ public class RoutingAPIController {
             Double.parseDouble(hours),
             Double.parseDouble(minutes),
             convertedElevation,
-            terrain
+            terrain,
+            Boolean.parseBoolean(accessible)
         ));
     }
 

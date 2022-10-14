@@ -397,8 +397,9 @@
             let distance = document.getElementById("distance").value;
             let terrain = getCookie("terrain", "0");
             let elevation = document.getElementById("Elevation").value;
+            let accessible = document.getElementById("flexCheckDefault").checked;
             
-            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon;
+            let url = "/route-api/start?hours=" + hours + "&minutes=" + minutes + "&distance=" + distance + "&elevation=" + elevation + "&terrain=" + terrain + "&lat=" + lat + "&lon=" + lon + "&accessible=" + accessible;
             $.get(url, function(data) {
                 let routeId = data.id;
                 setCookie("routeID", routeId, 1);

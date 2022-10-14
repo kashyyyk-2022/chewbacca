@@ -30,14 +30,14 @@ public class RoutingService {
      * @param terrain           the terrain type of the route
      * @return                  the id of the new route
      */
-    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain) {
+    //Add boolean at the end.
+    public String generateRoute(double startLat, double startLon, double length, double timeHours, double timeMinutes, double elevation, String terrain, boolean accessible) {
         var id = storage.newRoute();
-        boolean accessible = true;
 
         executorService.submit(() -> {
             try {
                 //final WaypointGenerator generator = new WaypointGenerator(startLat, startLon, length, timeHours, timeMinutes, elevation, terrain);
-                
+
                 var rstar = new RoutingStar();
                 rstar.start = new Point(startLat, startLon);
                 rstar.idealDistance = length!=0 ? length : timeToDistance(timeHours,timeMinutes,true); //If we want to generate a route for a runner boolean should be false
@@ -51,11 +51,12 @@ public class RoutingService {
                 rstar.randomBias = 0.0000001f;
                 rstar.accessibility = accessible; //Kan jag inte göra detta? Test - Marcus
 
+                rstar.Initialize();
+
                 if (timeMinutes == 5) {
                     rstar.start = new Point(57.67437, 11.95678);
                 }
 
-                rstar.Initialize();
 
                 var points = rstar.getRoute();
 
