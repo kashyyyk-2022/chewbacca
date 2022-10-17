@@ -3,7 +3,7 @@ With a frontend built in HTML with Bootstrap and JavaScript as well as ThymeLeaf
 
 ## Install and launch
 
-To host the application locally you need to have Maven installed and JVM. The application is written to work in JVM version 17 but can still work in older versions. When these prerequisites are checked you can clone the repo and start using it.
+To host the application locally you need to have Maven installed and JVM. The application is written to work in JVM version 17 but can still work in older versions. When these prerequisites are checked you can clone the repo and start using the application.
 
 ## Authors (Who's who)
 
