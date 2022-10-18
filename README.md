@@ -30,7 +30,7 @@ To proceed, locate the runnable java file in Chewbacca\src\main\java\com\kashyyy
 
 [`http://localhost:8080/`](http://localhost:8080/)
 
-If you have problems getting your IDE to run this java file, try opening the folder Chewbacca as a stand-alone own project.
+If you have problems getting your IDE to run this java file, try opening the folder Chewbacca as a stand-alone project.
 
 ## Deployed version
 The application is also as of the 18th of October 2022 hosted using the Google Cloud Platform. It can be accessed by going to:
