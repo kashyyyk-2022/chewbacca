@@ -22,14 +22,16 @@ To host the application locally you need to have Maven installed and JVM. The ap
 
 To proceed, locate the runnable java file in Chewbacca\src\main\java\com\kashyyyk\chewbacca\ChewbaccaApplication.java which contains the main method for the application. Run this file in your IDE. This will host the application locally on your machine. It can then be accesed in a web browser by going to:
 
-`http://localhost:8080/`
+[`http://localhost:8080/`](http://localhost:8080/)
 
 If you have problems getting your IDE to run this java file, try opening the folder Chewbacca as a stand-alone own project.
 
 ## Deployed version
 The application is also as of the 18th of October 2022 hosted using the Google Cloud Platform. It can be accessed by going to:
 
-`https://chewbacca-2022.ew.r.appspot.com/`
+[`https://chewbacca-2022.ew.r.appspot.com/`](https://chewbacca-2022.ew.r.appspot.com/)
+
+No guarantees are provided that the application will be continued to be hosted in the future.
 
 ## Authors (Who's who)
 
