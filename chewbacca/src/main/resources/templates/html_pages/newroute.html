@@ -368,10 +368,11 @@
             toggleDarkMode();
             document.getElementById("nature").style.backgroundImage = "url('nature.png')";
 
-            setInterval(function() {
-                navigator.geolocation.getCurrentPosition(success);
-            }, 1000);
-
+            // Subscribe to the location event
+            navigator.geolocation.watchPosition(function(position) {
+                success(position);
+            });
+            
             toggleGrayScale();
 
         }
