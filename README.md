@@ -3,10 +3,11 @@ With a frontend built in HTML with Bootstrap and JavaScript as well as ThymeLeaf
 
 ## Repository structure
 This root of the repository contains the following elements:
-+ Documentation - Folder containing all the documentation related to the project.
 + Chewbacca - Folder containing the source code for the project. 
-+ README.md - A markdown file containing this descriptive text of the repository.
++ Documentation - Folder containing all the documentation related to the project.
 + .gitignore - A plain text file where each line contains a pattern for files/directories to ignore.
++ LICENSE - A plain text file containing the GNU license for this project.
++ README.md - A markdown file containing this descriptive text of the repository.
 + Final_report.pdf - A pdf file containing the final report for the project this application was developed for.
 
 
