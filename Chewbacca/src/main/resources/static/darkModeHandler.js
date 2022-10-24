@@ -2,8 +2,9 @@ function toggleDarkMode() {
 
     let darkMode = getCookie('darkMode');
     if (darkMode == "true") {
-        document.body.style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg')";
+        document.body.style.backgroundColor = "black";
         document.body.style.color="white"
+
 
         /*Script to toggle color of element to dark mode. Add name of class inside one of the selectors by
         typing ',.classname' after .card-body or .card-header */
@@ -15,7 +16,7 @@ function toggleDarkMode() {
         for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundColor = "darkgray";
         }
-        document.body.style.backgroundImage = "url('/dark.png')";
+
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
         //document.body.style.color="black";
@@ -25,7 +26,7 @@ function toggleDarkMode() {
             icon.style.backgroundColor = "#202F55";
         }
     } else {
-        document.body.style.backgroundImage = "url('/light.png')";
+
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundSize = "cover";
         document.body.style.color="black";
