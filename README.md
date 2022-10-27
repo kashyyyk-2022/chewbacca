@@ -54,3 +54,6 @@ Oscar Marrero Engström	- 	Cuturhead
 Rasmus Standar		-	rstandar
 
 Marcus Phu		- 	Pipipipiano
+
+## Scrum board in trello
+https://trello.com/invite/b/IrlmVrVh/ATTIb131633c2980133bba3ae3d261e9db2f87561AD3/chewbacca 
