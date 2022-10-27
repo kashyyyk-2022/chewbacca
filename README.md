@@ -8,10 +8,9 @@ This root of the repository contains the following elements:
 + .gitignore - A plain text file where each line contains a pattern for files/directories to ignore.
 + LICENSE - A plain text file containing the GNU license for this project.
 + README.md - A markdown file containing this descriptive text of the repository.
-+ Final_report.pdf - A pdf file containing the final report for the project this application was developed for.
-
 
 The Documentation folder contains the following elements:
++ Final Report.pdf - A pdf file containing the final report for the project this application was developed for.
 + Planning - A folder containing miscellaneous files related to the planning done for this project.
 + Weekly relfections - A folder containing all the individual relfections from each team memeber for each week, as well as all the team relfections for each sprint.
 + Code_of_Conduct.txt - A text file containing the code of conduct all team memebers have followed during the development.
